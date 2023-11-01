@@ -1,5 +1,7 @@
+import Header from "../components/Header";
+
 function MyPage() {
-  return <div>Hello!!</div>;
+  return <Header />;
 }
 
 export default MyPage;
