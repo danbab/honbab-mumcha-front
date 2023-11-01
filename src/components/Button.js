@@ -9,7 +9,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "login":
       style +=
-        " text-[0.6875rem] w-[5.25rem] h-[2.0625rem] bg-[#ACC830] text-[#464646]";
+        " text-[0.6875rem] mr-[2.44rem] w-[5.25rem] h-[2.0625rem] bg-[#ACC830] text-[#464646]";
       break;
 
     case "mini-join":
