@@ -6,7 +6,10 @@ const Header = () => {
   return (
     <div className="w-[78.75rem] mx-auto my-0">
       <div className="flex justify-between mt-4">
-        <img src="img/mainlogo.svg" alt="메인로고" />
+        <div className="flex gap-0">
+          <img src="img/mainlogo.svg" alt="메인로고" />
+          <div className="mt-[2.7rem] text-[1.25rem] text-normal">Menu</div>
+        </div>
         <div className="mt-[2rem]">
           <Button type="login">로그인</Button>
           <Button type="register">회원가입</Button>
