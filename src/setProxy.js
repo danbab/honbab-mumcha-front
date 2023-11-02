@@ -1,13 +1,13 @@
 // src/main/frontend/src/setProxy.js
 
-const { createProxyMiddleware } = require('http-proxy-middleware');
+import { createProxyMiddleware } from "http-proxy-middleware";
 
-module.exports = function(app) {
+export default function (app) {
   app.use(
-    '/api',
+    "/api",
     createProxyMiddleware({
-      target: 'http://localhost:8080',	# 서버 URL or localhost:설정한포트번호
+      target: "http://localhost:8080",
       changeOrigin: true,
     })
   );
-};
+}
