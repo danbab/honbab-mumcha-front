@@ -1,4 +1,5 @@
 import React from 'react'
+import MainSectionTitle from './MainSectionTitle';
 
 const MenuSquare = () => {
 
@@ -41,15 +42,16 @@ const MenuSquare = () => {
         },
 ]
 return (
-
-    <div className='grid grid-cols-3 gap-4 mt-[6.14rem]'>
+    <>
+    <MainSectionTitle type="food-section">음식으로 약속잡기</MainSectionTitle>
+    <div className='grid grid-cols-3 mt-[2.7rem] w-[78.75rem] mx-auto my-0'>
         {menus.map( menu=> (
-            <div className='rounded-lg overflow-hidden'>
-                <img className='w-[361px] h-[194px] rounded-[10px] shadow' src={menu.image} alt={menu.alt}></img>
+            <div className='w-[361px] h-[194px] rounded-[10px] overflow-hidden'>
+                <img className= 'shadow hover:scale-150 transition-transform duration-1000 ease-in-out' src={menu.image} alt={menu.alt}></img>
             </div>
         ))}
     </div>
-
+    </>
   )
 }
 
