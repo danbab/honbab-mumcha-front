@@ -1,4 +1,5 @@
 import React from 'react'
+import MainSectionTitle from './MainSectionTitle';
 
 const LocationCircle = () => {
 
@@ -65,14 +66,17 @@ const LocationCircle = () => {
         }
     ]
     return (
-        <div className="grid grid-cols-6 gap-4 mt-[6.14rem]">
+        <>
+        <MainSectionTitle type='menu-section'>지역으로 약속잡기</MainSectionTitle>
+        <div className="grid grid-cols-6 gap-3 mt-[2.7rem] w-[78.75rem] mx-auto my-0">
             {locations.map(location => (
-                <div className='relative'>
-                    <p className="absolute inset-0 flex items-center justify-center text-white text-xl font-medium font-['Inter'] p-4">{location.name}</p>
-                    <img className='w-[140px] h-[140px] rounded-[100px]' src={location.image} alt={location.alt}/>
+                <div className='w-[140px] h-[140px] rounded-[100px] overflow-hidden'> 
+                    {/* <p className="absolute inset-0 flex items-center justify-center text-white text-xl font-medium font-['Inter'] p-4">{location.name}</p> */}
+                    <img className='shadow hover:scale-150 transition-transform duration-1000 ease-in-out' src={location.image} alt={location.alt}/>
                 </div>
             ))}
         </div>
+        </>
     )
 }
 
