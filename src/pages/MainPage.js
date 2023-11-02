@@ -3,13 +3,7 @@ import Kakao from "../components/Kakao";
 import MainSwiper from "../components/MainSwiper";
 
 function MyPage() {
-  return (
-    <>
-      <Header />
-      <MainSwiper />
-      <Kakao />
-    </>
-  );
+  return <></>;
 }
 
 export default MyPage;
