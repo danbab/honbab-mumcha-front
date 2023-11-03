@@ -22,7 +22,7 @@ const SearchPlace = () => {
     <>
      <div>
         <form className='inputForm' onSubmit={handleSubmit}>
-            <inpu 
+            <input 
                 placeholder="검색어를 입력해주세요"
                 onChange={onChange}
                 value={inputText}
