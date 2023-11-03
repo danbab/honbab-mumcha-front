@@ -18,7 +18,7 @@ function JoinPage() {
         </div>
 
         {/*회원가입 폼 부분 */}
-        <div className="mt-10 w-[35.625rem] rounded-[0.625rem] bg-[rgba(7, 7, 7, 0.42)] mx-auto">
+        <div className="mt-10 w-[35.625rem] rounded-[0.625rem] mx-auto">
             <h2 className="mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 회원 가입
             </h2>
@@ -29,6 +29,7 @@ function JoinPage() {
                     <Lable type="register-lable">이메일 </Lable>
                     <span className="text-[#F60000] mt-[0.350rem]">*</span>
                 </div>
+                <div className="flex">
                 <Input 
                     type="register-input" 
                     id="email"
@@ -36,6 +37,8 @@ function JoinPage() {
                     required
                     placeholder="이메일을 입력해주세요. (예: aa @ bb.cc)"
                     ></Input>
+                <Button type="register-emailDoubleCheck">중복 확인</Button>
+                </div>
             </div>
             {/*input: 이름 */}
             <div className="flex gap-3">
@@ -58,11 +61,12 @@ function JoinPage() {
                     <span className="text-[#F60000] mt-[0.350rem]">*</span>
                 </div>
                 <Input 
-                    type="register-input" 
+                    type="password" 
                     id="password"
                     name="password"
                     required
                     placeholder="비밀번호를 입력해주세요."
+                    className="border-2 rounded-[0.3125rem] border-gray-300 w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
                     ></Input>
             </div>
             {/*input: 비밀번호 확인 */}
@@ -72,11 +76,12 @@ function JoinPage() {
                     <span className="text-[#F60000] mt-[0.350rem]">*</span>
                 </div>
                 <Input 
-                    type="register-input" 
+                    type="password" 
                     id="passwordCheck"
                     name="passwordCheck"
                     required
                     placeholder="비밀번호를 한 번 더 입력해주세요."
+                    className="border-2 rounded-[0.3125rem] border-gray-300 w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
                     ></Input>
             </div>
             {/*input: 휴대폰 */}
@@ -85,6 +90,7 @@ function JoinPage() {
                     <Lable type="register-lable">휴대폰 </Lable>
                     <span className="text-[#F60000] mt-[0.350rem]">*</span>
                 </div>
+                <div className="flex">
                 <Input 
                     type="register-input" 
                     id="phone"
@@ -92,6 +98,8 @@ function JoinPage() {
                     required
                     placeholder="전화번호를 입력해주세요. (예: 010-0000-0000)"
                     ></Input>
+                <Button type="register-certification">본인 인증</Button>
+                </div>
             </div>
             {/*button: 주소 => 클릭 시, 주소찾기 api 연동할 예정 */}
             <div className="flex gap-3">
@@ -107,7 +115,7 @@ function JoinPage() {
                     >주소 검색</Button>
             </div>
             {/*radio: 성별 */}
-            <div className="flex gap-3 justify-between">
+            <div className="flex gap-3 justify-start">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">성별 </Lable>
                 </div>
@@ -134,7 +142,7 @@ function JoinPage() {
             <div className="flex gap-3 justify-center">
                 <Input 
                     type="submit" 
-                    className=" shadow-md rounded-[0.625rem] text-[0.875rem] w-[13.75rem] h-[2.875rem] bg-[#54AB75] text-[#ffffff] "
+                    className=" shadow-md rounded-[0.625rem] text-[0.875rem] w-[13.75rem] h-[2.875rem] bg-[#54AB75] text-[#ffffff] cursor-pointer hover:bg-transparent hover:text-[#54AB75] border border-green-500"
                     name="submit"
                     value="가입하기"
                     ></Input>
