@@ -10,17 +10,20 @@ import Date from "../components/Date";
 function JoinPage() {
     return (
     <>  
+    {/*헤더 부분 */}
         <div className="w-[78.75rem] mx-auto my-0">
             <div className="flex justify-between mt-4">
                 <img src="img/mainlogo.svg" alt="메인로고" />
             </div>
         </div>
 
+        {/*회원가입 폼 부분 */}
         <div className="mt-10 w-[35.625rem] rounded-[0.625rem] bg-[rgba(7, 7, 7, 0.42)] mx-auto">
             <h2 className="mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 회원 가입
             </h2>
-            <form className="space-y-6" action="#" method="POST"> {/*TODO: action에 요청을 보낼 경로 지정 */}
+            <form className="space-y-6" action="#" method="POST"> {/* action에 요청을 보낼 경로 지정 */}
+            {/*input: 이메일 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">이메일 </Lable>
@@ -34,6 +37,7 @@ function JoinPage() {
                     placeholder="이메일을 입력해주세요. (예: aa @ bb.cc)"
                     ></Input>
             </div>
+            {/*input: 이름 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">이름 </Lable>
@@ -47,6 +51,7 @@ function JoinPage() {
                     placeholder="이름을 입력해주세요."
                     ></Input>
             </div>
+            {/*input: 비밀번호 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">비밀번호 </Lable>
@@ -60,6 +65,7 @@ function JoinPage() {
                     placeholder="비밀번호를 입력해주세요."
                     ></Input>
             </div>
+            {/*input: 비밀번호 확인 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">비밀번호 확인 </Lable>
@@ -73,6 +79,7 @@ function JoinPage() {
                     placeholder="비밀번호를 한 번 더 입력해주세요."
                     ></Input>
             </div>
+            {/*input: 휴대폰 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">휴대폰 </Lable>
@@ -86,6 +93,7 @@ function JoinPage() {
                     placeholder="전화번호를 입력해주세요. (예: 010-0000-0000)"
                     ></Input>
             </div>
+            {/*button: 주소 => 클릭 시, 주소찾기 api 연동할 예정 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">주소 </Lable>
@@ -98,6 +106,7 @@ function JoinPage() {
                     required
                     >주소 검색</Button>
             </div>
+            {/*radio: 성별 */}
             <div className="flex gap-3 justify-between">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">성별 </Lable>
@@ -108,17 +117,20 @@ function JoinPage() {
                     <Radio name="gender" value="n">선택 안함</Radio>
                 </RadioGroup>
             </div>
+            {/*input: 생년월일 => dateformat : yyyy-mm-dd */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">생년월일 </Lable>
                 </div>
                 <Date></Date>
             </div>
+            {/*radio: 개인정보 동의 => 어떻게 처리할까? */}
             <div className="flex gap-3 justify-center">
                 <div className="flex gap-1"> 
                     <Radio name="policy" value="policy">개인정보 수집 이용 동의</Radio>
                 </div>
             </div>
+            {/*submit: 클릭 시, form에 입력된 정보들을 벡엔드로 보냄. */}
             <div className="flex gap-3 justify-center">
                 <Input 
                     type="submit" 
