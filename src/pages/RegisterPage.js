@@ -24,7 +24,7 @@ const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
 
 // 비밀번호
 const onChangePassword = (e) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/; //숫자+영문자+특수문자 조합으로 8자리 이상
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
   
@@ -65,7 +65,7 @@ const onChangePassword = (e) => {
             <h2 className="mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 회원 가입
             </h2>
-            <form className="space-y-6" action="/users/new" method="POST"> {/* action에 요청을 보낼 경로 지정 */}
+            <form className="space-y-6" action="/api/users/new" method="POST"> {/* action에 요청을 보낼 경로 지정 */}
             {/*input: 이메일 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
