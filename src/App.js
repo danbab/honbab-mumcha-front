@@ -7,11 +7,8 @@ import RegisterPage from "./pages/RegisterPage";
 //import WritePage from "pages/WritePage";
 //import MyPagePage from "pages/MyPagePage";
 
-
-
-
-
 function App() {
+
     return (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Routes>
