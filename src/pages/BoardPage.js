@@ -13,6 +13,28 @@ function BoardPage() {
           <BoardCard />
           <BoardCard />
           <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
+          <BoardCard />
         </BoardSection>
       </div>
     </>
