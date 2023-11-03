@@ -2,8 +2,8 @@ const Card = ({}) => {
   let style = "rounded-[0.625rem] shadow-md";
 
   return (
-    <div className="w-[218px] h-[350px] relative">
-      <div className="w-[218px] h-[350px] left-0 top-0 absolute bg-white rounded-[20px] shadow" />
+    <div className="w-[295px] h-[473px] mb-3 mt-5 relative">
+      <div className="w-[295px] h-[473px] left-0 top-0 absolute bg-white rounded-[20px] shadow" />
       <div className="left-[49px] top-[43px] absolute text-black text-xs font-medium font-['Inter']">
         역관광경영학과
       </div>
@@ -11,8 +11,8 @@ const Card = ({}) => {
         작성일
       </div>
       <img
-        className="w-[218px] h-[195px] left-0 top-[70px] absolute"
-        src="https://via.placeholder.com/218x195"
+        className="w-[295px] h-[195px] left-0 top-[70px] absolute"
+        src="https://via.placeholder.com/295x195"
       />
       <div className="left-[11px] top-[233px] absolute text-white text-[15px] font-bold font-['Inter']">
         한남동 이탈리안 가실분?
