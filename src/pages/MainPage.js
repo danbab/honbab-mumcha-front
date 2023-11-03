@@ -1,11 +1,9 @@
-import Header from "../components/Header";
-import MainSwiper from "../components/MainSwiper";
+import ChatRoom from "../components/ChatRoom";
 
 function MyPage() {
   return (
     <>
-      <Header />
-      <MainSwiper />
+      <ChatRoom />
     </>
   );
 }
