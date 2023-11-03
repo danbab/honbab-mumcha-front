@@ -12,13 +12,9 @@ const Input = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "register-input":
       style +=
-        " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem]";
+        " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]";
       break;
       
-    case "register-submit":
-      style +=
-        " shadow-md rounded-[0.625rem] text-[0.875rem] w-[13.75rem] h-[2.875rem] bg-[#54AB75] text-[#ffffff] ";
-      break;
 
     default:
       style += " w-[28rem] h-[2.38rem]";
