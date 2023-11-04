@@ -38,13 +38,14 @@ const MapContainer = ({searchPlace}) => {
                 map: map,
                 position: new kakao.maps.LatLng(place.y, place.x) 
             });
+            
+            kakao.maps.event.addListener(marker, 'click', function () {
+                //마커를 클릭하면 장소명이 인포윈도우에 표시
+                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                infowindow.open(map, marker);
+              });
         }
 
-        kakao.maps.event.addListener(marker, 'click', function () {
-            //마커를 클릭하면 장소명이 인포윈도우에 표시
-            infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-            infowindow.open(map, marker);
-          });
         
     }, [searchPlace]);
 
