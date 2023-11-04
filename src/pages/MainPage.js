@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import LocationCircle from "../components/LocationCircle";
 import MainSwiper from "../components/MainSwiper";
 import MenuSquare from "../components/MenuSquare";
-import Map from "../components/Map";
+import SearchPlace from "../components/SearchPlace";
 
 function MyPage() {
   return (
@@ -12,7 +12,7 @@ function MyPage() {
       <MainSwiper />
       <MenuSquare />
       <LocationCircle />
-      <Map />
+      <SearchPlace />
       <Footer />
     </>
   );

@@ -1,39 +1,36 @@
-import React, { useState } from 'react'
-import Map from './Map';
+import React, { useState } from "react";
+import MapContainer from "./MapContainer";
 
 const SearchPlace = () => {
-    const [inputText, setInputText] = useState("");
-    const [place, setPlace] = useState("");
+  const [inputText, setInputText] = useState("");
+  const [place, setPlace] = useState("");
 
-    //onChange 함수를 활용해서 작성된 검색어를 setInputText에 넣어준다
-    const onChange = (evnet) => {
-        setInputText(evnet.target.value);
-    };
+  const onChange = (e) => {
+    setInputText(e.target.value);
+  };
 
-    //submit이 실행되면 지역에 inpuText를 넣어서 보내준다.
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setPlace(inputText);
-        setInputText("");
-    };
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setPlace(inputText);
+    setInputText("");
+  };
 
   return (
     <>
-     <div>
-        <form className='inputForm' onSubmit={handleSubmit}>
-            <input 
-                placeholder="검색어를 입력해주세요"
-                onChange={onChange}
-                value={inputText}
-            />
-            <button type="submit"></button>
-        </form>
-        <Map searchPlace={place} />
-        </div>   
+    <div className="mt-[2.7rem] w-[78.75rem] mx-auto my-0">
+      <form className="" onSubmit={handleSubmit}>
+        <input
+          placeholder="검색어를 입력해주세요:)"
+          onChange={onChange}
+          value={inputText}
+          className="border-spacing-2  border border-gray-400"
+        />
+        <button className="bg-orange-200 w-[5.4rem] border-black mb-[1.6rem] mx-[1.2rem]"type="submit">검색</button>
+      </form>
+      <MapContainer searchPlace={place} />
+      </div>
     </>
+  );
+};
 
-  )
-}
-
-export default SearchPlace
+export default SearchPlace;
