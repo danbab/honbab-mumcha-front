@@ -4,6 +4,7 @@ import MainPage from "./pages/MainPage";
 import RegisterPage from "./pages/RegisterPage";
 //import BoardPage from "pages/BoardPage";
 import BoardDetailPage from "./pages/BoardDetailPage";
+import ChatPage from './pages/ChatPage';
 //import WritePage from "pages/WritePage";
 //import MyPagePage from "pages/MyPagePage";
 
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/boardDetail" element={<BoardDetailPage />} />
                 {/*<Route path="/write" element={<WritePage />} />*/}
                 {/*<Route path="/my" element={<MyPagePage />} />*/}
+                <Route path="/chat" element={<ChatPage />} />
             </Routes>
         </BrowserRouter>
     );
