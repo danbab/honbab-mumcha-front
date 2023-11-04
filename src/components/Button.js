@@ -47,10 +47,15 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
         " text-[0.625rem] w-[5.625rem] h-[1.9375rem] bg-transparent text-[#54AB75] border border-green-500 rounded-[0.3125rem]      ";
       break;
 
-      case "register-addressSearch":
-        style +=
-          " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff]   ";
-        break;
+    case "register-addressSearch":
+      style +=
+        " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff]   ";
+      break;
+
+    case "chat":
+      style +=
+        " w-[5.25rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff] mt-2";
+      break;
 
     default:
       style += "bg-[#675D50] text-white";
