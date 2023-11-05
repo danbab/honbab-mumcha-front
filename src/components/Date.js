@@ -12,7 +12,7 @@ const Birth = () => {
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
                 dateFormat="yyyy-MM-dd"
-                className="mt-1 ml-2"
+                className="mt-1 ml-[0.75rem] border-2 rounded-[0.3125rem] pl-[0.5rem]"
               />
     );
   };
