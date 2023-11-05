@@ -34,19 +34,24 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "register-long":
       style +=
-        " rounded-[0.625rem] text-[0.875rem] w-[13.75rem] h-[2.875rem] bg-[#54AB75] text-[#ffffff]";
+        " rounded-[0.625rem] text-[0.875rem] w-[13.75rem] h-[2.875rem] bg-[#54AB75] text-[#ffffff] ";
       break;
 
     case "register-emailDoubleCheck":
       style +=
-        " text-[0.625rem] text-[#54AB75] bg-transparent w-[4.5rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 ";
+        " text-[0.625rem] text-[#54AB75] bg-transparent w-[4.5rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 ml-1 hover:bg-[#54AB75] hover:text-[#ffffff]";
       break;
 
     case "register-certification":
       style +=
-        " text-[0.625rem] w-[5.625rem] h-[1.9375rem] bg-transparent text-[#54AB75] border border-green-500 rounded-[0.3125rem]      ";
+        " text-[0.625rem] w-[4.5rem] h-[1.9375rem] bg-transparent text-[#54AB75] border border-green-500 rounded-[0.3125rem] ml-1 hover:bg-[#54AB75] hover:text-[#ffffff]";
       break;
 
+      case "register-addressSearch":
+        style +=
+          " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff] hover:bg-transparent hover:text-[#54AB75]  ";
+        break;
+      
     case "register-addressSearch":
       style +=
         " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff]   ";

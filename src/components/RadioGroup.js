@@ -1,6 +1,6 @@
 const RadioGroup = ({ label, children }) => {
     return (
-      <div className="mt-1 ml-4">
+      <div className="mt-1 ml-[2.7rem]">
         <legend>{label}</legend>
         {children}
       </div>
