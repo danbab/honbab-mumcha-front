@@ -1,5 +1,6 @@
 import React from "react";
 
+// 게시글 제목, 약속 시간, 게시글 내용 섹션
 const DetailPageTitleAndContentSection = () => {
     const postTitle = '논현점 퇴근하고 만나서 밥 드실분 구해요';
     const meetDate = '2023.10.30 (월)';
@@ -12,7 +13,7 @@ const DetailPageTitleAndContentSection = () => {
                 {postTitle}
             </div>
 
-            <div className="w-full md:w-72 h-2.25 border border-black  rounded-md flex justify-between mt-0.5 mb-4">
+            <div className="w-full md:w-72 h-2.25 border border-black  rounded-md flex justify-between mt-2 mb-4">
                 <div className="flex-grow border-r border-black text-black text-center text-base font-bold">
                     <p>{meetDate}</p>
                 </div>
@@ -21,8 +22,18 @@ const DetailPageTitleAndContentSection = () => {
                 </div>
             </div>
 
-            <div className="w-full h-full md:mt-10 text-black text-base md:text-lg bg-neutral-100 rounded-md p-4">
+            <div className="w-full h-96 md:mt-10 text-black text-base md:text-lg bg-neutral-100 rounded-md p-4">
                 <p>{postContent}</p>
+            </div>
+
+            <div className="w-full h-full md:mt-28 p-4">
+                <p><img src="img/postimage.svg"></img>
+                </p>
+            </div>
+
+            <div className="w-full h-full md:mt-20 p-4">
+                <p><img src="img/postimagedetail.svg"></img>
+                </p>
             </div>
         </div>
     );
