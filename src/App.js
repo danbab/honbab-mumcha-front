@@ -6,6 +6,7 @@ import BoardPage from "./pages/BoardPage";
 import BoardDetailPage from "./pages/BoardDetailPage";
 import ChatPage from "./pages/ChatPage";
 import BoardFoodPage from "./pages/BoardFoodPage";
+import Menu from "./components/Menu";
 //import WritePage from "pages/WritePage";
 //import MyPagePage from "pages/MyPagePage";
 
@@ -22,6 +23,7 @@ function App() {
         {/*<Route path="/write" element={<WritePage />} />*/}
         {/*<Route path="/my" element={<MyPagePage />} />*/}
         <Route path="/chat" element={<ChatPage />} />
+        <Route path="/menubar" element={<Menu />} />
       </Routes>
     </BrowserRouter>
   );

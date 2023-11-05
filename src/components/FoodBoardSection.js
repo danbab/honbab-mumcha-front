@@ -6,7 +6,7 @@ const BoardSection = ({ children }) => {
     <div className="p-4 sm:ml-64 bg-[#F6F6F6] flex-grow">
       <div className="flex mb-5 ml-[4.7rem] flex-wrap justify-between items-center ">
         <Button type="make-reservation">지금 약속잡기</Button>
-        <div className="flex mr-[6.85rem]">
+        <div className="flex mr-[1.58rem] 2xl:mr-[6.85rem]">
           <Input type="board-search-input" name="검색창" />
           <Button type="search">검색</Button>
         </div>

@@ -1,12 +1,24 @@
-module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
+export const purge = ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"];
+export const darkMode = false;
+export const theme = {
+  extend: {
+    animation: {
+      "slide-down": "slide-down 0.5s forwards",
+      "slide-down2": "slide-down 0.5s forwards",
+    },
+    keyframes: {
+      "slide-down": {
+        "0%": { transform: "translateY(100%)" },
+        "100%": { transform: "translateX(0)" },
+      },
+      "slide-down2": {
+        "0%": { transform: "translateY(100%)" },
+        "100%": { transform: "translateX(0)" },
+      },
+    },
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
 };
-
+export const variants = {
+  extend: {},
+};
+export const plugins = [];
