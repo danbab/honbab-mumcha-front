@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import MainPage from "./pages/MainPage";
+import MainPage from "./pages/MainPage";
 //import LoginPage from "pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import BoardPage from "./pages/BoardPage";
@@ -23,7 +23,6 @@ function App() {
         {/*<Route path="/write" element={<WritePage />} />*/}
         {/*<Route path="/my" element={<MyPagePage />} />*/}
         <Route path="/chat" element={<ChatPage />} />
-        <Route path="/menubar" element={<Menu />} />
       </Routes>
     </BrowserRouter>
   );
