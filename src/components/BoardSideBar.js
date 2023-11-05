@@ -1,7 +1,24 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const BoardSideBar = () => {
-  const locations = [
+const BoardSideBar = ({ locations }) => {
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [clickedLocation, setClickedLocation] = useState(null);
+
+  const handleClick = (imageName) => {
+    setClickedLocation(imageName);
+    setSelectedLocation(null);
+  };
+  const handleMouseEnter = (imageName) => {
+    if (!clickedLocation) {
+      // 클릭한 항목이 없는 경우에만 selectedLocation을 업데이트
+      setSelectedLocation(imageName);
+    }
+  };
+  const handleMouseLeave = () => {
+    setSelectedLocation(null); // 마우스가 떠날 때 selectedLocation을 null로 설정
+  };
+  const locationList = [
     {
       name: "내 위치",
       image: "img/location.svg",
@@ -74,14 +91,27 @@ const BoardSideBar = () => {
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-yellow-400 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
-            {locations.map((location) => (
+            {locationList.map((location) => (
               <li key={location.alt}>
                 <Link
                   to="#"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  className={`flex items-center p-2 rounded-lg group ${
+                    clickedLocation === location.image
+                      ? "text-white bg-gray-700"
+                      : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  }`}
+                  onMouseEnter={() => handleMouseEnter(location.image)}
+                  onMouseLeave={handleMouseLeave}
+                  onClick={() => handleClick(location.image)}
                 >
                   <span className="ml-3">{location.name}</span>
                 </Link>
+                {selectedLocation === location.image && (
+                  <img src={location.image} alt={location.name} />
+                )}
+                {clickedLocation === location.image && (
+                  <img src={location.image} alt={location.name} />
+                )}
               </li>
             ))}
           </ul>
