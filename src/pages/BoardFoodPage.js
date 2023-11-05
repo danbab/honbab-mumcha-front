@@ -4,11 +4,14 @@ import BoardSection from "../components/BoardSection";
 import BoardSideBar from "../components/BoardSideBar";
 import BoardSideBarFood from "../components/BoardSideBarFood";
 import FoodBoardSection from "../components/FoodBoardSection";
+import { Link } from "react-router-dom";
 function BoardFoodPage() {
   return (
     <>
       <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
-        <img src="img/mainlogo.svg" alt="메인로고" className="ml-[8rem]" />
+        <Link to="/">
+          <img src="img/mainlogo.svg" alt="메인로고" className="ml-[8rem]" />
+        </Link>
         <div className="flex">
           <img src="img/Bell.svg" alt="이미지" />
           <p>여~! 쓰~벌 브라더~</p>

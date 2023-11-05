@@ -1,19 +1,20 @@
 import Button from "./Button";
 import Input from "./Input";
 
-const FoodBoardSection = ({ children }) => {
+const BoardSection = ({ children }) => {
   return (
     <div className="p-4 sm:ml-64 bg-[#F6F6F6] flex-grow">
       <div className="flex mb-5 ml-[4.7rem] flex-wrap justify-between items-center ">
         <Button type="make-reservation">지금 약속잡기</Button>
-        <div className="flex mr-[4.7rem]">
+        <div className="flex mr-[6.85rem]">
           <Input type="board-search-input" name="검색창" />
           <Button type="search">검색</Button>
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-4 mb-4 ml-[4.7rem]">{children}</div>
+      {/* <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"> */}
+      <div className="grid grid-cols-5 gap-4 mb-4 mx-[4.7rem]">{children}</div>
     </div>
   );
 };
 
-export default FoodBoardSection;
+export default BoardSection;

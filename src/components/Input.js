@@ -8,7 +8,7 @@ const Input = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "board-search-input":
       style +=
-        " w-[24rem] h-[2.1875rem] mr-[20px] border border-green-500 bg-[#FFFDFD]";
+        " w-[24rem] h-[2.1875rem] mr-[30px] border border-green-500 bg-[#FFFDFD]";
       break;
 
     case "register-input":

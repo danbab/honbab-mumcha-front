@@ -2,11 +2,14 @@ import React from "react";
 import BoardCard from "../components/BoardCard";
 import BoardSection from "../components/BoardSection";
 import BoardSideBar from "../components/BoardSideBar";
+import { Link } from "react-router-dom";
 function BoardPage() {
   return (
     <>
       <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
-        <img src="img/mainlogo.svg" alt="메인로고" className="ml-[8rem]" />
+        <Link to="/">
+          <img src="img/mainlogo.svg" alt="메인로고" className="ml-[8rem]" />
+        </Link>
         <div className="flex">
           <img src="img/Bell.svg" alt="이미지" />
           <p>여~! 쓰~벌 브라더~</p>
