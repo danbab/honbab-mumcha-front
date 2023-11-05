@@ -9,7 +9,7 @@ const Radio = ({ children, value, name, ...restProps }) => {
           type="radio"
           value={value}
           name={name}
-          className="mr-2 mt-2 "
+          className="mr-2 mt-2"
         />
         {children}
       </label>
