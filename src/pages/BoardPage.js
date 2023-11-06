@@ -47,11 +47,11 @@ function BoardPage() {
       <div className="flex">
         <BoardSideBar />
         <BoardSection>
-          <ul>
+          
             {boardDtos.map((boardDto) => (
               <BoardCard key={boardDto.board_id} boardDto={boardDto} />
             ))}
-          </ul>
+          
         </BoardSection>
       </div>
     </>
