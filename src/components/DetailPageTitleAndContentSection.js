@@ -10,7 +10,7 @@ const DetailPageTitleAndContentSection = () => {
     return (
         <div className="max-w-screen-md mx-auto md:px-16 md:mt-14">
             <div className="text-lg md:text-xl font-bold">
-                {postTitle}
+                <p>{postTitle}</p>
             </div>
 
             <div className="flex md:w-1/2 border border-black rounded-sm md:mt-7">
