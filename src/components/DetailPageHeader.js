@@ -26,7 +26,6 @@ const DetailPageHeader = () => {
       </div>
 
       <div className="flex items-center space-x-2">
-
         <Button type="big-join">참여하기</Button>
         <div className="inline-block">
           <Heart className="w-[2.5rem]" isActive={active} onClick={() => setActive(!active)}
@@ -35,6 +34,8 @@ const DetailPageHeader = () => {
         </div>
       </div>
     </div>
+
+
   );
 }
 

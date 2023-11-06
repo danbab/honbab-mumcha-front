@@ -13,7 +13,7 @@ const DetailPageTitleAndContentSection = () => {
                 {postTitle}
             </div>
 
-            <div className="w-full md:w-72 h-2.25 border border-black  rounded-md flex justify-between mt-2 mb-4">
+            <div className="w-full md:w-72 border border-black  rounded-md flex mt-2">
                 <div className="flex-grow border-r border-black text-black text-center text-base font-bold">
                     <p>{meetDate}</p>
                 </div>
@@ -22,16 +22,16 @@ const DetailPageTitleAndContentSection = () => {
                 </div>
             </div>
 
-            <div className="w-full h-96 md:mt-10 text-black text-base md:text-lg bg-neutral-100 rounded-md p-4">
+            <div className="w-full h-full md:mt-10 text-black text-base md:text-lg bg-neutral-100 rounded-md p-5">
                 <p>{postContent}</p>
             </div>
 
-            <div className="w-full h-full md:mt-28 p-4">
+            <div className="w-full h-full md:mt-28 mx-auto  bg-neutral-100 rounded-md p-4">
                 <p><img src="img/postimage.svg"></img>
                 </p>
             </div>
 
-            <div className="w-full h-full md:mt-20 p-4">
+            <div className="w-full h-full md:mt-20 mx-auto  bg-neutral-100 rounded-md p-4">
                 <p><img src="img/postimagedetail.svg"></img>
                 </p>
             </div>
