@@ -11,7 +11,6 @@ import React, { useState} from "react";
 
 
 function JoinPage() {
-const baseUrl = "http://localhost:8080";
 
 // 성별, 폰번호, 주소, 생년월일, MBTI 초기화
 const [gender, setGender] = useState('');
@@ -146,6 +145,7 @@ const onChangePasswordConfirm = (e) => {
 }
 
 //백엔드 통신
+const baseUrl = "http://localhost:8080";
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(birth)
@@ -160,11 +160,13 @@ const handleSubmit = async (e) => {
             password: password,
             address: address,
             gender: gender,
-            birth: birth
+            birth: birth,
+            mbti: mbti
         })
         .then((response) => {
             console.log(response.data)
             console.log(birth)
+            alert(response.data);
         })
         .catch((error) => {
             console.log(error);
