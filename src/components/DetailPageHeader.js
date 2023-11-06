@@ -11,7 +11,7 @@ const DetailPageHeader = () => {
   const [active, setActive] = useState(false);
   
   return (
-    <div className="flex justify-between items-center max-w-screen-md mx-auto p-4 md:p-16 mt-10">
+    <div className="flex justify-between items-center max-w-screen-md md:mx-auto md:p-16 md:mt-10">
       <div className="flex items-center space-x-2">
         <img src="img/usericon.svg" alt="유저아이콘" className="w-12 h-12 rounded-full" />
         <div>
@@ -25,7 +25,7 @@ const DetailPageHeader = () => {
         </div>
       </div>
 
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-5">
         <Button type="big-join">참여하기</Button>
         <div className="inline-block">
           <Heart className="w-[2.5rem]" isActive={active} onClick={() => setActive(!active)}
