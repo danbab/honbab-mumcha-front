@@ -254,14 +254,18 @@ return (
                     <Lable type="register-lable">주소 </Lable>
                     <span className="text-[#F60000] mt-[0.350rem]">*</span>
                 </div>
-                <Button 
-                    type="register-addressSearch" 
+                <div className="flex">
+                <Input 
+                    type="register-input" 
                     id="address"
                     name="address"
                     value={address}
                     onChange={addressChange}
                     required
-                    >주소 검색</Button>
+                    placeholder="주소를 입력해주세요."
+                    ></Input>
+                <Button type="register-addressSearch" >주소 검색</Button>
+                </div>
             </div>
             {/*radio: 성별 */}
             <div className="flex gap-3 justify-start">
