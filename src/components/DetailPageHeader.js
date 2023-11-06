@@ -2,6 +2,10 @@ import React from "react";
 import Button from "./Button";
 import { useState } from "react";
 import Heart from "react-heart"
+/*
+ * 게시글 상세 페이지 헤더
+ * 구성 요소: 유저 아이콘, 유저 닉네임, 게시글 작성시간, 참여하기 버튼, 좋아요 버튼
+ */
 
 const DetailPageHeader = () => {
   const userNickname = '닉네임';

@@ -1,6 +1,10 @@
 import React from "react";
 
-// 게시글 제목, 약속 시간, 게시글 내용 섹션
+/*
+ * 게시글 상세 페이지 제목과 내용
+ * 구성 요소: 게시글 제목, 약속 시간, 게시글 내용, 사용자가 첨부한 이미지, 식당 위치를 표시할 지도
+ */
+
 const DetailPageTitleAndContentSection = () => {
     const postTitle = '논현점 퇴근하고 만나서 밥 드실분 구해요';
     const meetDate = '2023.10.30 (월)';
