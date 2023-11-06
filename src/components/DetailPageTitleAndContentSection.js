@@ -8,12 +8,12 @@ const DetailPageTitleAndContentSection = () => {
     const postContent = '게시글 내용을 여기에 입력하세요.';
 
     return (
-        <div className="max-w-screen-md mx-auto md:p-16">
+        <div className="max-w-screen-md mx-auto md:px-16 md:mt-14">
             <div className="text-lg md:text-xl font-bold">
                 {postTitle}
             </div>
 
-            <div className="flex md:w-1/2 border border-black rounded-sm md:mt-5">
+            <div className="flex md:w-1/2 border border-black rounded-sm md:mt-7">
                 <div className="flex-grow border-r border-black text-black text-center font-bold">
                     <p>{meetDate}</p>
                 </div>
