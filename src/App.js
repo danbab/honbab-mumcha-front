@@ -10,6 +10,10 @@ import Menu from "./components/Menu";
 //import WritePage from "pages/WritePage";
 //import MyPagePage from "pages/MyPagePage";
 
+
+
+
+
 function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
