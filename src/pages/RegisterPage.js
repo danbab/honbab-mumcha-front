@@ -1,8 +1,12 @@
 import Input from "../components/Input";
 import Lable from "../components/Lable";
 import Button from "../components/Button";
+import PopupDom from '../components/PopupDom';
+//import PopupPostCode from '../components/PopupPostCode';
+import DaumPostcode from "react-daum-postcode";
 import axios from "axios";
 import React, { useState} from "react";
+//import Address from "../components/Address";
 
 
 
@@ -14,7 +18,49 @@ const [gender, setGender] = useState('');
 const [phone, setPhone] = useState('');    
 const [address, setAddress] = useState('');
 const [birth, setBirth] = useState('');
-const [mbti, setMbti] = useState('');        
+const [mbti, setMbti] = useState('');
+// 팝업창 상태 관리
+const [isPopupOpen, setIsPopupOpen] = useState(false)
+
+// 팝업창 열기
+const openPostCode = () => {
+    setIsPopupOpen(true)
+}
+ 
+// 팝업창 닫기
+const closePostCode = () => {
+    setIsPopupOpen(false)
+}
+
+// 우편번호 검색 후 주소 클릭 시 실행될 함수, data callback 용
+const handlePostCode = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = ''; 
+    
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+      }
+      fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+    }
+    console.log(data)
+    // fullAddress 값을 주소 상태에 저장
+    setAddress(fullAddress);
+    //팝업창을 닫음.
+    closePostCode();
+}
+
+    const postCodeStyle = {
+        display: "block",
+        position: "absolute",
+        top: "10%",
+        width: "600px",
+        height: "600px",
+        padding: "7px",
+      };
 
 //이름, 이메일, 비밀번호, 비밀번호 확인
 const [userName, setUserName] = useState('')
@@ -248,7 +294,7 @@ return (
                 <Button type="register-certification">본인 인증</Button>
                 </div>
             </div>
-            {/*button: 주소 => 클릭 시, 주소찾기 api 연동할 예정 */}
+            {/*button: 주소 => 클릭 시, 주소찾기 api 연동 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">주소 </Lable>
@@ -264,7 +310,19 @@ return (
                     required
                     placeholder="주소를 입력해주세요."
                     ></Input>
-                <Button type="register-addressSearch" >주소 검색</Button>
+                <Button type="register-addressSearch" onClick={openPostCode}>주소 검색</Button>
+            {/*팝업 생성 기준 div*/}
+                <div id='popupDom'>
+                    {isPopupOpen && (
+                    <PopupDom>
+                        <div>
+                            <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
+                            {/* 닫기 버튼 생성*/}
+                            <button type='button' onClick={closePostCode} className='postCode_btn'>닫기</button>
+                        </div>
+                    </PopupDom>
+                    )}
+                </div>
                 </div>
             </div>
             {/*radio: 성별 */}
@@ -297,7 +355,7 @@ return (
                     onChange={mbtiChange}
                     className="mt-1 ml-3"
                     >
-                    <option value="">-- MBTI를 선택하세요 --</option>
+                    <option value="" selected>-- MBTI를 선택하세요 --</option>
                     <option value="none">선택안함</option>
                     <option value="ENFJ">ENFJ</option>
                     <option value="ENFP">ENFP</option>
