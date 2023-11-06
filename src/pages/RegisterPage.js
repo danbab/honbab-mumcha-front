@@ -1,9 +1,6 @@
 import Input from "../components/Input";
 import Lable from "../components/Lable";
 import Button from "../components/Button";
-//import Radio from "../components/Radio";
-//import RadioGroup from "../components/RadioGroup";
-import Date from "../components/Date";
 import axios from "axios";
 import React, { useState} from "react";
 
@@ -12,11 +9,12 @@ import React, { useState} from "react";
 function JoinPage() {
 const baseUrl = "http://localhost:8080";
 
-// 성별, 폰번호, 주소, 생년월일 초기화
+// 성별, 폰번호, 주소, 생년월일, MBTI 초기화
 const [gender, setGender] = useState('');
 const [phone, setPhone] = useState('');    
 const [address, setAddress] = useState('');
-const [birth, setBirth] = useState('');        
+const [birth, setBirth] = useState('');
+const [mbti, setMbti] = useState('');        
 
 //이름, 이메일, 비밀번호, 비밀번호 확인
 const [userName, setUserName] = useState('')
@@ -59,6 +57,11 @@ const genderChange = (e) => {
 const birthChange = (e) => {
     e.preventDefault();
     setBirth(e.target.value); 
+}
+//MBTI
+const mbtiChange = (e) => {
+    e.preventDefault();
+    setMbti(e.target.value); 
 }
 
 // 유효성 검사
@@ -265,22 +268,51 @@ return (
                 <div className="flex gap-1">    
                     <Lable type="register-lable">성별 </Lable>
                 </div>
-                    <label>남</label>
-                    <input type="radio" name="gender" value="m" checked={gender==="m"} onChange={genderChange}/>
+                    <label className="mt-1 ml-3">남</label>
+                    <input type="radio" name="gender" value="m" checked={gender==="m"} onChange={genderChange} className="mt-1"/>
                     
-                    <label>여</label>
-                    <input type="radio" name="gender" value="f" checked={gender==="f"} onChange={genderChange}/>
-                    
-                    <label>선택 안함</label>
-                    <input type="radio" name="gender" value="n" checked={gender==="n"} onChange={genderChange}/>
+                    <label className="mt-1">여</label>
+                    <input type="radio" name="gender" value="f" checked={gender==="f"} onChange={genderChange} className="mt-1"/>
             </div>
             {/*input: 생년월일 => dateformat : yyyy-mm-dd */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">생년월일 </Lable>
                 </div>
-                {/*<Date name="birth"></Date>*/}
-                <input type="date" name="birth" value={birth} onChange={birthChange}/>
+                <input type="date" name="birth" value={birth} onChange={birthChange} className="mt-1 ml-3"/>
+            </div>
+            {/*select: MBTI  */}
+            <div className="flex gap-3">
+                <div className="flex gap-1">    
+                    <Lable type="register-lable">MBTI 유형:</Lable>
+                </div>
+                <select
+                    id="mbti"
+                    name="mbti"
+                    value={mbti}
+                    onChange={mbtiChange}
+                    className="mt-1 ml-3"
+                    >
+                    <option value="">-- MBTI를 선택하세요 --</option>
+                    <option value="none">선택안함</option>
+                    <option value="ENFJ">ENFJ</option>
+                    <option value="ENFP">ENFP</option>
+                    <option value="ENTJ">ENTJ</option>
+                    <option value="ENTP">ENTP</option>
+                    <option value="ESFJ">ESFJ</option>
+                    <option value="ESFP">ESFP</option>
+                    <option value="ESTJ">ESTJ</option>
+                    <option value="ESTP">ESTP</option>
+                    <option value="INFJ">INFJ</option>
+                    <option value="INFP">INFP</option>
+                    <option value="INTJ">INTJ</option>
+                    <option value="INTP">INTP</option>
+                    <option value="ISFJ">ISFJ</option>
+                    <option value="ISFP">ISFP</option>
+                    <option value="ISTJ">ISTJ</option>
+                    <option value="ISTP">ISTP</option>
+
+                    </select>
             </div>
             {/*radio: 개인정보 동의 => 어떻게 처리할까? */}
             <div className="flex gap-3 justify-center">
