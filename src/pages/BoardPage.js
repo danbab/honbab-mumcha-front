@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BoardCard from "../components/BoardCard";
 import BoardSection from "../components/BoardSection";
 import BoardSideBar from "../components/BoardSideBar";
+import axios from "axios";
+
 import { Link } from "react-router-dom";
 function BoardPage() {
+  const [boardDtos, setBoardDtos] = useState([]);
+
+  useEffect(() => {
+    const fetchBoardData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/board");
+        console.log("서버 응답:", response.data);
+        setBoardDtos(response.data);
+      } catch (error) {
+        console.error("서버 요청 에러:", error);
+      }
+    };
+
+    fetchBoardData();
+  }, []);
+
   return (
     <>
       <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
@@ -29,32 +47,11 @@ function BoardPage() {
       <div className="flex">
         <BoardSideBar />
         <BoardSection>
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
+          <ul>
+            {boardDtos.map((boardDto) => (
+              <BoardCard key={boardDto.board_id} boardDto={boardDto} />
+            ))}
+          </ul>
         </BoardSection>
       </div>
     </>

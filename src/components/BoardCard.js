@@ -1,6 +1,4 @@
-import Button from "./Button";
-
-const Card = ({}) => {
+const Card = ({ boardDto }) => {
   let style = "rounded-[0.625rem] shadow-md";
 
   return (
@@ -8,18 +6,23 @@ const Card = ({}) => {
       <div className="w-[14.25rem] h-[21.875rem] flex justify-between mx-auto">
         <div className="flex gap-2 ml-2 mt-4">
           <img className="w-[2.125rem] h-[2.125rem]" src="img/iamlogo.svg" />
-          <div className="text-[#000] text-[12px] mt-3">닉네임</div>
+          {/* 작성자 이름 */}
+          <div className="text-[#000] text-[12px] mt-3">
+            {boardDto.writer.name}
+          </div>
         </div>
+        {/* 작성일-reg_date */}
         <div className="text-[#BFBFBF] text-[10px] mt-8 mr-[1.5rem]">
-          작성일
+          {boardDto.reg_date}
         </div>
       </div>
       <img
         className="absolute top-[4.5rem] right-0 w-full h-[12.1875rem] "
         src="img/boardexampleimg.svg"
       />
+      {/* 글 제목-title */}
       <p className="absolute bottom-[6rem] left-[1rem] text-[0.9375rem] font-bold">
-        글제목
+        {boardDto.title}
       </p>
       <ul className="list-disc absolute bottom-[3.8rem] left-[2rem] ">
         <li className="text-[#8B8686] text-[0.5rem]">태그1</li>
