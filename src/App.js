@@ -8,6 +8,7 @@ import ChatPage from "./pages/ChatPage";
 import BoardFoodPage from "./pages/BoardFoodPage";
 import Menu from "./components/Menu";
 import WritePage from "./pages/WritePage";
+import LandingPage from "./components/LandingPage";
 
 //import MyPagePage from "pages/MyPagePage";
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/write" element={<WritePage />} />
         {/*<Route path="/my" element={<MyPagePage />} />*/}
         <Route path="/chat" element={<ChatPage />} />
+        <Route path="landing" element={<LandingPage />} />
       </Routes>
     </BrowserRouter>
   );
