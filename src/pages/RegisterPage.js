@@ -1,16 +1,26 @@
 import Input from "../components/Input";
 import Lable from "../components/Lable";
 import Button from "../components/Button";
-import Radio from "../components/Radio";
-import RadioGroup from "../components/RadioGroup";
+//import Radio from "../components/Radio";
+//import RadioGroup from "../components/RadioGroup";
 import Date from "../components/Date";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState} from "react";
 
 
 
 function JoinPage() {
+const baseUrl = "http://localhost:8080";
+
+// 성별, 폰번호, 주소, 생년월일 초기화
+const [gender, setGender] = useState('');
+const [phone, setPhone] = useState('');    
+const [address, setAddress] = useState('');
+const [birth, setBirth] = useState('');        
 
 //이름, 이메일, 비밀번호, 비밀번호 확인
+const [userName, setUserName] = useState('')
+const [email, setEmail] = useState('')
 const [password, setPassword] = useState('')
 const [passwordConfirm, setPasswordConfirm] = useState('')
 
@@ -18,40 +28,101 @@ const [passwordConfirm, setPasswordConfirm] = useState('')
 const [passwordMessage, setPasswordMessage] = useState('')
 const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
 
+
+//값 세팅 메서드
+//이름
+const userNameChange = (e) => {
+    e.preventDefault();
+    setUserName(e.target.value); 
+}
+//이메일 (추후 수정)
+const emailChange = (e) => {
+    e.preventDefault();
+    setEmail(e.target.value); 
+}
+//폰번호
+const phoneChange = (e) => {
+    e.preventDefault();
+    setPhone(e.target.value); 
+}
+//주소
+const addressChange = (e) => {
+    e.preventDefault();
+    setAddress(e.target.value); 
+}
+//성별
+const genderChange = (e) => {
+    //e.preventDefault();
+    setGender(e.target.value); 
+}
+//생년월일
+const birthChange = (e) => {
+    e.preventDefault();
+    setBirth(e.target.value); 
+}
+
 // 유효성 검사
 const [isPassword, setIsPassword] = useState(false)
 const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
 
 // 비밀번호
 const onChangePassword = (e) => {
+    e.preventDefault();
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/; //숫자+영문자+특수문자 조합으로 8자리 이상
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
-  
+    
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!');
-      setIsPassword(false);
+        setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!');
+        setIsPassword(false);
     } else {
-      setPasswordMessage('안전한 비밀번호에요 : )');
-      setIsPassword(true);
+        setPasswordMessage('안전한 비밀번호에요 : )');
+        setIsPassword(true);
     }
-  };
+};
 
-  // 비밀번호 확인
-  const onChangePasswordConfirm = (e) => {
-      const passwordConfirmCurrent = e.target.value
-      setPasswordConfirm(passwordConfirmCurrent)
-
-      if (password === passwordConfirmCurrent) {
+// 비밀번호 확인
+const onChangePasswordConfirm = (e) => {
+    e.preventDefault();
+    const passwordConfirmCurrent = e.target.value
+    setPasswordConfirm(passwordConfirmCurrent)
+    
+    if (password === passwordConfirmCurrent) {
         setPasswordConfirmMessage('비밀번호를 똑같이 입력했어요 : )')
         setIsPasswordConfirm(true)
-      } else {
+    } else {
         setPasswordConfirmMessage('비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ')
         setIsPasswordConfirm(false)
-      }
     }
+}
 
-    return (
+//백엔드 통신
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(birth)
+    console.log(gender)
+    console.log(userName)
+
+    await axios
+        .post(baseUrl + "/api/users/new", {
+            email: email,
+            userName: userName,
+            phone: phone,
+            password: password,
+            address: address,
+            gender: gender,
+            birth: birth
+        })
+        .then((response) => {
+            console.log(response.data)
+            console.log(birth)
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+return (
     <>  
     {/*헤더 부분 */}
         <div className="w-[78.75rem] mx-auto my-0">
@@ -65,7 +136,7 @@ const onChangePassword = (e) => {
             <h2 className="mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 회원 가입
             </h2>
-            <form className="space-y-6" action="/api/users/new" method="POST"> {/* action에 요청을 보낼 경로 지정 */}
+            <form className="space-y-6" onSubmit={handleSubmit}> {/* submit 버튼으로 보냄. */}
             {/*input: 이메일 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
@@ -77,6 +148,8 @@ const onChangePassword = (e) => {
                     type="register-input" 
                     id="email"
                     name="email"
+                    value={email}
+                    onChange={emailChange}
                     required
                     placeholder="이메일을 입력해주세요. (예: aa @ bb.cc)"
                     ></Input>
@@ -93,6 +166,8 @@ const onChangePassword = (e) => {
                     type="register-input" 
                     id="userName"
                     name="userName"
+                    value={userName}
+                    onChange={userNameChange}
                     required
                     placeholder="이름을 입력해주세요."
                     ></Input>
@@ -107,6 +182,7 @@ const onChangePassword = (e) => {
                     type="password" 
                     id="password"
                     name="password"
+                    value={password}
                     required
                     placeholder="비밀번호를 입력해주세요."
                     onChange={onChangePassword}
@@ -161,6 +237,8 @@ const onChangePassword = (e) => {
                     type="register-input" 
                     id="phone"
                     name="phone"
+                    value={phone}
+                    onChange={phoneChange}
                     required
                     placeholder="전화번호를 입력해주세요. (예: 010-0000-0000)"
                     ></Input>
@@ -177,6 +255,8 @@ const onChangePassword = (e) => {
                     type="register-addressSearch" 
                     id="address"
                     name="address"
+                    value={address}
+                    onChange={addressChange}
                     required
                     >주소 검색</Button>
             </div>
@@ -185,39 +265,42 @@ const onChangePassword = (e) => {
                 <div className="flex gap-1">    
                     <Lable type="register-lable">성별 </Lable>
                 </div>
-                <RadioGroup>
-                    <Radio name="gender" value="m" >남</Radio>
-                    <Radio name="gender" value="f" >여</Radio>
-                    <Radio name="gender" value="n">선택 안함</Radio>
-                </RadioGroup>
+                    <label>남</label>
+                    <input type="radio" name="gender" value="m" checked={gender==="m"} onChange={genderChange}/>
+                    
+                    <label>여</label>
+                    <input type="radio" name="gender" value="f" checked={gender==="f"} onChange={genderChange}/>
+                    
+                    <label>선택 안함</label>
+                    <input type="radio" name="gender" value="n" checked={gender==="n"} onChange={genderChange}/>
             </div>
             {/*input: 생년월일 => dateformat : yyyy-mm-dd */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">생년월일 </Lable>
                 </div>
-                <Date></Date>
+                {/*<Date name="birth"></Date>*/}
+                <input type="date" name="birth" value={birth} onChange={birthChange}/>
             </div>
             {/*radio: 개인정보 동의 => 어떻게 처리할까? */}
             <div className="flex gap-3 justify-center">
                 <div className="flex gap-1"> 
-                    <Radio name="policy" value="policy">개인정보 수집 이용 동의</Radio>
+                <label>
+                    <input type="radio" name="policy" value="policy"/>개인 정보 수집 동의
+                </label>
                 </div>
             </div>
             {/*submit: 클릭 시, form에 입력된 정보들을 벡엔드로 보냄. */}
             <div className="flex gap-3 justify-center">
-                <Input 
+                <button 
                     type="submit" 
                     className=" shadow-md rounded-[0.625rem] text-[0.875rem] w-[13.75rem] h-[2.875rem] bg-[#54AB75] text-[#ffffff] cursor-pointer hover:bg-transparent hover:text-[#54AB75] border border-green-500"
-                    name="submit"
-                    value="가입하기"
-                    ></Input>
+                    >가입하기</button>
             </div>                
             </form>
         </div>    
     </>      
     
     );
-  }
-  
+}
   export default JoinPage;
