@@ -19,7 +19,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "big-join":
       style +=
-        " rounded-[0.625rem] text-[0.75rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] text-[#ffffff]";
+        " rounded-[0.625rem] text-[0.75rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] hover:bg-[#76C598] text-[#ffffff]";
       break;
 
     case "make-reservation":
