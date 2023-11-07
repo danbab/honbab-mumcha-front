@@ -12,12 +12,6 @@ import React, {useEffect, useState} from "react";
 
 function JoinPage() {
 
-// 성별, 폰번호, 주소, 생년월일, MBTI 초기화
-const [gender, setGender] = useState('');
-const [phone, setPhone] = useState('');    
-const [address, setAddress] = useState('');
-const [birth, setBirth] = useState('');
-const [mbti, setMbti] = useState('');
 // 팝업창 상태 관리
 const [isPopupOpen, setIsPopupOpen] = useState(false)
 
@@ -61,31 +55,32 @@ const handlePostCode = (data) => {
         padding: "7px",
       };
 
-//이름, 이메일, 비밀번호, 비밀번호 확인
+//이름, 이메일, 비밀번호, 비밀번호 확인, 성별, 폰번호, 주소, 생년월일, MBTI 초기화
 const [userName, setUserName] = useState('')
 const [email, setEmail] = useState('')
 const [password, setPassword] = useState('')
 const [passwordConfirm, setPasswordConfirm] = useState('')
+const [gender, setGender] = useState('');
+const [phone, setPhone] = useState('');    
+const [address, setAddress] = useState('');
+const [birth, setBirth] = useState('');
+const [mbti, setMbti] = useState('');
 
 //오류메시지 상태저장
 const [nameMessage, setNameMessage] = useState('')
 const [emailMessage, setEmailMessage] = useState('')
 const [passwordMessage, setPasswordMessage] = useState('')
 const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
+const [phoneMessage, setPhoneMessage] = useState('')
 
 
 
 //값 세팅 메서드
-//이메일 (추후 수정)
-// const emailChange = (e) => {
+// //폰번호
+// const phoneChange = (e) => {
 //     e.preventDefault();
-//     setEmail(e.target.value); 
+//     setPhone(e.target.value); 
 // }
-//폰번호
-const phoneChange = (e) => {
-    e.preventDefault();
-    setPhone(e.target.value); 
-}
 //주소
 const addressChange = (e) => {
     e.preventDefault();
@@ -112,6 +107,7 @@ const [isName, setIsName] = useState(false)
 const [isEmail, setIsEmail] = useState(false)
 const [isPassword, setIsPassword] = useState(false)
 const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
+const [isPhoneNum, setIsPhoneNum] = useState(false)
 //폼 제출 전 유효한지 체크
 const [isFormValid, setIsFormValid] = useState(false);
 
@@ -179,9 +175,26 @@ const onChangePasswordConfirm = (e) => {
     }
 }
 
+// 전화번호
+const phoneChange = (e) => {
+    e.preventDefault();
+    //전화번호(숫자) 형식만 가능
+    const phoneRegex =/^(01[0|1|6|7|8|9]{1})-?([0-9]{3,4})-?([0-9]{4})$/;
+    const phoneCurrent = e.target.value;// 입력된 전화번호
+    setPhone(phoneCurrent);
+  
+    if (!phoneRegex.test(phoneCurrent)) {
+        setPhoneMessage('전화번호 형식이 맞지 않습니다.');
+        setIsPhoneNum(false);
+    } else {
+        setPhoneMessage('올바른 전화번호 형식이에요 : )');
+        setIsPhoneNum(true);
+    }
+  };
+
 //비밀번호 유효성 검사
 useEffect(() => {
-    setIsFormValid(isPassword && isPasswordConfirm && isName && isEmail);
+    setIsFormValid(isPassword && isPasswordConfirm && isName && isEmail && isPhoneNum);
   }, [isPassword, isPasswordConfirm, isName, isEmail]);
 
 //백엔드 통신
@@ -356,6 +369,13 @@ return (
                 <Button type="register-certification">본인 인증</Button>
                 </div>
             </div>
+            {/*휴대폰 유효성 체크 : 휴대폰 형식 */}
+            {phone.length > 0 && <span className={`message ${isPhoneNum ? 'success' : 'error'}`}
+                style={{ 
+                    marginLeft: '7rem', // margin 값을 원하는 값으로 설정
+                    color: isPhoneNum ? 'green' : 'red' // 에러: 빨강색 / 성공: 초록색
+                }}>{phoneMessage}</span>}
+
             {/*button: 주소 => 클릭 시, 주소찾기 api 연동 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
@@ -405,7 +425,7 @@ return (
                     <Lable type="register-lable">생년월일 </Lable>
                     <span className="text-[#F60000] mt-[0.350rem]">*</span>
                 </div>
-                <input type="date" name="birth" value={birth} onChange={birthChange} className="mt-1 ml-3"/>
+                <input type="date" name="birth" value={birth} required onChange={birthChange} className="mt-1 ml-3"/>
             </div>
             {/*select: MBTI  */}
             <div className="flex gap-3">
