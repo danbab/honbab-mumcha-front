@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
 
@@ -11,21 +12,22 @@ const LoginPage = () => {
 
   return (
     <>
-  <div style={containerStyle}>
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
+  <div className="py-20" style={containerStyle}>
+    <div className="justify-center w-[37.625rem] h-[43.625rem] m-auto bg-neutral-500/60 py-20 rounded-[1rem]">
+        <div>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
             src="img/mainlogo.svg"
             alt="메인 로고"
           />
-          <h2 className="mt-2 text-center text-[2.25rem] font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-2 text-center text-[2.25rem] font-bold leading-9 text-gray-900">
             Login
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST"> {/*TODO: action에 요청을 보낼 경로 지정 */}
+          <form className="space-y-6" action="/api/users/login" method="POST"> {/*TODO: action에 요청을 보낼 경로 지정 */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
@@ -74,6 +76,16 @@ const LoginPage = () => {
               </button>
             </div>
           </form>
+          <div className="my-10">
+              <Link to="/oauth2/authorization/google">
+                <img
+                  className="mx-auto h-10 w-auto"
+                  src="img/googleLogin.svg"
+                  alt="구글 로그인"
+                />
+              </Link>
+            </div>
+        </div>
         </div>  
     </div>
     </div>
