@@ -2,30 +2,29 @@ import Input from "../components/Input";
 import Lable from "../components/Lable";
 import Button from "../components/Button";
 import PopupDom from '../components/PopupDom';
-//import PopupPostCode from '../components/PopupPostCode';
 import DaumPostcode from "react-daum-postcode";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-//import Address from "../components/Address";
+
 
 
 
 function JoinPage() {
 
-// 팝업창 상태 관리
+// 팝업창 상태 관리(주소찾기)
 const [isPopupOpen, setIsPopupOpen] = useState(false)
 
-// 팝업창 열기
+// 팝업창 열기(주소찾기)
 const openPostCode = () => {
     setIsPopupOpen(true)
 }
  
-// 팝업창 닫기
+// 팝업창 닫기(주소찾기)
 const closePostCode = () => {
     setIsPopupOpen(false)
 }
 
-// 우편번호 검색 후 주소 클릭 시 실행될 함수, data callback 용
+// 주소 검색 후 주소 클릭 시 실행될 함수, data callback 용(주소찾기)
 const handlePostCode = (data) => {
     let fullAddress = data.address;
     let extraAddress = ''; 
@@ -45,15 +44,15 @@ const handlePostCode = (data) => {
     //팝업창을 닫음.
     closePostCode();
 }
-
-    const postCodeStyle = {
-        display: "block",
-        position: "absolute",
-        top: "10%",
-        width: "600px",
-        height: "600px",
-        padding: "7px",
-      };
+// 주소 찾기 api 스타일
+const postCodeStyle = {
+    display: "block",
+    position: "absolute",
+    top: "10%",
+    width: "600px",
+    height: "600px",
+    padding: "7px",
+  };
 
 //이름, 이메일, 비밀번호, 비밀번호 확인, 성별, 폰번호, 주소, 생년월일, MBTI 초기화
 const [userName, setUserName] = useState('')
@@ -76,11 +75,6 @@ const [phoneMessage, setPhoneMessage] = useState('')
 
 
 //값 세팅 메서드
-// //폰번호
-// const phoneChange = (e) => {
-//     e.preventDefault();
-//     setPhone(e.target.value); 
-// }
 //주소
 const addressChange = (e) => {
     e.preventDefault();
@@ -195,7 +189,7 @@ const phoneChange = (e) => {
 //비밀번호 유효성 검사
 useEffect(() => {
     setIsFormValid(isPassword && isPasswordConfirm && isName && isEmail && isPhoneNum);
-  }, [isPassword, isPasswordConfirm, isName, isEmail]);
+  }, [isPassword, isPasswordConfirm, isName, isEmail, isPhoneNum]);
 
 //백엔드 통신
 const baseUrl = "http://localhost:8080";
@@ -414,10 +408,10 @@ return (
                     <span className="text-[#F60000] mt-[0.350rem]">*</span>
                 </div>
                     <label className="mt-1 ml-3">남</label>
-                    <input type="radio" name="gender" value="m" checked={gender==="m"} onChange={genderChange} className="mt-1"/>
+                    <input type="radio" name="gender" value="m" required checked={gender==="m"} onChange={genderChange} className="mt-1"/>
                     
                     <label className="mt-1">여</label>
-                    <input type="radio" name="gender" value="f" checked={gender==="f"} onChange={genderChange} className="mt-1"/>
+                    <input type="radio" name="gender" value="f" required checked={gender==="f"} onChange={genderChange} className="mt-1"/>
             </div>
             {/*input: 생년월일 => dateformat : yyyy-mm-dd */}
             <div className="flex gap-3">
