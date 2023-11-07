@@ -1,3 +1,5 @@
+import Button from "../components/Button";
+
 const Card = ({ boardDto }) => {
   let style = "rounded-[0.625rem] shadow-md";
 
@@ -29,7 +31,7 @@ const Card = ({ boardDto }) => {
         <li className="text-[#8B8686] text-[0.5rem]">태그2</li>
       </ul>
       <button
-        className="rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#54AB75] text-[#ffffff] absolute bottom-[1rem] left-[1rem] shadow-md"
+        className="rounded-[0.5rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#54AB75] hover:bg-[#76C598] text-[#ffffff] absolute bottom-[1rem] left-[1rem]"
         type="button"
       >
         참여하기
