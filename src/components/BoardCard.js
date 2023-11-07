@@ -1,5 +1,9 @@
+import Heart from "../components/Heart";
+import { useState } from "react";
+
 const Card = ({ boardDto }) => {
   let style = "rounded-[0.625rem] shadow-md";
+  const [active, setActive] = useState(false);
 
   return (
     <div className="bg-[#FDFDFD] w-[15.625rem] h-[24.875rem] rounded-[1.25rem] relative">
@@ -13,7 +17,7 @@ const Card = ({ boardDto }) => {
         </div>
         {/* 작성일-reg_date */}
         <div className="text-[#BFBFBF] text-[10px] mt-8 mr-[1.5rem]">
-          {boardDto.reg_date}
+          {boardDto.regdate.replace("T", " ")}
         </div>
       </div>
       <img
@@ -24,6 +28,16 @@ const Card = ({ boardDto }) => {
       <p className="absolute bottom-[6rem] left-[1rem] text-[0.9375rem] font-bold">
         {boardDto.title}
       </p>
+      <Heart
+        className="w-[1.5rem] absolute bottom-[6rem] right-[1.1rem]"
+        isActive={active}
+        onClick={() => setActive(!active)}
+        animationTrigger="both"
+        inactiveColor="rgba(255,125,125,.75)"
+        activeColor="#E14949"
+        animationDuration={0.1}
+      />
+
       <ul className="list-disc absolute bottom-[3.8rem] left-[2rem] ">
         <li className="text-[#8B8686] text-[0.5rem]">태그1</li>
         <li className="text-[#8B8686] text-[0.5rem]">태그2</li>
