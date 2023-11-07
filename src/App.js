@@ -9,7 +9,6 @@ import BoardFoodPage from "./pages/BoardFoodPage";
 import Menu from "./components/Menu";
 import WritePage from "./pages/WritePage";
 import LandingPage from "./components/LandingPage";
-
 //import MyPagePage from "pages/MyPagePage";
 
 
