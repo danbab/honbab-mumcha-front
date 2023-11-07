@@ -2,8 +2,10 @@ import React from "react";
 import BoardCard from "../components/BoardCard";
 import BoardSection from "../components/BoardSection";
 import BoardSideBar from "../components/BoardSideBar";
+import BoardSideBarFood from "../components/BoardSideBarFood";
+import FoodBoardSection from "../components/FoodBoardSection";
 import { Link } from "react-router-dom";
-function BoardPage() {
+function BoardFoodPage() {
   return (
     <>
       <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
@@ -16,19 +18,9 @@ function BoardPage() {
         </div>
       </div>
 
-      {/* <div className="w-[78.75rem] mx-auto my-0">
-        <div className="flex justify-between mt-4">
-          <img src="img/mainlogo.svg" alt="메인로고" />
-          <div id="nav" className="mt-[2rem]">
-            <img src="img/Bell.svg" alt="이미지" />
-            <p>여~! 쓰~벌 브라더~</p>
-          </div>
-        </div>
-      </div> */}
-
       <div className="flex">
-        <BoardSideBar />
-        <BoardSection>
+        <BoardSideBarFood />
+        <FoodBoardSection>
           <BoardCard />
           <BoardCard />
           <BoardCard />
@@ -55,10 +47,10 @@ function BoardPage() {
           <BoardCard />
           <BoardCard />
           <BoardCard />
-        </BoardSection>
+        </FoodBoardSection>
       </div>
     </>
   );
 }
 
-export default BoardPage;
+export default BoardFoodPage;

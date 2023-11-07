@@ -47,11 +47,11 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
         " text-[0.625rem] w-[4.5rem] h-[1.9375rem] bg-transparent text-[#54AB75] border border-green-500 rounded-[0.3125rem] ml-1 hover:bg-[#54AB75] hover:text-[#ffffff]";
       break;
 
-      case "register-addressSearch":
-        style +=
-          " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff] hover:bg-transparent hover:text-[#54AB75]  ";
-        break;
-      
+    case "register-addressSearch":
+      style +=
+        " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff] hover:bg-transparent hover:text-[#54AB75]  ";
+      break;
+
     case "register-addressSearch":
       style +=
         " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff]   ";
@@ -60,6 +60,11 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
     case "chat":
       style +=
         " w-[5.25rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff] mt-2";
+      break;
+
+    case "board-mini-join":
+      style +=
+        " rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#54AB75] text-[#ffffff] absolute bottom-[1rem] left-[3rem]";
       break;
 
     default:
