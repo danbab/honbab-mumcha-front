@@ -1,6 +1,10 @@
 import React from "react";
 
-// 게시글 제목, 약속 시간, 게시글 내용 섹션
+/*
+ * 게시글 상세 페이지 제목과 내용
+ * 구성 요소: 게시글 제목, 약속 시간, 게시글 내용, 사용자가 첨부한 이미지, 식당 위치를 표시할 지도
+ */
+
 const DetailPageTitleAndContentSection = () => {
     const postTitle = '논현점 퇴근하고 만나서 밥 드실분 구해요';
     const meetDate = '2023.10.30 (월)';
@@ -8,31 +12,31 @@ const DetailPageTitleAndContentSection = () => {
     const postContent = '게시글 내용을 여기에 입력하세요.';
 
     return (
-        <div className="max-w-screen-md mx-auto p-4 md:p-16">
+        <div className="max-w-screen-md mx-auto md:px-16 md:mt-14">
             <div className="text-lg md:text-xl font-bold">
-                {postTitle}
+                <p>{postTitle}</p>
             </div>
 
-            <div className="w-full md:w-72 h-2.25 border border-black  rounded-md flex justify-between mt-2 mb-4">
-                <div className="flex-grow border-r border-black text-black text-center text-base font-bold">
+            <div className="flex md:w-1/2 border border-black rounded-sm md:mt-7">
+                <div className="flex-grow border-r border-black text-black text-center font-bold">
                     <p>{meetDate}</p>
                 </div>
-                <div className="px-3 text-black text-center text-base font-bold">
+                <div className="md:px-5 text-black text-center text-base font-bold">
                     <p>{time}</p>
                 </div>
             </div>
 
-            <div className="w-full h-96 md:mt-10 text-black text-base md:text-lg bg-neutral-100 rounded-md p-4">
+            <div className="md:w-full md:h-full md:mt-10 text-black text-base md:text-lg bg-neutral-100 rounded-md p-5">
                 <p>{postContent}</p>
             </div>
 
-            <div className="w-full h-full md:mt-28 p-4">
-                <p><img src="img/postimage.svg"></img>
+            <div className="md:w-full md:h-full md:mt-28 bg-neutral-50 rounded-md">
+                <p><img src="img/postimage.svg" className="md:mx-auto rounded-md p-3"></img>
                 </p>
             </div>
 
-            <div className="w-full h-full md:mt-20 p-4">
-                <p><img src="img/postimagedetail.svg"></img>
+            <div className="md:w-full md:h-full md:mt-7 bg-neutral-50 rounded-md">
+                <p><img src="img/postimagedetail.svg" className="md:mx-auto rounded-md p-3"></img>
                 </p>
             </div>
         </div>

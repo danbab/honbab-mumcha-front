@@ -8,11 +8,10 @@ const BoardDetailPage = () => {
     <>
       <DetailPageHeader />
       <DetailPageTitleAndContentSection />
-      
-      
-      <div className="flex max-w-screen-xl mx-auto md:px-10">
-        <div className="w-full h-full md:mt-10">
-      <MapContainer />
+
+      <div className="flex max-w-screen-xl xl:mx-auto xl:justify-between">
+        <div className="w-full h-full my-20">
+          <MapContainer />
         </div>
       </div>
     </>

@@ -19,7 +19,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "big-join":
       style +=
-        " rounded-[0.625rem] text-[0.75rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] text-[#ffffff]";
+        " rounded-[0.625rem] text-[0.75rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] hover:bg-[#76C598] text-[#ffffff]";
       break;
 
     case "make-reservation":
@@ -49,12 +49,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "register-addressSearch":
       style +=
-        " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff] hover:bg-transparent hover:text-[#54AB75]  ";
-      break;
-
-    case "register-addressSearch":
-      style +=
-        " w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-green-500 bg-[#54AB75] text-[0.625rem] text-[#ffffff]   ";
+        " text-[0.625rem] w-[4.5rem] h-[1.9375rem] bg-transparent text-[#54AB75] border border-green-500 rounded-[0.3125rem] ml-1 hover:bg-[#54AB75] hover:text-[#ffffff] ";
       break;
 
     case "chat":
