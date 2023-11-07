@@ -68,22 +68,19 @@ const [password, setPassword] = useState('')
 const [passwordConfirm, setPasswordConfirm] = useState('')
 
 //오류메시지 상태저장
+const [nameMessage, setNameMessage] = useState('')
+const [emailMessage, setEmailMessage] = useState('')
 const [passwordMessage, setPasswordMessage] = useState('')
 const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
 
 
 
 //값 세팅 메서드
-//이름
-const userNameChange = (e) => {
-    e.preventDefault();
-    setUserName(e.target.value); 
-}
 //이메일 (추후 수정)
-const emailChange = (e) => {
-    e.preventDefault();
-    setEmail(e.target.value); 
-}
+// const emailChange = (e) => {
+//     e.preventDefault();
+//     setEmail(e.target.value); 
+// }
 //폰번호
 const phoneChange = (e) => {
     e.preventDefault();
@@ -110,13 +107,48 @@ const mbtiChange = (e) => {
     setMbti(e.target.value); 
 }
 
-// 유효성 검사
+// 유효성 검사를 위한 선언
+const [isName, setIsName] = useState(false)
+const [isEmail, setIsEmail] = useState(false)
 const [isPassword, setIsPassword] = useState(false)
 const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
 //폼 제출 전 유효한지 체크
 const [isFormValid, setIsFormValid] = useState(false);
 
-// 비밀번호
+/* 유효성 검사 */
+// 이름
+const userNameChange = (e) => {
+    e.preventDefault();
+    const userNameRegex = /^[가-힣]{2,6}$/; //한글 이름 2~6자 이내
+    const userNameCurrent = e.target.value; // 입력된 이름
+    setUserName(userNameCurrent);
+    if (!userNameRegex.test(userNameCurrent)) {
+      setNameMessage('한글 이름을 2~6자 이내로 입력해주세요.');
+      setIsName(false);
+    } else {
+      setNameMessage('올바른 이름 형식입니다 :)');
+      setIsName(true);
+    }
+  };
+
+// 이메일
+const emailChange = (e) => {
+    e.preventDefault();
+    //이메일 형식만 가능
+    const emailRegex =/([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const emailCurrent = e.target.value;// 입력된 이메일
+    setEmail(emailCurrent);
+  
+    if (!emailRegex.test(emailCurrent)) {
+      setEmailMessage('이메일 형식이 맞지 않습니다.');
+      setIsEmail(false);
+    } else {
+      setEmailMessage('올바른 이메일 형식이에요 : )');
+      setIsEmail(true);
+    }
+  };
+
+// 비밀번호 
 const onChangePassword = (e) => {
 
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/; //숫자+영문자+특수문자 조합으로 8자리 이상
@@ -149,8 +181,8 @@ const onChangePasswordConfirm = (e) => {
 
 //비밀번호 유효성 검사
 useEffect(() => {
-    setIsFormValid(isPassword && isPasswordConfirm);
-  }, [isPassword, isPasswordConfirm]);
+    setIsFormValid(isPassword && isPasswordConfirm && isName && isEmail);
+  }, [isPassword, isPasswordConfirm, isName, isEmail]);
 
 //백엔드 통신
 const baseUrl = "http://localhost:8080";
@@ -221,6 +253,12 @@ return (
                 <Button type="register-emailDoubleCheck">중복 확인</Button>
                 </div>
             </div>
+            {/*이메일 유효성 체크 : 이메일 형식 */}
+            {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}
+                style={{ 
+                    marginLeft: '7rem', // margin 값을 원하는 값으로 설정
+                    color: isEmail ? 'green' : 'red' // 에러: 빨강색 / 성공: 초록색
+                }}>{emailMessage}</span>}
             {/*input: 이름 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
@@ -237,6 +275,14 @@ return (
                     placeholder="이름을 입력해주세요."
                     ></Input>
             </div>
+            {/*이름 유효성 체크 : 한글 이름 2~6자 이내 */}
+            {userName.length > 0 && 
+                <span className={`message ${isName ? 'success' : 'error'}`}
+                style={{ 
+                    marginLeft: '7rem', // margin 값을 원하는 값으로 설정
+                    color: isName ? 'green' : 'red' // 에러: 빨강색 / 성공: 초록색
+                }}>{nameMessage}</span>}
+
             {/*input: 비밀번호 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
