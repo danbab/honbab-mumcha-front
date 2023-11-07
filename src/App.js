@@ -12,6 +12,10 @@ import LandingPage from "./components/LandingPage";
 
 //import MyPagePage from "pages/MyPagePage";
 
+
+
+
+
 function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
