@@ -34,24 +34,12 @@ function BoardPage() {
         </div>
       </div>
 
-      {/* <div className="w-[78.75rem] mx-auto my-0">
-        <div className="flex justify-between mt-4">
-          <img src="img/mainlogo.svg" alt="메인로고" />
-          <div id="nav" className="mt-[2rem]">
-            <img src="img/Bell.svg" alt="이미지" />
-            <p>여~! 쓰~벌 브라더~</p>
-          </div>
-        </div>
-      </div> */}
-
       <div className="flex">
         <BoardSideBar />
         <BoardSection>
-          
-            {boardDtos.map((boardDto) => (
-              <BoardCard key={boardDto.board_id} boardDto={boardDto} />
-            ))}
-          
+          {boardDtos.map((boardDto) => (
+            <BoardCard key={boardDto.board_id} boardDto={boardDto} />
+          ))}
         </BoardSection>
       </div>
     </>
