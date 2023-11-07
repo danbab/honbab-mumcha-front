@@ -9,11 +9,18 @@ const WritePage = () => {
   const [buttonHashTag, setbuttonHashTag] = useState("");
   const [hashTags, setHashTags] = useState([]);
   const [restaurantName, setRestaurantName] = useState("");
+  const [restaurantAddress, setRestaurantAddress] = useState("");
   const [foodTheme, setFoodTheme] = useState("");
-  const [file, setFile] = useState(null);
+  const [time, setTime] = useState(null);
   const [date, setDate] = useState("");
+  const [memberCnt, setMemberCnt] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isInputVisible, setInputVisible] = useState(false);
+
+  const handleClick = () => {
+    setInputVisible(!isInputVisible);
+  };
 
   const handleButtonHashTag = (val) => {
     setbuttonHashTag(val);
@@ -26,21 +33,25 @@ const WritePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("restaurantName", restaurantName);
-    formData.append("foodTheme", foodTheme);
-    formData.append("file", file);
-    formData.append("date", date);
-    formData.append("title", title);
-    formData.append("content", content);
-    formData.append("hashTags", hashTags);
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/article",
-        formData
-      );
-      console.log(response.data);
+        "http://localhost:8080/board/new",{
+          restaurantName:  restaurantName,
+          restaurantAddress: restaurantAddress,
+          foodTheme:  foodTheme,
+          time: time,
+          date:  date,
+          memberCnt:  memberCnt,
+          title:  title,
+          content:  content,
+          hashTags: hashTags,
+        }
+      )
+      .then((response) => {
+        console.log(response.data)
+        alert(response.data);
+    })
     } catch (error) {
       console.error(error);
     }
@@ -72,22 +83,25 @@ const WritePage = () => {
               약속 만들기
             </button>
           </div>
-          <Tag
-            buttonHashTag={buttonHashTag}
-            handleButtonHashTag={handleButtonHashTag}
-            hashTags={hashTags}
-            handleHashTags={handleHashTags}
-          />
           <div className="flex flex-col mt-5">
             <div className="flex flex-row justify-between mb-4">
               <input
-                className="border w-[33.9375rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                className="border w-[15.9375rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
                 type="text"
                 placeholder="식당 이름"
                 value={restaurantName}
                 onChange={(e) => setRestaurantName(e.target.value)}
               />
-              <select
+              <input
+                className="border w-[33.9375rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                type="text"
+                placeholder="주소"
+                value={restaurantAddress}
+                onChange={(e) => setRestaurantAddress(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-row justify-between gap-12 mb-4">
+            <select
                 className="border w-[12.875rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
                 value={foodTheme}
                 onChange={(e) => setFoodTheme(e.target.value)}
@@ -104,13 +118,12 @@ const WritePage = () => {
                 <option value="아시아">아시아</option>
                 <option value="족발">족발</option>
               </select>
-            </div>
-            <div className="flex flex-row justify-between mb-4">
               <input
-                className="border bg-[#F9F9F9] rounded-md w-[33.9375rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
-                type="file"
-                placeholder="파일"
-                onChange={(e) => setFile(e.target.files[0])}
+                className="border bg-[#F9F9F9] rounded-md w-[15rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] px-2"
+                type="text"
+                placeholder="시간"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
               />
               <input
                 className="border bg-[#F9F9F9] rounded-md px-2 w-[12.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
@@ -118,6 +131,13 @@ const WritePage = () => {
                 placeholder="날짜"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+              />
+              <input
+                className="border bg-[#F9F9F9] rounded-md px-2 w-[10.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                type="text"
+                placeholder="인원수(숫자)"
+                value={memberCnt}
+                onChange={(e) => setMemberCnt(e.target.value)}
               />
             </div>
             <input

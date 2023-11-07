@@ -2,7 +2,7 @@
 import { forwardRef, useEffect } from "react";
 import isEmptyValue from "../utils/isEmptyValue";
 
-const Tag = forwardRef(({ ...restProps }, ref) => {
+const Tag = forwardRef(({ isInputVisible, handleClick, ...restProps }, ref) => {
   const { buttonHashTag, handleButtonHashTag, hashTags, handleHashTags } =
     restProps;
 
