@@ -2,8 +2,23 @@ import Heart from "../components/Heart";
 import { useState } from "react";
 
 const Card = ({ boardDto }) => {
-  let style = "rounded-[0.625rem] shadow-md";
   const [active, setActive] = useState(false);
+  let date = new Date(boardDto.regdate);
+
+  // 날짜 및 시간 형식 지정
+  const options = {
+    year: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  // 지역화된 문자열로 변환
+  date = date
+    .toLocaleDateString("ko-KR", options)
+    .replace(/\./g, "-")
+    .replace(/ /g, "");
 
   return (
     <div className="bg-[#FDFDFD] w-[15.625rem] h-[24.875rem] rounded-[1.25rem] relative">
@@ -17,7 +32,7 @@ const Card = ({ boardDto }) => {
         </div>
         {/* 작성일-reg_date */}
         <div className="text-[#BFBFBF] text-[10px] mt-8 mr-[1.5rem]">
-          {boardDto.regdate.replace("T", " ")}
+          {date}
         </div>
       </div>
       <img
