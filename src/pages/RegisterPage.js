@@ -5,7 +5,7 @@ import PopupDom from '../components/PopupDom';
 //import PopupPostCode from '../components/PopupPostCode';
 import DaumPostcode from "react-daum-postcode";
 import axios from "axios";
-import React, { useState} from "react";
+import React, {useEffect, useState} from "react";
 //import Address from "../components/Address";
 
 
@@ -72,6 +72,7 @@ const [passwordMessage, setPasswordMessage] = useState('')
 const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
 
 
+
 //값 세팅 메서드
 //이름
 const userNameChange = (e) => {
@@ -112,10 +113,12 @@ const mbtiChange = (e) => {
 // 유효성 검사
 const [isPassword, setIsPassword] = useState(false)
 const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
+//폼 제출 전 유효한지 체크
+const [isFormValid, setIsFormValid] = useState(false);
 
 // 비밀번호
 const onChangePassword = (e) => {
-    e.preventDefault();
+
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/; //숫자+영문자+특수문자 조합으로 8자리 이상
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
@@ -131,7 +134,7 @@ const onChangePassword = (e) => {
 
 // 비밀번호 확인
 const onChangePasswordConfirm = (e) => {
-    e.preventDefault();
+
     const passwordConfirmCurrent = e.target.value
     setPasswordConfirm(passwordConfirmCurrent)
     
@@ -144,6 +147,11 @@ const onChangePasswordConfirm = (e) => {
     }
 }
 
+//비밀번호 유효성 검사
+useEffect(() => {
+    setIsFormValid(isPassword && isPasswordConfirm);
+  }, [isPassword, isPasswordConfirm]);
+
 //백엔드 통신
 const baseUrl = "http://localhost:8080";
 const handleSubmit = async (e) => {
@@ -151,6 +159,12 @@ const handleSubmit = async (e) => {
     console.log(birth)
     console.log(gender)
     console.log(userName)
+
+    //폼에 입력된 값이 유효한지 체크한 후, false면 전송 X
+    if (!isFormValid) {
+        alert('회원가입 입력이 잘못되었습니다.');
+        return;
+      }
 
     await axios
         .post(baseUrl + "/api/users/new", {
@@ -331,6 +345,7 @@ return (
             <div className="flex gap-3 justify-start">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">성별 </Lable>
+                    <span className="text-[#F60000] mt-[0.350rem]">*</span>
                 </div>
                     <label className="mt-1 ml-3">남</label>
                     <input type="radio" name="gender" value="m" checked={gender==="m"} onChange={genderChange} className="mt-1"/>
@@ -342,6 +357,7 @@ return (
             <div className="flex gap-3">
                 <div className="flex gap-1">    
                     <Lable type="register-lable">생년월일 </Lable>
+                    <span className="text-[#F60000] mt-[0.350rem]">*</span>
                 </div>
                 <input type="date" name="birth" value={birth} onChange={birthChange} className="mt-1 ml-3"/>
             </div>
