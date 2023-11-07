@@ -186,7 +186,17 @@ const phoneChange = (e) => {
     }
   };
 
-//비밀번호 유효성 검사
+//생년월일
+// 현재 날짜를 "YYYY-MM-DD" 형식의 문자열로 반환하는 함수
+function getCurrentDate() {
+    const now = new Date(); // 현재 시간을 가져옴
+    const year = now.getFullYear(); // 연도를 가져옴
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // 월을 가져옴 (0부터 시작하므로 +1 필요), 두 자리로 만듦
+    const day = String(now.getDate()).padStart(2, "0"); // 일을 가져옴, 두 자리로 만듦
+    return `${year}-${month}-${day}`; // "YYYY-MM-DD" 형식의 문자열로 반환
+  };
+
+//폼 입력 내용 유효성 검사
 useEffect(() => {
     setIsFormValid(isPassword && isPasswordConfirm && isName && isEmail && isPhoneNum);
   }, [isPassword, isPasswordConfirm, isName, isEmail, isPhoneNum]);
@@ -220,6 +230,7 @@ const handleSubmit = async (e) => {
             console.log(response.data)
             console.log(birth)
             alert(response.data);
+            window.location.href = "/login"; // 로그인 페이지로 이동.
         })
         .catch((error) => {
             console.log(error);
@@ -419,7 +430,7 @@ return (
                     <Lable type="register-lable">생년월일 </Lable>
                     <span className="text-[#F60000] mt-[0.350rem]">*</span>
                 </div>
-                <input type="date" name="birth" value={birth} required onChange={birthChange} className="mt-1 ml-3"/>
+                <input type="date" name="birth" value={birth} required onChange={birthChange} className="mt-1 ml-3" max={getCurrentDate()}/>
             </div>
             {/*select: MBTI  */}
             <div className="flex gap-3">
