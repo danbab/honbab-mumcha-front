@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import Tag from "../components/Tag";
 import axios from "axios";
+import LandingPage from '../components/LandingPage';
 
 const WritePage = () => {
   const [buttonHashTag, setbuttonHashTag] = useState("");
@@ -56,6 +57,7 @@ const WritePage = () => {
           <p>여~! 쓰~벌 브라더~</p>
         </div>
       </div>
+      <LandingPage />
       <form onSubmit={handleSubmit}>
         <div className="w-[50.5rem] h-[46.75rem] mt-[3rem] mx-auto my-0">
           <div className="flex justify-between border-b-2 border-[#000000] pb-3">

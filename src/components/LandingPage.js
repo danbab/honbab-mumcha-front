@@ -33,19 +33,21 @@ const LandingPage = () => {
               <input
                 type="text"
                 id="movie-title"
-                className="form__input"
+                className="border w-[20rem] h-[2rem] mt-[1rem] px-2"
                 name="place"
                 onChange={keywordChange}
                 placeholder="검색어를 입력해주세요. (ex: 강남 맛집)"
                 required
               />
               <div className="btn-box">
-                <input
-                  className="btn form__submit"
+                <button
+                  className="btn form__submit cursor-pointer"
                   type="submit"
                   value="검색"
                   onClick={valueChecker}
-                />
+                >
+                  검색
+                </button>
               </div>
             </label>
           </form>
