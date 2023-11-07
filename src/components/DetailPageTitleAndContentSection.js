@@ -31,12 +31,12 @@ const DetailPageTitleAndContentSection = () => {
             </div>
 
             <div className="md:w-full md:h-full md:mt-28 bg-neutral-50 rounded-md">
-                <p><img src="img/postimage.svg" className="md:mx-auto rounded-md p-3"></img>
+                <p><img src="img/postimage.svg" className="md:mx-auto rounded-md p-3" alt="식당 사진"></img>
                 </p>
             </div>
 
             <div className="md:w-full md:h-full md:mt-7 bg-neutral-50 rounded-md">
-                <p><img src="img/postimagedetail.svg" className="md:mx-auto rounded-md p-3"></img>
+                <p><img src="img/postimagedetail.svg" className="md:mx-auto rounded-md p-3" alt="식당 상세정보"></img>
                 </p>
             </div>
         </div>
