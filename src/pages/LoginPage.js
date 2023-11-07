@@ -15,6 +15,7 @@ const LoginPage = () => {
   <div className="py-20" style={containerStyle}>
     <div className="justify-center w-[37.625rem] h-[43.625rem] m-auto bg-neutral-500/60 py-20 rounded-[1rem]">
         <div>
+          {/*메인로고 */}
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
@@ -25,9 +26,10 @@ const LoginPage = () => {
             Login
           </h2>
         </div>
-
+        {/*로그인 폼 */}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action="/api/users/login" method="POST"> {/*TODO: action에 요청을 보낼 경로 지정 */}
+            {/*이메일 */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
@@ -43,7 +45,7 @@ const LoginPage = () => {
                 />
               </div>
             </div>
-
+            {/*비밀번호 */}
             <div>
               <div className="flex items-center justify-between">
                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
@@ -66,7 +68,7 @@ const LoginPage = () => {
                 />
               </div>
             </div>
-
+            {/*로그인 버튼 */}
             <div>
               <button
                 type="submit"
@@ -76,6 +78,7 @@ const LoginPage = () => {
               </button>
             </div>
           </form>
+          {/*구글 로그인 버튼 */}
           <div className="my-10">
               <Link to="/oauth2/authorization/google">
                 <img
