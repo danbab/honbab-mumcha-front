@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import styles from "./myMap.module.css";
+import './myMap.css'
 
 const { kakao } = window;
 
@@ -236,16 +238,29 @@ const MyMap = (props) => {
   }, [props.searchKeyword]);
 
   return (
-    <div className="flex gap-2">
-      <div id="map" className="w-[400px] h-[450px]"></div>
-      <div id="search-result">
-        <p className="result-text">
-          <span className="">{props.searchKeyword}</span>
-          검색 결과
-        </p>
-        <div className="scroll-wrapper">
-          <ul id="places-list"></ul>
+    <div className={styles.map_wrap}>
+      <div
+        id="map"
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      ></div>
+
+      <div id="menu_wrap" className={styles.bg_white}>
+        {/* <div id="map" className="map"></div> */}
+        <div id="search-result" class={styles.option}>
+          <p className={styles.result_text}>
+            <span className="result-keyword text-[blue]">
+              {props.searchKeyword}
+            </span>
+            검색 결과
+          </p>
         </div>
+        <hr />
+        <ul id="places-list"></ul>
         <div id="pagination"></div>
       </div>
     </div>
