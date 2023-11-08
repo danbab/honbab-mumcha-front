@@ -268,7 +268,7 @@ return (
                     required
                     placeholder="이메일을 입력해주세요. (예: aa @ bb.cc)"
                     ></Input>
-                <Button type="register-emailDoubleCheck">중복 확인</Button>
+                <Button type="register-emailDoubleCheck">이메일 인증</Button>
                 </div>
             </div>
             {/*이메일 유효성 체크 : 이메일 형식 */}
@@ -371,7 +371,6 @@ return (
                     required
                     placeholder="전화번호를 입력해주세요. (예: 010-0000-0000)"
                     ></Input>
-                <Button type="register-certification">본인 인증</Button>
                 </div>
             </div>
             {/*휴대폰 유효성 체크 : 휴대폰 형식 */}
