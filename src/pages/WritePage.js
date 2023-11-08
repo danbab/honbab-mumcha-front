@@ -4,7 +4,7 @@ import Button from "../components/Button";
 import Tag from "../components/Tag";
 import axios from "axios";
 import LandingPage from "../components/LandingPage";
-import { pl } from 'date-fns/locale';
+import { pl } from "date-fns/locale";
 
 const WritePage = () => {
   const [buttonHashTag, setbuttonHashTag] = useState("");
@@ -35,26 +35,24 @@ const WritePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
     try {
-      const response = await axios.post(
-        "http://localhost:8080/board/new",{
-          restaurantName:  restaurantName,
+      const response = await axios
+        .post("http://localhost:8080/board/new", {
+          restaurantName: restaurantName,
           restaurantAddress: restaurantAddress,
-          foodCategory:  foodCategory,
+          foodCategory: foodCategory,
           placeCategory: placeCategory,
           time: time,
-          date:  date,
-          people:  people,
-          title:  title,
-          content:  content,
+          date: date,
+          people: people,
+          title: title,
+          content: content,
           hashTags: hashTags,
-        }
-      )
-      .then((response) => {
-        console.log(response.data)
-        alert(response.data);
-    })
+        })
+        .then((response) => {
+          console.log(response.data);
+          alert(response.data);
+        });
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +102,7 @@ const WritePage = () => {
               />
             </div>
             <div className="flex flex-row justify-between gap-12 mb-4">
-            <select
+              <select
                 className="border w-[12.875rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
                 value={foodCategory}
                 onChange={(e) => setFoodCategory(e.target.value)}
@@ -140,21 +138,21 @@ const WritePage = () => {
                 <option value="삼성">삼성</option>
               </select>
               <input
-                className="border bg-[#F9F9F9] rounded-md w-[15rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] px-2"
+                className="border bg-[#F9F9F9] rounded-md w-[16rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] px-2"
                 type="time"
                 placeholder="시간"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
               />
               <input
-                className="border bg-[#F9F9F9] rounded-md px-2 w-[12.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                className="border bg-[#F9F9F9] rounded-md px-2 w-[15.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
                 type="date"
                 placeholder="날짜"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
               />
               <input
-                className="border bg-[#F9F9F9] rounded-md px-2 w-[10.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                className="border bg-[#F9F9F9] rounded-md px-2 w-[6.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
                 type="text"
                 placeholder="인원수(숫자)"
                 value={people}
@@ -169,7 +167,7 @@ const WritePage = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
             <textarea
-              className="border bg-[#F9F9F9] rounded-md px-2 h-[36.5rem] mb-5 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+              className="border bg-[#F9F9F9] rounded-md px-2 h-[36.5rem] mb-5 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] py-3 px-3"
               value={content}
               onChange={(e) => setContent(e.target.value)}
             ></textarea>
