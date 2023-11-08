@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const BoardSideBar = ({ locations }) => {
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  const [clickedLocation, setClickedLocation] = useState(null);
+const BoardSideBar = ({ onSelectFoodCategory }) => {
+  const [selectedFood, setSelectedFood] = useState(null);
+  const [clickedFood, setClickedFood] = useState(null);
 
   const handleClick = (imageName) => {
-    setClickedLocation(imageName);
-    setSelectedLocation(null);
+    setClickedFood(imageName);
+    setSelectedFood(null);
   };
   const handleMouseEnter = (imageName) => {
-    if (!clickedLocation) {
-      // 클릭한 항목이 없는 경우에만 selectedLocation을 업데이트
-      setSelectedLocation(imageName);
+    if (!clickedFood) {
+      // 클릭한 항목이 없는 경우에만 selectedFood을 업데이트
+      setSelectedFood(imageName);
     }
   };
   const handleMouseLeave = () => {
-    setSelectedLocation(null); // 마우스가 떠날 때 selectedLocation을 null로 설정
+    setSelectedFood(null); // 마우스가 떠날 때 selectedFood을 null로 설정
   };
-  const locationList = [
+  const foodCategoryList = [
     {
       name: "양식",
       image: "img/pastaSideBar.svg",
@@ -75,24 +75,26 @@ const BoardSideBar = ({ locations }) => {
       >
         <div className="h-full px-3 overflow-y-auto">
           <ul className="space-y-2 font-medium">
-            {locationList.map((location) => (
-              <li key={location.alt}>
+            {foodCategoryList.map((food) => (
+              <li key={food.alt}>
                 <Link
-                  to="#"
+                  to=""
                   className="py-2"
-                  onMouseEnter={() => handleMouseEnter(location.image)}
+                  onMouseEnter={() => handleMouseEnter(food.image)}
                   onMouseLeave={handleMouseLeave}
-                  onClick={() => handleClick(location.image)}
+                  onClick={() => {
+                    handleClick(food.image);
+                    onSelectFoodCategory(food.name);
+                  }}
                 >
-                  {selectedLocation === location.image ||
-                  clickedLocation === location.image ? (
+                  {selectedFood === food.image || clickedFood === food.image ? (
                     <img
-                      src={location.image}
-                      alt={location.name}
+                      src={food.image}
+                      alt={food.name}
                       className="h-[6.625rem] object-cover w-full"
                     />
                   ) : (
-                    <span className="ml-3 text-black">{location.name}</span>
+                    <span className="ml-3 text-black">{food.name}</span>
                   )}
                 </Link>
               </li>

@@ -7,6 +7,8 @@ import axios from "axios";
 
 function BoardFoodPage() {
   const [boardDtos, setBoardDtos] = useState([]);
+  const [selectedFoodCategory, setSelectedFoodCategory] = useState(null);
+
   useEffect(() => {
     const fetchBoardData = async () => {
       try {
@@ -17,9 +19,27 @@ function BoardFoodPage() {
         console.error("서버 요청 에러:", error);
       }
     };
-
     fetchBoardData();
   }, []);
+
+  const fetchBoardDataByFoodCategory = async (foodCategory) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/board/${foodCategory}`
+      );
+      console.log(`${foodCategory}에 대한 서버 응답:`, response.data);
+      setBoardDtos(response.data);
+    } catch (error) {
+      console.error(`${foodCategory}에 대한 서버 요청 에러:`, error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedFoodCategory) {
+      fetchBoardDataByFoodCategory(selectedFoodCategory);
+    }
+  }, [selectedFoodCategory]);
+
   return (
     <>
       <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
@@ -33,7 +53,7 @@ function BoardFoodPage() {
       </div>
 
       <div className="flex">
-        <BoardSideBarFood />
+        <BoardSideBarFood onSelectFoodCategory={setSelectedFoodCategory} />
         <FoodBoardSection>
           {boardDtos.map((boardDto) => (
             <BoardCard key={boardDto.board_id} boardDto={boardDto} />
