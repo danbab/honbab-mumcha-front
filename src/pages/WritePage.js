@@ -4,16 +4,18 @@ import Button from "../components/Button";
 import Tag from "../components/Tag";
 import axios from "axios";
 import LandingPage from "../components/LandingPage";
+import { pl } from 'date-fns/locale';
 
 const WritePage = () => {
   const [buttonHashTag, setbuttonHashTag] = useState("");
   const [hashTags, setHashTags] = useState([]);
   const [restaurantName, setRestaurantName] = useState("");
   const [restaurantAddress, setRestaurantAddress] = useState("");
-  const [foodTheme, setFoodTheme] = useState("");
+  const [foodCategory, setFoodCategory] = useState("");
+  const [placeCategory, setPlaceCategory] = useState("");
   const [time, setTime] = useState(null);
   const [date, setDate] = useState("");
-  const [memberCnt, setMemberCnt] = useState("");
+  const [people, setPeople] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isInputVisible, setInputVisible] = useState(false);
@@ -39,10 +41,11 @@ const WritePage = () => {
         "http://localhost:8080/board/new",{
           restaurantName:  restaurantName,
           restaurantAddress: restaurantAddress,
-          foodTheme:  foodTheme,
+          foodCategory:  foodCategory,
+          placeCategory: placeCategory,
           time: time,
           date:  date,
-          memberCnt:  memberCnt,
+          people:  people,
           title:  title,
           content:  content,
           hashTags: hashTags,
@@ -103,8 +106,8 @@ const WritePage = () => {
             <div className="flex flex-row justify-between gap-12 mb-4">
             <select
                 className="border w-[12.875rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
-                value={foodTheme}
-                onChange={(e) => setFoodTheme(e.target.value)}
+                value={foodCategory}
+                onChange={(e) => setFoodCategory(e.target.value)}
                 defaultValue={"음식테마 선택"}
               >
                 <option value="음식테마 선택">음식테마 선택</option>
@@ -118,9 +121,27 @@ const WritePage = () => {
                 <option value="아시아">아시아</option>
                 <option value="족발">족발</option>
               </select>
+              <select
+                className="border w-[12.875rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                value={placeCategory}
+                onChange={(e) => setPlaceCategory(e.target.value)}
+                defaultValue={"장소 선택"}
+              >
+                <option value="음식테마 선택">장소 선택</option>
+                <option value="용산">용산</option>
+                <option value="성수">성수</option>
+                <option value="종로">종로</option>
+                <option value="동대문">동대문</option>
+                <option value="잠실">잠실</option>
+                <option value="여의도">여의도</option>
+                <option value="홍대">홍대</option>
+                <option value="신사">신사</option>
+                <option value="청담">청담</option>
+                <option value="삼성">삼성</option>
+              </select>
               <input
                 className="border bg-[#F9F9F9] rounded-md w-[15rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] px-2"
-                type="text"
+                type="time"
                 placeholder="시간"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
@@ -136,8 +157,8 @@ const WritePage = () => {
                 className="border bg-[#F9F9F9] rounded-md px-2 w-[10.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
                 type="text"
                 placeholder="인원수(숫자)"
-                value={memberCnt}
-                onChange={(e) => setMemberCnt(e.target.value)}
+                value={people}
+                onChange={(e) => setPeople(e.target.value)}
               />
             </div>
             <input
