@@ -3,10 +3,11 @@ import BoardCard from "../components/BoardCard";
 import BoardSection from "../components/BoardSection";
 import BoardSideBar from "../components/BoardSideBar";
 import axios from "axios";
-
 import { Link } from "react-router-dom";
+
 function BoardPage() {
   const [boardDtos, setBoardDtos] = useState([]);
+  const [selectedPlaceCategory, setSelectedPlaceCategory] = useState(null);
 
   useEffect(() => {
     const fetchBoardData = async () => {
@@ -22,6 +23,24 @@ function BoardPage() {
     fetchBoardData();
   }, []);
 
+  const fetchBoardDataByPlaceCategory = async (placeCategory) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/board/place/${placeCategory}`
+      );
+      console.log(`${placeCategory}에 대한 서버 응답:`, response.data);
+      setBoardDtos(response.data);
+    } catch (error) {
+      console.error(`${placeCategory}에 대한 서버 요청 에러:`, error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedPlaceCategory) {
+      fetchBoardDataByPlaceCategory(selectedPlaceCategory);
+    }
+  }, [selectedPlaceCategory]);
+
   return (
     <>
       <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
@@ -35,7 +54,7 @@ function BoardPage() {
       </div>
 
       <div className="flex">
-        <BoardSideBar />
+        <BoardSideBar onSelectPlaceCategory={setSelectedPlaceCategory} />
         <BoardSection>
           {boardDtos.map((boardDto) => (
             <BoardCard key={boardDto.board_id} boardDto={boardDto} />

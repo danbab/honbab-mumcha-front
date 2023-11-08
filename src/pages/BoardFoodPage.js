@@ -25,7 +25,7 @@ function BoardFoodPage() {
   const fetchBoardDataByFoodCategory = async (foodCategory) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/board/${foodCategory}`
+        `http://localhost:8080/board/food/${foodCategory}`
       );
       console.log(`${foodCategory}에 대한 서버 응답:`, response.data);
       setBoardDtos(response.data);
