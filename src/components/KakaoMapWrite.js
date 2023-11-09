@@ -3,12 +3,18 @@ import { MapMarker, Map } from "react-kakao-maps-sdk";
 import "./myMap.css"; // CSS 파일 불러오기
 const { kakao } = window;
 
-const KakaoMapSearch = () => {
+const KakaoMapSearch = ({ onSelectPlace }) => {
   const [searchTerm, setSearchTerm] = useState("이태원 맛집");
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
   const [places, setPlaces] = useState([]);
+
+  const handlePlaceClick = (place) => {
+    // 선택된 장소의 이름과 주소를 onSelectPlace로 전달합니다.
+    onSelectPlace(place.place_name, place.road_address_name || place.address_name);
+  };
+
 
   useEffect(() => {
     if (!map) return;
@@ -75,7 +81,7 @@ const KakaoMapSearch = () => {
         </div>
         <ul id="placesList">
           {places.map((place, index) => (
-            <li key={index} className="item">
+            <li key={index} className="item" onClick={() => handlePlaceClick(place)}>
               <span className={`markerbg marker_${index + 1}`}></span>
               <div className="info">
                 <h5>{place.place_name}</h5>

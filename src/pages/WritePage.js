@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import LandingPage from "../components/LandingPage";
 import { pl } from "date-fns/locale";
-import KakaoMapWrite from '../components/KakaoMapWrite';
+import KakaoMapWrite from "../components/KakaoMapWrite";
 
 const WritePage = () => {
   const [buttonHashTag, setbuttonHashTag] = useState("");
@@ -29,6 +29,11 @@ const WritePage = () => {
 
   const handleHashTags = (val) => {
     setHashTags(val);
+  };
+
+  const handleSelectPlace = (name, address) => {
+    setRestaurantName(name);
+    setRestaurantAddress(address);
   };
 
   const handleSubmit = async (e) => {
@@ -70,7 +75,7 @@ const WritePage = () => {
       </div>
       <div className="w-[50.5rem] mx-auto my-0">
         <div className="text-[1.25rem] mt-[0.5rem]">식당찾기</div>
-        <KakaoMapWrite />
+        <KakaoMapWrite onSelectPlace={handleSelectPlace} />
       </div>
       <form onSubmit={handleSubmit}>
         <div className="w-[50.5rem] h-[46.75rem] mt-[3rem] mx-auto my-0">
