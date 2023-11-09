@@ -74,9 +74,11 @@ const [emailMessage, setEmailMessage] = useState('')
 const [passwordMessage, setPasswordMessage] = useState('')
 const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
 const [phoneMessage, setPhoneMessage] = useState('')
+const [codeCheckedMessage, setCodeCheckedMessage] = useState('')
 
 /*-----이메일 인증-----*/
 const [isEmailVerified, setIsEmailVerified] = useState(false);
+const [isEmailCodeOpen, setEmailCodeOpen] = useState(false);
 const [authCode, setAuthCode] = useState('');
 
 // 이메일 인증 버튼 클릭 이벤트 핸들러
@@ -92,21 +94,47 @@ const handleEmailVerification = async(e) => {
             console.log(response.data)
             alert(response.data);
             // 인증 코드를 입력받을 새로운 input 태그 생성 및 표시
-            setIsEmailVerified(true);
+            setEmailCodeOpen(true);
+            setCodeCheckedMessage('인증이 필요합니다.');
+
         })
         .catch((error) => {
             console.log(error);
-            alert(error.response.data);
+            alert(error.response.data.message);
 
         });
   };
 
 // 확인 버튼 클릭 이벤트 핸들러
 // 서버로 인증 코드 전송 등의 로직 수행
-  const handleVerificationConfirmation = () => {
+  const handleVerificationConfirmation = async(e) => {
     
     console.log('authCode:', authCode);
     // TODO : 이후 필요한 서버 요청 등을 처리하도록 구현 
+    //백엔드 통신
+    e.preventDefault();
+
+    await axios
+        .post(baseUrl + "/api/users/emails/codeChecked", {
+            email: email,
+            authCode: authCode
+        })
+        .then((response) => {
+            console.log(response.data)
+            //인증 완료
+            console.log(isEmailVerified);
+            alert(response.data);
+            setCodeCheckedMessage('인증이 완료되었습니다.');
+            setIsEmailVerified(true);
+
+        })
+        .catch((error) => {
+            console.log(error);
+            alert(error.response.data.message);
+            setCodeCheckedMessage('인증 코드를 다시 입력해주세요.');
+            setIsEmailVerified(false);
+
+        });
   };
 
 /*-----이메일 인증(end)-----*/
@@ -176,6 +204,7 @@ const emailChange = (e) => {
     }
   };
 
+
 // 비밀번호 
 const onChangePassword = (e) => {
 
@@ -236,8 +265,8 @@ function getCurrentDate() {
 
 //폼 입력 내용 유효성 검사
 useEffect(() => {
-    setIsFormValid(isPassword && isPasswordConfirm && isName && isEmail && isPhoneNum);
-  }, [isPassword, isPasswordConfirm, isName, isEmail, isPhoneNum]);
+    setIsFormValid(isPassword && isPasswordConfirm && isName && isEmail && isPhoneNum && isEmailVerified);
+  }, [isPassword, isPasswordConfirm, isName, isEmail, isPhoneNum, isEmailVerified]);
 
 //백엔드 통신
 const baseUrl = "http://localhost:8080";
@@ -311,7 +340,7 @@ return (
                         >이메일 인증</Button>
                 </div>
             </div>
-            <div className="flex">
+            <div className="flex justify-between mt-0">
                 {/*이메일 유효성 체크 : 이메일 형식 */}
                 {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}
                     style={{ 
@@ -319,7 +348,7 @@ return (
                         color: isEmail ? 'green' : 'red' // 에러: 빨강색 / 성공: 초록색
                     }}>{emailMessage}</span>}
                 {/*이메일 인증 버튼 클릭 시, 생성*/}
-                {isEmailVerified && (
+                {isEmailCodeOpen && (
                 <div className="flex gap-1 justify-end">
                     <input
                     id="authCode"
@@ -335,6 +364,15 @@ return (
                 </div>
                 )}
             </div>
+                {/*인증코드 유효성 체크 : 이메일 인증확인 */}
+                {isEmail && 
+                <div className={`message ${isEmailVerified ? 'success' : 'error'}`}
+                style={{ 
+                    marginTop: '0',
+                    paddingRight: '4rem', 
+                    color: isEmailVerified ? 'green' : 'red', // 에러: 빨강색 / 성공: 초록색
+                    textAlign: 'right'
+                }}>{codeCheckedMessage}</div>}
             {/*input: 이름 */}
             <div className="flex gap-3">
                 <div className="flex gap-1">    
