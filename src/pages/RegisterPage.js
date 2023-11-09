@@ -89,12 +89,14 @@ const handleEmailVerification = async(e) => {
         .then((response) => {
             console.log(response.data)
             alert(response.data);
+            // 인증 코드를 입력받을 새로운 input 태그 생성 및 표시
+            setIsEmailVerified(true);
         })
         .catch((error) => {
             console.log(error);
+            alert(error.response.data);
+
         });
-    // 인증 코드를 입력받을 새로운 input 태그 생성 및 표시
-    setIsEmailVerified(true);
   };
 
 // 확인 버튼 클릭 이벤트 핸들러
@@ -455,11 +457,11 @@ return (
                 <div id='popupDom'>
                     {isPopupOpen && (
                     <PopupDom>
-                        <div>
+                        <div className="m-auto 0">
                             <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
+                        </div>
                             {/* 닫기 버튼 생성*/}
                             <button type='button' onClick={closePostCode} className='postCode_btn'>닫기</button>
-                        </div>
                     </PopupDom>
                     )}
                 </div>
