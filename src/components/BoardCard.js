@@ -2,10 +2,9 @@ import Button from "../components/Button";
 import Heart from "../components/Heart";
 import { useState } from "react";
 
-
 const Card = ({ boardDto }) => {
   const [active, setActive] = useState(false);
-  let date = new Date(boardDto.regdate);
+  let date = new Date(boardDto.regDate);
 
   // 날짜 및 시간 형식 지정
   const options = {
@@ -36,7 +35,7 @@ const Card = ({ boardDto }) => {
         <div className="text-[#BFBFBF] text-[10px] mt-[2.1rem] mr-[0.5rem]">
           {date}
         </div>
-        {boardDto.regdate != boardDto.lastModified && (
+        {boardDto.regDate != boardDto.lastModified && (
           <span className="absolute top-12 right-[1.2rem] text-[#BFBFBF] text-[10px]">
             수정됨
           </span>
