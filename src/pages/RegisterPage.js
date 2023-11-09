@@ -219,6 +219,11 @@ const onChangePassword = (e) => {
         setPasswordMessage('안전한 비밀번호에요 : )');
         setIsPassword(true);
     }
+
+    if (password !== passwordConfirm) {
+        setPasswordConfirmMessage('비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ')
+        setIsPasswordConfirm(false)
+    }
 };
 
 // 비밀번호 확인
@@ -267,6 +272,7 @@ function getCurrentDate() {
 useEffect(() => {
     setIsFormValid(isPassword && isPasswordConfirm && isName && isEmail && isPhoneNum && isEmailVerified);
   }, [isPassword, isPasswordConfirm, isName, isEmail, isPhoneNum, isEmailVerified]);
+
 
 //백엔드 통신
 const baseUrl = "http://localhost:8080";
