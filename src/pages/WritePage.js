@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
-import Tag from "../components/Tag";
 import axios from "axios";
 import LandingPage from "../components/LandingPage";
 import { pl } from "date-fns/locale";
-import MyMap from '../components/MyMap';
+import KakaoMapWrite from '../components/KakaoMapWrite';
 
 const WritePage = () => {
   const [buttonHashTag, setbuttonHashTag] = useState("");
@@ -72,7 +70,7 @@ const WritePage = () => {
       </div>
       <div className="w-[50.5rem] mx-auto my-0">
         <div className="text-[1.25rem] mt-[0.5rem]">식당찾기</div>
-        <LandingPage />
+        <KakaoMapWrite />
       </div>
       <form onSubmit={handleSubmit}>
         <div className="w-[50.5rem] h-[46.75rem] mt-[3rem] mx-auto my-0">
