@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
-import Tag from "../components/Tag";
 import axios from "axios";
-import LandingPage from "../components/LandingPage";
 import { pl } from "date-fns/locale";
-import MyMap from '../components/MyMap';
+import KakaoMapWrite from "../components/KakaoMapWrite";
+const { kakao } = window;
+
 
 const WritePage = () => {
   const [buttonHashTag, setbuttonHashTag] = useState("");
@@ -33,30 +32,49 @@ const WritePage = () => {
     setHashTags(val);
   };
 
+  const handleSelectPlace = (name, address) => {
+    setRestaurantName(name);
+    setRestaurantAddress(address);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios
-        .post("http://localhost:8080/board/new", {
-          restaurantName: restaurantName,
-          restaurantAddress: restaurantAddress,
-          foodCategory: foodCategory,
-          placeCategory: placeCategory,
-          time: time,
-          date: date,
-          people: people,
-          title: title,
-          content: content,
-          hashTags: hashTags,
-        })
-        .then((response) => {
-          console.log(response.data);
-          alert(response.data);
-        });
-    } catch (error) {
-      console.error(error);
-    }
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    // 주소를 좌표로 변환합니다
+    geocoder.addressSearch(restaurantAddress, async (result, status) => {
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+ 
+        const lat = result[0].y;
+        const lng = result[0].x;
+
+
+        try {
+          const response = await axios
+            .post("http://localhost:8080/board/new", {
+              restaurantName: restaurantName,
+              restaurantAddress: restaurantAddress,
+              foodCategory: foodCategory,
+              placeCategory: placeCategory,
+              time: time,
+              date: date,
+              people: people,
+              title: title,
+              content: content,
+              lat: result[0].y,
+              lng: result[0].x,
+            })
+            .then((response) => {
+              console.log(response.data);
+              alert(response.data);
+            });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    });
   };
 
   return (
@@ -72,7 +90,7 @@ const WritePage = () => {
       </div>
       <div className="w-[50.5rem] mx-auto my-0">
         <div className="text-[1.25rem] mt-[0.5rem]">식당찾기</div>
-        <LandingPage />
+        <KakaoMapWrite onSelectPlace={handleSelectPlace} />
       </div>
       <form onSubmit={handleSubmit}>
         <div className="w-[50.5rem] h-[46.75rem] mt-[3rem] mx-auto my-0">
