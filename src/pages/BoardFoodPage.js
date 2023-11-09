@@ -1,11 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BoardCard from "../components/BoardCard";
-import BoardSection from "../components/BoardSection";
-import BoardSideBar from "../components/BoardSideBar";
 import BoardSideBarFood from "../components/BoardSideBarFood";
 import FoodBoardSection from "../components/FoodBoardSection";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 function BoardFoodPage() {
+  const [boardDtos, setBoardDtos] = useState([]);
+  const [selectedFoodCategory, setSelectedFoodCategory] = useState(null);
+
+  useEffect(() => {
+    const fetchBoardData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/board");
+        console.log("서버 응답:", response.data);
+        setBoardDtos(response.data);
+      } catch (error) {
+        console.error("서버 요청 에러:", error);
+      }
+    };
+    fetchBoardData();
+  }, []);
+
+  const fetchBoardDataByFoodCategory = async (foodCategory) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/board/food/${foodCategory}`
+      );
+      console.log(`${foodCategory}에 대한 서버 응답:`, response.data);
+      setBoardDtos(response.data);
+    } catch (error) {
+      console.error(`${foodCategory}에 대한 서버 요청 에러:`, error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedFoodCategory) {
+      fetchBoardDataByFoodCategory(selectedFoodCategory);
+    }
+  }, [selectedFoodCategory]);
+
   return (
     <>
       <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
@@ -19,34 +53,11 @@ function BoardFoodPage() {
       </div>
 
       <div className="flex">
-        <BoardSideBarFood />
+        <BoardSideBarFood onSelectFoodCategory={setSelectedFoodCategory} />
         <FoodBoardSection>
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
+          {boardDtos.map((boardDto) => (
+            <BoardCard key={boardDto.board_id} boardDto={boardDto} />
+          ))}
         </FoodBoardSection>
       </div>
     </>
