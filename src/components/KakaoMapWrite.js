@@ -62,6 +62,19 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
           <MapMarker
             key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
             position={marker.position}
+            image={{
+              src:"img/locationicon.png",
+              size: {
+                width: 60,
+                height: 65,
+              },
+              options: {
+                offset:{
+                  x: 27,
+                  y: 69,
+                },
+              },
+            }}
             onClick={() => setInfo(marker)}
           >
             {info && info.content === marker.content && (
