@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./myMap.module.css";
-import './myMap.css'
+import "./myMap.css";
 
 const { kakao } = window;
 
@@ -61,7 +60,7 @@ const MyMap = (props) => {
 
     // 검색 결과 목록과 마커를 표출하는 함수
     function displayPlaces(places) {
-      const listEl = document.getElementById("places-list"),
+      const listEl = document.getElementById("placesList"),
         resultEl = document.getElementById("search-result"),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds();
@@ -237,8 +236,10 @@ const MyMap = (props) => {
     }
   }, [props.searchKeyword]);
 
+
+
   return (
-    <div className={styles.map_wrap}>
+    <div className="map_wrap">
       <div
         id="map"
         style={{
@@ -249,18 +250,19 @@ const MyMap = (props) => {
         }}
       ></div>
 
-      <div id="menu_wrap" className={styles.bg_white}>
-        {/* <div id="map" className="map"></div> */}
-        <div id="search-result" class={styles.option}>
-          <p className={styles.result_text}>
-            <span className="result-keyword text-[blue]">
-              {props.searchKeyword}
-            </span>
-            검색 결과
-          </p>
+      <div id="menu_wrap" className="bg_white">
+        <div id="search-result" className="option">
+          <div>
+            <p className="result_text">
+              <span className="result-keyword text-[blue]">
+                {props.searchKeyword}
+              </span>
+              검색 결과
+            </p>
+          </div>  
         </div>
         <hr />
-        <ul id="places-list"></ul>
+        <ul id="placesList"></ul>
         <div id="pagination"></div>
       </div>
     </div>
