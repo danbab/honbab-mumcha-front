@@ -14,7 +14,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "mini-join":
       style +=
-        " rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#54AB75] text-[#ffffff]";
+        " rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#54AB75] hover:bg-[#76C598] text-[#ffffff]";
       break;
 
     case "big-join":

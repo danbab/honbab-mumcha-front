@@ -1,5 +1,7 @@
+import Button from "../components/Button";
 import Heart from "../components/Heart";
 import { useState } from "react";
+
 
 const Card = ({ boardDto }) => {
   const [active, setActive] = useState(false);

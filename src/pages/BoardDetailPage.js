@@ -1,24 +1,13 @@
 import DetailPageHeader from "../components/DetailPageHeader";
 import DetailPageTitleAndContentSection from "../components/DetailPageTitleAndContentSection";
 import MapContainer from "../components/MapContainer";
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from 'axios';
-
-const BoardDetail = () => {
-    useEffect(() => {
-        axios.get('')
-            .then(response => {
-                console.log(response);
-            });
-    }, []);
-    return (
-        <h1>Users</h1>
-    );
-}
 
 const BoardDetailPage = () => {
   return (
-    <>
+    <div>
       <DetailPageHeader />
       <DetailPageTitleAndContentSection />
 
@@ -27,7 +16,7 @@ const BoardDetailPage = () => {
           <MapContainer />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
