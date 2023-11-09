@@ -5,6 +5,7 @@ import Tag from "../components/Tag";
 import axios from "axios";
 import LandingPage from "../components/LandingPage";
 import { pl } from "date-fns/locale";
+import MyMap from '../components/MyMap';
 
 const WritePage = () => {
   const [buttonHashTag, setbuttonHashTag] = useState("");
