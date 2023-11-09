@@ -1,9 +1,29 @@
 import { Link } from "react-router-dom";
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import MyPageSideBar from "../components/MyPageSideBar";
+import axios from "axios";
+import MyBoardCard from "../components/MyBoardCard";
+import MyPageSection from "../components/MyPageSection";
 
 
 const MyPage = () => {
+    const[myBoard, setMyBoard] = useState([]);
+
+    useEffect(()=>{
+        const fetchBoardData = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/my/board");
+                console.log("서버 응답 :" + response.data);
+                setMyBoard(response.data);
+            } catch (error) {
+                console.error("서버 요청 에러: ", error);
+            }
+        };
+
+        fetchBoardData();
+    }, []);
+
+
     return (
         <>
             <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
@@ -16,12 +36,17 @@ const MyPage = () => {
             </div>
 
             <div className="flex">
-                <div className="mr-[18rem]">
+                <div className="mr-[1.2rem]">
                 <MyPageSideBar />
                 </div>
-                <div className="bg-[#F6F6F6] w-[95rem] h-[55.3125rem] rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[20px] rounded-br-[20px]">
-                </div>
+                
+                <MyPageSection>
 
+                {myBoard.map((myBoards) => (
+                    <MyBoardCard myBoards={myBoards} />
+                ))}
+                
+                </MyPageSection>     
             </div>
         </>
     )

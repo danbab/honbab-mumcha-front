@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const BoardSideBar = ({ locations }) => {
+const BoardSideBar = ({ onSelectPlaceCategory }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [clickedLocation, setClickedLocation] = useState(null);
 
@@ -97,7 +97,10 @@ const BoardSideBar = ({ locations }) => {
                   className="py-2"
                   onMouseEnter={() => handleMouseEnter(location.image)}
                   onMouseLeave={handleMouseLeave}
-                  onClick={() => handleClick(location.image)}
+                  onClick={() => {
+                    handleClick(location.image);
+                    onSelectPlaceCategory(location.name);
+                  }}
                 >
                   {selectedLocation === location.image ||
                   clickedLocation === location.image ? (
