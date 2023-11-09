@@ -348,7 +348,7 @@ return (
                         color: isEmail ? 'green' : 'red' // 에러: 빨강색 / 성공: 초록색
                     }}>{emailMessage}</span>}
                 {/*이메일 인증 버튼 클릭 시, 생성*/}
-                {isEmailCodeOpen && (
+                {email.length > 0 && isEmailCodeOpen && (
                 <div className="flex gap-1 justify-end">
                     <input
                     id="authCode"
