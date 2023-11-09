@@ -1,7 +1,7 @@
 import Input from "../components/Input";
 import Lable from "../components/Lable";
 import Button from "../components/Button";
-import PopupDom from '../components/PopupDom';
+import Modal from 'react-modal';
 import DaumPostcode from "react-daum-postcode";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
@@ -11,17 +11,17 @@ import React, {useEffect, useState} from "react";
 
 function JoinPage() {
 /*-----주소찾기 API-----*/
-// 팝업창 상태 관리(주소찾기)
-const [isPopupOpen, setIsPopupOpen] = useState(false)
+// 모달창 상태 관리(주소찾기)
+const [modalIsOpen, setModalIsOpen] = useState(false);
 
-// 팝업창 열기(주소찾기)
+// 모달창 열기(주소찾기)
 const openPostCode = () => {
-    setIsPopupOpen(true)
+    setModalIsOpen(true)
 }
  
-// 팝업창 닫기(주소찾기)
+// 모달창 닫기(주소찾기)
 const closePostCode = () => {
-    setIsPopupOpen(false)
+    setModalIsOpen(false)
 }
 
 // 주소 검색 후 주소 클릭 시 실행될 함수, data callback 용(주소찾기)
@@ -41,7 +41,7 @@ const handlePostCode = (data) => {
     console.log(data)
     // fullAddress 값을 주소 상태에 저장
     setAddress(fullAddress);
-    //팝업창을 닫음.
+    //모달창을 닫음.
     closePostCode();
 }
 // 주소 찾기 api 스타일
@@ -52,6 +52,8 @@ const postCodeStyle = {
     width: "600px",
     height: "600px",
     padding: "7px",
+    border: "solid 1px #CBCBCB",
+    borderRadius: "1rem"
   };
 /*-----주소찾기 API (end) -----*/
 
@@ -453,18 +455,16 @@ return (
                     placeholder="주소를 입력해주세요."
                     ></Input>
                 <Button type="register-addressSearch" onClick={openPostCode}>주소 검색</Button>
-            {/*팝업 생성 기준 div*/}
-                <div id='popupDom'>
-                    {isPopupOpen && (
-                    <PopupDom>
-                        <div className="m-auto 0">
+            {/*모달 생성 기준 div*/}
+                    {modalIsOpen && (
+                    <Modal isOpen={true} onRequestClose={() => setModalIsOpen(false)} className="mx-auto my-0 w-[650px]">
+                        <div className="mt-10">
+                            {/* 닫기 버튼 생성*/}
+                            <button type='button' onClick={closePostCode} className='postCode_btn'>X 닫기</button>
                             <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
                         </div>
-                            {/* 닫기 버튼 생성*/}
-                            <button type='button' onClick={closePostCode} className='postCode_btn'>닫기</button>
-                    </PopupDom>
+                    </Modal>
                     )}
-                </div>
                 </div>
             </div>
             {/*radio: 성별 */}
