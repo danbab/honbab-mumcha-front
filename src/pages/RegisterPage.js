@@ -204,6 +204,8 @@ function JoinPage() {
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/; //숫자+영문자+특수문자 조합으로 8자리 이상
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
+    console.log(passwordCurrent)
+
 
     if (!passwordRegex.test(passwordCurrent)) {
       setPasswordMessage(
@@ -215,9 +217,13 @@ function JoinPage() {
       setIsPassword(true);
     }
 
-    if (password !== passwordConfirm) {
+    // 비밀번호 값이 변경된 경우, 비밀번호 확인 값을 다시 확인하여 메시지를 업데이트
+    if (passwordConfirm !== passwordCurrent) {
       setPasswordConfirmMessage("비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ");
       setIsPasswordConfirm(false);
+    } else {
+      setPasswordConfirmMessage("비밀번호를 똑같이 입력했어요 : )");
+      setIsPasswordConfirm(true);
     }
   };
 
@@ -225,6 +231,7 @@ function JoinPage() {
   const onChangePasswordConfirm = (e) => {
     const passwordConfirmCurrent = e.target.value;
     setPasswordConfirm(passwordConfirmCurrent);
+    console.log(passwordConfirmCurrent)
 
     if (password === passwordConfirmCurrent) {
       setPasswordConfirmMessage("비밀번호를 똑같이 입력했어요 : )");
@@ -233,6 +240,8 @@ function JoinPage() {
       setPasswordConfirmMessage("비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ");
       setIsPasswordConfirm(false);
     }
+
+
   };
 
   // 전화번호
