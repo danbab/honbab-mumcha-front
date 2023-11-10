@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const BoardSideBar = () => {
+const MyPageSideBar = ({ onSelectMyPageCategory }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [clickedLocation, setClickedLocation] = useState(null);
 
@@ -20,33 +20,33 @@ const BoardSideBar = () => {
   };
   const myPageList = [
     {
-      name: "내 약속",
-      image: "img/myPlaceSideBar.svg",
+      name: "내약속",
+      image: "",
       alt: "내 위치 아이콘",
     },
     {
-      name: "내 글",
-      image: "img/youngsanSideBar.svg",
+      name: "내글",
+      image: "",
       alt: "용산 이미지",
     },
     {
-      name: "내가 찜한 약속",
-      image: "img/SengsuSideBar.svg",
+      name: "내가찜한약속",
+      image: "",
       alt: "성수 이미지",
     },
     {
-      name: "정보 수정",
-      image: "img/JongnoSideBar.svg",
+      name: "정보수정",
+      image: "",
       alt: "종로 이미지",
     },
     {
-      name: "내 채팅",
-      image: "img/DongdaemunSideBar.svg",
+      name: "내채팅",
+      image: "",
       alt: "동대문 이미지",
     },
     {
       name: "회원탈퇴",
-      image: "img/JamsilSideBar.svg",
+      image: "",
       alt: "잠실 이미지",
     }
   ];
@@ -61,23 +61,22 @@ const BoardSideBar = () => {
         <div className="h-full px-3 overflow-y-auto">
           <ul className="space-y-2 text-center font-medium">
             {/* 로그인한 회원의 Id를 가지고 와야함 */}
-            <div className="text-[1.5rem] mb-[3.4rem] ml-[1.2rem]" >wanding</div>
+            <div className="text-[1.5rem] mb-[3.4rem] ml-[1.2rem]" >단밥</div>
             {myPageList.map((list) => (
               <li key={list.alt}>
                 <Link
                   to="#"
-                  className="py-[3.2rem]"
-                  onMouseEnter={() => handleMouseEnter(list.image)}
+                  className="py-[1.2rem]"
+                  onMouseEnter={() => handleMouseEnter(list.name)}
                   onMouseLeave={handleMouseLeave}
-                  onClick={() => handleClick(list.image)}
+                  onClick={() => {
+                    handleClick(list.name);
+                    onSelectMyPageCategory(list.name);
+                  }}
                 >
-                  {selectedLocation === list.image ||
-                  clickedLocation === list.image ? (
-                    <img
-                      src={list.image}
-                      alt={list.name}
-                      className="h-[6.625rem] object-cover w-full"
-                    />
+                  {selectedLocation === list.name ||
+                  clickedLocation === list.name ? (
+                    <span className="h-[6.625rem] mb-[3.2rem] ml-3 object-cover text-lime-500">{list.name}</span>
                   ) : (
                     <span className="mb-[3.2rem] ml-3 text-black">{list.name}</span>
                   )}
@@ -91,4 +90,4 @@ const BoardSideBar = () => {
   );
 };
 
-export default BoardSideBar;
+export default MyPageSideBar;

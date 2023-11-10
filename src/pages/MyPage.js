@@ -8,11 +8,12 @@ import MyPageSection from "../components/MyPageSection";
 
 const MyPage = () => {
     const[myBoard, setMyBoard] = useState([]);
+    const[selectMyPageCategory, setSelectMyPageCategory] = useState(null);
 
     useEffect(()=>{
         const fetchBoardData = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/my/board");
+                const response = await axios.get("http://localhost:8080/my");
                 console.log("서버 응답 :" + response.data);
                 setMyBoard(response.data);
             } catch (error) {
@@ -23,6 +24,24 @@ const MyPage = () => {
         fetchBoardData();
     }, []);
 
+    const fetchBoardDataMyCategory = async (myCategory) => {
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/my/board/${myCategory}`
+            );
+            console.log(`${myCategory}에 대한 서버 응답: `, response.data);
+            setMyBoard(response.data);
+            console.log(myCategory);
+        } catch (error) {
+            console.error(`${myCategory}에 대한 서버 요청 에러: `, error);
+        }
+    };
+
+    useEffect(() => {
+        if (selectMyPageCategory) {
+            fetchBoardDataMyCategory(selectMyPageCategory);
+        }
+      }, [selectMyPageCategory]);
 
     return (
         <>
@@ -37,7 +56,7 @@ const MyPage = () => {
 
             <div className="flex">
                 <div className="mr-[1.2rem]">
-                <MyPageSideBar />
+                <MyPageSideBar onSelectMyPageCategory={setSelectMyPageCategory}/>
                 </div>
                 
                 <MyPageSection>
