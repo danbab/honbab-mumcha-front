@@ -6,7 +6,7 @@ import BoardPage from "./pages/BoardPage";
 import BoardDetailPage from "./pages/BoardDetailPage";
 import ChatPage from "./pages/ChatPage";
 import BoardFoodPage from "./pages/BoardFoodPage";
-// import Menu from "./components/Menu";
+import Menu from "./components/Menu";
 import WritePage from "./pages/WritePage";
 import MyPage from "./pages/MyPage";
 

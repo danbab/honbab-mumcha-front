@@ -1,8 +1,8 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import DetailPageHeader from "../components/DetailPageHeader";
 import DetailPageTitleAndContentSection from "../components/DetailPageTitleAndContentSection";
 import MapContainer from "../components/MapContainer";
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from 'axios';
 
 const BoardDetailPage = () => {
