@@ -85,7 +85,7 @@ const BoardSideBar = ({ onSelectPlaceCategory }) => {
     <>
       <aside
         id="default-sidebar"
-        className="fixed left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 text-lg leading-loose"
+        className="fixed left-0 z-40 w-[170px] d_s:w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 text-lg leading-loose"
         aria-label="Sidebar"
       >
         <div className="h-full px-3 overflow-y-auto">
