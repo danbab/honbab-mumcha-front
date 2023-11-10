@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-//import axios from "axios";
 import Button from "./Button";
 import Input from "./Input";
 import { Link } from "react-router-dom";
@@ -11,13 +10,12 @@ const Header = () => {
   //const baseUrl = "http://localhost:8080";
   const getCurrentUser = async () => {
     try {
-      // const response = await axios.get(baseUrl + "/api/users/current");
-      // const currentUser = response.data;
-      // setUser(currentUser);
       const storedUser = sessionStorage.getItem("user");
-      setUser(storedUser);
-      console.log("현재 사용자 정보:", user);
-      // 여기에서 currentUser를 사용하거나 처리할 수 있습니다.
+      if (storedUser) {
+        // JSON 문자열을 객체로 변환
+        const userObject = JSON.parse(storedUser);
+        setUser(userObject);
+      }
     } catch (e) {
       console.error("사용자 정보 가져오기 실패:" + e);
     }
@@ -34,6 +32,13 @@ const Header = () => {
 
   const handleMouseOut = () => {
     setShowMenu(false);
+  };
+
+  const handleLogout = () => {
+    // 로그아웃 버튼을 클릭했을 때 세션에서 사용자 정보 삭제
+    sessionStorage.removeItem("user");
+    // 사용자 상태 초기화
+    setUser(null);
   };
 
   return (
@@ -56,7 +61,6 @@ const Header = () => {
             {user ? (
               // 세션이 있는 경우, 회원 이름과 마이페이지 버튼 표시
               <>
-                {user.name}
                 {showMenu && (
                   <div className="animate-slide-down2 absolute top-full left-0 z-10">
                     <Menu />
@@ -79,9 +83,12 @@ const Header = () => {
         <div className="mt-[2rem]">
           {user ? (
             // 세션이 있는 경우, 로그아웃 버튼 표시
-            <Link to="">
-              <Button type="logout">로그아웃</Button>
-            </Link>
+            <>
+              <>{user.username}</>
+              <Button type="login" onClick={handleLogout}>
+                로그아웃
+              </Button>
+            </>
           ) : (
             // 세션이 없는 경우, 로그인과 회원가입 버튼 표시
             <>

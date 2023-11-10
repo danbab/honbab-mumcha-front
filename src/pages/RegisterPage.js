@@ -1,7 +1,7 @@
 import Input from "../components/Input";
 import Lable from "../components/Lable";
 import Button from "../components/Button";
-import Modal from 'react-modal';
+import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
@@ -10,19 +10,19 @@ import React, {useEffect, useState} from "react";
 
 
 function JoinPage() {
-/*-----주소찾기 API-----*/
-// 모달창 상태 관리(주소찾기)
-const [modalIsOpen, setModalIsOpen] = useState(false);
+  /*-----주소찾기 API-----*/
+  // 모달창 상태 관리(주소찾기)
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-// 모달창 열기(주소찾기)
-const openPostCode = () => {
-    setModalIsOpen(true)
-}
- 
-// 모달창 닫기(주소찾기)
-const closePostCode = () => {
-    setModalIsOpen(false)
-}
+  // 모달창 열기(주소찾기)
+  const openPostCode = () => {
+    setModalIsOpen(true);
+  };
+
+  // 모달창 닫기(주소찾기)
+  const closePostCode = () => {
+    setModalIsOpen(false);
+  };
 
 // 주소 검색 후 주소 클릭 시 실행될 함수, data callback 용(주소찾기)
 const handlePostCode = (data) => {
@@ -53,88 +53,84 @@ const postCodeStyle = {
     height: "600px",
     padding: "7px",
     border: "solid 1px #CBCBCB",
-    borderRadius: "1rem"
+    borderRadius: "1rem",
   };
-/*-----주소찾기 API (end) -----*/
 
-//이름, 이메일, 비밀번호, 비밀번호 확인, 성별, 폰번호, 주소, 생년월일, MBTI 초기화
-const [userName, setUserName] = useState('')
-const [email, setEmail] = useState('')
-const [password, setPassword] = useState('')
-const [passwordConfirm, setPasswordConfirm] = useState('')
-const [gender, setGender] = useState('');
-const [phone, setPhone] = useState('');    
-const [address, setAddress] = useState('');
-const [birth, setBirth] = useState('');
-const [mbti, setMbti] = useState('');
+  /*-----주소찾기 API (end) -----*/
 
-//오류메시지 상태저장
-const [nameMessage, setNameMessage] = useState('')
-const [emailMessage, setEmailMessage] = useState('')
-const [passwordMessage, setPasswordMessage] = useState('')
-const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
-const [phoneMessage, setPhoneMessage] = useState('')
-const [codeCheckedMessage, setCodeCheckedMessage] = useState('')
+  //이름, 이메일, 비밀번호, 비밀번호 확인, 성별, 폰번호, 주소, 생년월일, MBTI 초기화
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [gender, setGender] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [birth, setBirth] = useState("");
+  const [mbti, setMbti] = useState("");
 
-/*-----이메일 인증-----*/
-const [isEmailVerified, setIsEmailVerified] = useState(false);
-const [isEmailCodeOpen, setEmailCodeOpen] = useState(false);
-const [authCode, setAuthCode] = useState('');
+  //오류메시지 상태저장
+  const [nameMessage, setNameMessage] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+  const [phoneMessage, setPhoneMessage] = useState("");
+  const [codeCheckedMessage, setCodeCheckedMessage] = useState("");
 
-// 이메일 인증 버튼 클릭 이벤트 핸들러
-const handleEmailVerification = async(e) => {
+  /*-----이메일 인증-----*/
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [isEmailCodeOpen, setEmailCodeOpen] = useState(false);
+  const [authCode, setAuthCode] = useState("");
+
+  // 이메일 인증 버튼 클릭 이벤트 핸들러
+  const handleEmailVerification = async (e) => {
     //백엔드 통신
     e.preventDefault();
 
     await axios
-        .post(baseUrl + "/api/users/emails/authenticationRequest", {
-            email: email
-        })
-        .then((response) => {
-            console.log(response.data)
-            alert(response.data);
-            // 인증 코드를 입력받을 새로운 input 태그 생성 및 표시
-            setEmailCodeOpen(true);
-            setCodeCheckedMessage('인증이 필요합니다.');
-
-        })
-        .catch((error) => {
-            console.log(error);
-            alert(error.response.data.message);
-
-        });
+      .post(baseUrl + "/api/users/emails/authenticationRequest", {
+        email: email,
+      })
+      .then((response) => {
+        console.log(response.data);
+        alert(response.data);
+        // 인증 코드를 입력받을 새로운 input 태그 생성 및 표시
+        setEmailCodeOpen(true);
+        setCodeCheckedMessage("인증이 필요합니다.");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error.response.data.message);
+      });
   };
 
-// 확인 버튼 클릭 이벤트 핸들러
-// 서버로 인증 코드 전송 등의 로직 수행
-  const handleVerificationConfirmation = async(e) => {
-    
-    console.log('authCode:', authCode);
-    // TODO : 이후 필요한 서버 요청 등을 처리하도록 구현 
+  // 확인 버튼 클릭 이벤트 핸들러
+  // 서버로 인증 코드 전송 등의 로직 수행
+  const handleVerificationConfirmation = async (e) => {
+    console.log("authCode:", authCode);
+    // TODO : 이후 필요한 서버 요청 등을 처리하도록 구현
     //백엔드 통신
     e.preventDefault();
 
     await axios
-        .post(baseUrl + "/api/users/emails/codeChecked", {
-            email: email,
-            authCode: authCode
-        })
-        .then((response) => {
-            console.log(response.data)
-            //인증 완료
-            console.log(isEmailVerified);
-            alert(response.data);
-            setCodeCheckedMessage('인증이 완료되었습니다.');
-            setIsEmailVerified(true);
-
-        })
-        .catch((error) => {
-            console.log(error);
-            alert(error.response.data.message);
-            setCodeCheckedMessage('인증 코드를 다시 입력해주세요.');
-            setIsEmailVerified(false);
-
-        });
+      .post(baseUrl + "/api/users/emails/codeChecked", {
+        email: email,
+        authCode: authCode,
+      })
+      .then((response) => {
+        console.log(response.data);
+        //인증 완료
+        console.log(isEmailVerified);
+        alert(response.data);
+        setCodeCheckedMessage("인증이 완료되었습니다.");
+        setIsEmailVerified(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error.response.data.message);
+        setCodeCheckedMessage("인증 코드를 다시 입력해주세요.");
+        setIsEmailVerified(false);
+      });
   };
 
 /*-----이메일 인증(end)-----*/
@@ -204,11 +200,10 @@ const emailChange = (e) => {
     }
   };
 
-
-// 비밀번호 
-const onChangePassword = (e) => {
-
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/; //숫자+영문자+특수문자 조합으로 8자리 이상
+  // 비밀번호
+  const onChangePassword = (e) => {
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/; //숫자+영문자+특수문자 조합으로 8자리 이상
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
     
@@ -221,10 +216,10 @@ const onChangePassword = (e) => {
     }
 
     if (password !== passwordConfirm) {
-        setPasswordConfirmMessage('비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ')
-        setIsPasswordConfirm(false)
+      setPasswordConfirmMessage("비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ");
+      setIsPasswordConfirm(false);
     }
-};
+  };
 
 // 비밀번호 확인
 const onChangePasswordConfirm = (e) => {
@@ -266,13 +261,26 @@ function getCurrentDate() {
     const month = String(now.getMonth() + 1).padStart(2, "0"); // 월을 가져옴 (0부터 시작하므로 +1 필요), 두 자리로 만듦
     const day = String(now.getDate()).padStart(2, "0"); // 일을 가져옴, 두 자리로 만듦
     return `${year}-${month}-${day}`; // "YYYY-MM-DD" 형식의 문자열로 반환
-  };
+  }
 
-//폼 입력 내용 유효성 검사
-useEffect(() => {
-    setIsFormValid(isPassword && isPasswordConfirm && isName && isEmail && isPhoneNum && isEmailVerified);
-  }, [isPassword, isPasswordConfirm, isName, isEmail, isPhoneNum, isEmailVerified]);
-
+  //폼 입력 내용 유효성 검사
+  useEffect(() => {
+    setIsFormValid(
+      isPassword &&
+        isPasswordConfirm &&
+        isName &&
+        isEmail &&
+        isPhoneNum &&
+        isEmailVerified
+    );
+  }, [
+    isPassword,
+    isPasswordConfirm,
+    isName,
+    isEmail,
+    isPhoneNum,
+    isEmailVerified,
+  ]);
 
 //백엔드 통신
 const baseUrl = "http://localhost:8080";
@@ -346,243 +354,312 @@ return (
                         >이메일 인증</Button>
                 </div>
             </div>
-            <div className="flex justify-between mt-0">
-                {/*이메일 유효성 체크 : 이메일 형식 */}
-                {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}
-                    style={{ 
-                        marginLeft: '7rem', // margin 값을 원하는 값으로 설정
-                        color: isEmail ? 'green' : 'red' // 에러: 빨강색 / 성공: 초록색
-                    }}>{emailMessage}</span>}
-                {/*이메일 인증 버튼 클릭 시, 생성*/}
-                {email.length > 0 && isEmailCodeOpen && (
-                <div className="flex gap-1 justify-end">
-                    <input
-                    id="authCode"
-                    name="authCode"
-                    value={authCode}
-                    onChange={(e) => setAuthCode(e.target.value)}
-                    placeholder="인증 코드를 입력해주세요."
-                    className="w-[10.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
-                    ></input>
-                    <Button type="register-emailDoubleCheck"
-                        onClick={handleVerificationConfirmation}
-                        >인증 확인</Button>
-                </div>
-                )}
+          </div>
+          <div className="flex justify-between mt-0">
+            {/*이메일 유효성 체크 : 이메일 형식 */}
+            {email.length > 0 && (
+              <span
+                className={`message ${isEmail ? "success" : "error"}`}
+                style={{
+                  marginLeft: "7rem", // margin 값을 원하는 값으로 설정
+                  color: isEmail ? "green" : "red", // 에러: 빨강색 / 성공: 초록색
+                }}
+              >
+                {emailMessage}
+              </span>
+            )}
+            {/*이메일 인증 버튼 클릭 시, 생성*/}
+            {email.length > 0 && isEmailCodeOpen && (
+              <div className="flex gap-1 justify-end">
+                <input
+                  id="authCode"
+                  name="authCode"
+                  value={authCode}
+                  onChange={(e) => setAuthCode(e.target.value)}
+                  placeholder="인증 코드를 입력해주세요."
+                  className="w-[10.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
+                ></input>
+                <Button
+                  type="register-emailDoubleCheck"
+                  onClick={handleVerificationConfirmation}
+                >
+                  인증 확인
+                </Button>
+              </div>
+            )}
+          </div>
+          {/*인증코드 유효성 체크 : 이메일 인증확인 */}
+          {isEmail && (
+            <div
+              className={`message ${isEmailVerified ? "success" : "error"}`}
+              style={{
+                marginTop: "0",
+                paddingRight: "4rem",
+                color: isEmailVerified ? "green" : "red", // 에러: 빨강색 / 성공: 초록색
+                textAlign: "right",
+              }}
+            >
+              {codeCheckedMessage}
             </div>
-                {/*인증코드 유효성 체크 : 이메일 인증확인 */}
-                {isEmail && 
-                <div className={`message ${isEmailVerified ? 'success' : 'error'}`}
-                style={{ 
-                    marginTop: '0',
-                    paddingRight: '4rem', 
-                    color: isEmailVerified ? 'green' : 'red', // 에러: 빨강색 / 성공: 초록색
-                    textAlign: 'right'
-                }}>{codeCheckedMessage}</div>}
-            {/*input: 이름 */}
-            <div className="flex gap-3">
-                <div className="flex gap-1">    
-                    <Lable type="register-lable">이름 </Lable>
-                    <span className="text-[#F60000] mt-[0.350rem]">*</span>
-                </div>
-                <Input 
-                    type="register-input" 
-                    id="userName"
-                    name="userName"
-                    value={userName}
-                    onChange={userNameChange}
-                    required
-                    placeholder="이름을 입력해주세요."
-                    ></Input>
+          )}
+          {/*input: 이름 */}
+          <div className="flex gap-3">
+            <div className="flex gap-1">
+              <Lable type="register-lable">이름 </Lable>
+              <span className="text-[#F60000] mt-[0.350rem]">*</span>
             </div>
-            {/*이름 유효성 체크 : 한글 이름 2~6자 이내 */}
-            {userName.length > 0 && 
-                <span className={`message ${isName ? 'success' : 'error'}`}
-                style={{ 
-                    marginLeft: '7rem', // margin 값을 원하는 값으로 설정
-                    color: isName ? 'green' : 'red' // 에러: 빨강색 / 성공: 초록색
-                }}>{nameMessage}</span>}
-
-            {/*input: 비밀번호 */}
-            <div className="flex gap-3">
-                <div className="flex gap-1">    
-                    <Lable type="register-lable">비밀번호 </Lable>
-                    <span className="text-[#F60000] mt-[0.350rem]">*</span>
-                </div>
-                <Input 
-                    type="password" 
-                    id="password"
-                    name="password"
-                    value={password}
-                    required
-                    placeholder="비밀번호를 입력해주세요."
-                    onChange={onChangePassword}
-                    className="border-2 rounded-[0.3125rem] border-gray-300 w-[25.3125rem] h-[1.9375rem] border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
-                    ></Input>
-
+            <Input
+              type="register-input"
+              id="userName"
+              name="userName"
+              value={userName}
+              onChange={userNameChange}
+              required
+              placeholder="이름을 입력해주세요."
+            ></Input>
+          </div>
+          {/*이름 유효성 체크 : 한글 이름 2~6자 이내 */}
+          {userName.length > 0 && (
+            <span
+              className={`message ${isName ? "success" : "error"}`}
+              style={{
+                marginLeft: "7rem", // margin 값을 원하는 값으로 설정
+                color: isName ? "green" : "red", // 에러: 빨강색 / 성공: 초록색
+              }}
+            >
+              {nameMessage}
+            </span>
+          )}
+          {/*input: 비밀번호 */}
+          <div className="flex gap-3">
+            <div className="flex gap-1">
+              <Lable type="register-lable">비밀번호 </Lable>
+              <span className="text-[#F60000] mt-[0.350rem]">*</span>
             </div>
-            {/*비밀번호 유효성 체크 : 숫자+영문자+특수문자 조합으로 8자리 이상 */}
-                {password.length > 0 && (
-                <span className={`message ${isPassword ? 'success' : 'error'}`}
-                    style={{ 
-                        marginLeft: '7rem', // margin 값을 원하는 값으로 설정
-                        color: isPassword ? 'green' : 'red' // 에러: 빨강색 / 성공: 초록색
-                    }} 
-                >{passwordMessage}</span>
-                )}
-
-            {/*input: 비밀번호 확인 */}
-            <div className="flex gap-3">
-                <div className="flex gap-1">    
-                    <Lable type="register-lable">비밀번호 확인 </Lable>
-                    <span className="text-[#F60000] mt-[0.350rem]">*</span>
-                </div>
-                <Input 
-                    type="password" 
-                    id="passwordCheck"
-                    name="passwordCheck"
-                    required
-                    placeholder="비밀번호를 한 번 더 입력해주세요."
-                    onChange={onChangePasswordConfirm}
-                    className="border-2 rounded-[0.3125rem] border-gray-300 w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
-                    ></Input>
-
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              required
+              placeholder="비밀번호를 입력해주세요."
+              onChange={onChangePassword}
+              className="border-2 rounded-[0.3125rem] border-gray-300 w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
+            ></Input>
+          </div>
+          {/*비밀번호 유효성 체크 : 숫자+영문자+특수문자 조합으로 8자리 이상 */}
+          {password.length > 0 && (
+            <span
+              className={`message ${isPassword ? "success" : "error"}`}
+              style={{
+                marginLeft: "7rem", // margin 값을 원하는 값으로 설정
+                color: isPassword ? "green" : "red", // 에러: 빨강색 / 성공: 초록색
+              }}
+            >
+              {passwordMessage}
+            </span>
+          )}
+          {/*input: 비밀번호 확인 */}
+          <div className="flex gap-3">
+            <div className="flex gap-1">
+              <Lable type="register-lable">비밀번호 확인 </Lable>
+              <span className="text-[#F60000] mt-[0.350rem]">*</span>
             </div>
-            {/*비밀번호 유효성 체크 : 비밀번호가 일치하는지 체크*/}
-                {passwordConfirm.length > 0 && (
-                <span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}
-                    style={{ 
-                        marginLeft: '7rem', // margin 값을 원하는 값으로 설정
-                        color: isPasswordConfirm ? 'green' : 'red' // 에러: 빨강색 / 성공: 초록색
-                }} 
-                >{passwordConfirmMessage}</span>
-                )}
-            {/*input: 휴대폰 */}
-            <div className="flex gap-3">
-                <div className="flex gap-1">    
-                    <Lable type="register-lable">휴대폰 </Lable>
-                    <span className="text-[#F60000] mt-[0.350rem]">*</span>
-                </div>
-                <div className="flex">
-                <Input 
-                    type="register-input" 
-                    id="phone"
-                    name="phone"
-                    value={phone}
-                    onChange={phoneChange}
-                    required
-                    placeholder="전화번호를 입력해주세요. (예: 010-0000-0000)"
-                    ></Input>
-                </div>
+            <Input
+              type="password"
+              id="passwordCheck"
+              name="passwordCheck"
+              required
+              placeholder="비밀번호를 한 번 더 입력해주세요."
+              onChange={onChangePasswordConfirm}
+              className="border-2 rounded-[0.3125rem] border-gray-300 w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
+            ></Input>
+          </div>
+          {/*비밀번호 유효성 체크 : 비밀번호가 일치하는지 체크*/}
+          {passwordConfirm.length > 0 && (
+            <span
+              className={`message ${isPasswordConfirm ? "success" : "error"}`}
+              style={{
+                marginLeft: "7rem", // margin 값을 원하는 값으로 설정
+                color: isPasswordConfirm ? "green" : "red", // 에러: 빨강색 / 성공: 초록색
+              }}
+            >
+              {passwordConfirmMessage}
+            </span>
+          )}
+          {/*input: 휴대폰 */}
+          <div className="flex gap-3">
+            <div className="flex gap-1">
+              <Lable type="register-lable">휴대폰 </Lable>
+              <span className="text-[#F60000] mt-[0.350rem]">*</span>
             </div>
-            {/*휴대폰 유효성 체크 : 휴대폰 형식 */}
-            {phone.length > 0 && <span className={`message ${isPhoneNum ? 'success' : 'error'}`}
-                style={{ 
-                    marginLeft: '7rem', // margin 값을 원하는 값으로 설정
-                    color: isPhoneNum ? 'green' : 'red' // 에러: 빨강색 / 성공: 초록색
-                }}>{phoneMessage}</span>}
-
-            {/*button: 주소 => 클릭 시, 주소찾기 api 연동 */}
-            <div className="flex gap-3">
-                <div className="flex gap-1">    
-                    <Lable type="register-lable">주소 </Lable>
-                    <span className="text-[#F60000] mt-[0.350rem]">*</span>
-                </div>
-                <div className="flex">
-                <Input 
-                    type="register-input" 
-                    id="address"
-                    name="address"
-                    value={address}
-                    onChange={addressChange}
-                    required
-                    placeholder="주소를 입력해주세요."
-                    ></Input>
-                <Button type="register-addressSearch" onClick={openPostCode}>주소 검색</Button>
-            {/*모달 생성 기준 div*/}
-                    {modalIsOpen && (
-                    <Modal isOpen={true} onRequestClose={() => setModalIsOpen(false)} className="mx-auto my-0 w-[650px]">
-                        <div className="mt-10">
-                            {/* 닫기 버튼 생성*/}
-                            <button type='button' onClick={closePostCode} className='postCode_btn'>X 닫기</button>
-                            <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
-                        </div>
-                    </Modal>
-                    )}
-                </div>
+            <div className="flex">
+              <Input
+                type="register-input"
+                id="phone"
+                name="phone"
+                value={phone}
+                onChange={phoneChange}
+                required
+                placeholder="전화번호를 입력해주세요. (예: 010-0000-0000)"
+              ></Input>
             </div>
-            {/*radio: 성별 */}
-            <div className="flex gap-3 justify-start">
-                <div className="flex gap-1">    
-                    <Lable type="register-lable">성별 </Lable>
-                    <span className="text-[#F60000] mt-[0.350rem]">*</span>
-                </div>
-                    <label className="mt-1 ml-3">남</label>
-                    <input type="radio" name="gender" value="m" required checked={gender==="m"} onChange={genderChange} className="mt-1"/>
-                    
-                    <label className="mt-1">여</label>
-                    <input type="radio" name="gender" value="f" required checked={gender==="f"} onChange={genderChange} className="mt-1"/>
+          </div>
+          {/*휴대폰 유효성 체크 : 휴대폰 형식 */}
+          {phone.length > 0 && (
+            <span
+              className={`message ${isPhoneNum ? "success" : "error"}`}
+              style={{
+                marginLeft: "7rem", // margin 값을 원하는 값으로 설정
+                color: isPhoneNum ? "green" : "red", // 에러: 빨강색 / 성공: 초록색
+              }}
+            >
+              {phoneMessage}
+            </span>
+          )}
+          {/*button: 주소 => 클릭 시, 주소찾기 api 연동 */}
+          <div className="flex gap-3">
+            <div className="flex gap-1">
+              <Lable type="register-lable">주소 </Lable>
+              <span className="text-[#F60000] mt-[0.350rem]">*</span>
             </div>
-            {/*input: 생년월일 => dateformat : yyyy-mm-dd */}
-            <div className="flex gap-3">
-                <div className="flex gap-1">    
-                    <Lable type="register-lable">생년월일 </Lable>
-                    <span className="text-[#F60000] mt-[0.350rem]">*</span>
-                </div>
-                <input type="date" name="birth" value={birth} required onChange={birthChange} className="mt-1 ml-3" max={getCurrentDate()}/>
-            </div>
-            {/*select: MBTI  */}
-            <div className="flex gap-3">
-                <div className="flex gap-1">    
-                    <Lable type="register-lable">MBTI 유형:</Lable>
-                </div>
-                <select
-                    id="mbti"
-                    name="mbti"
-                    value={mbti}
-                    onChange={mbtiChange}
-                    className="mt-1 ml-3"
+            <div className="flex">
+              <Input
+                type="register-input"
+                id="address"
+                name="address"
+                value={address}
+                onChange={addressChange}
+                required
+                placeholder="주소를 입력해주세요."
+              ></Input>
+              <Button type="register-addressSearch" onClick={openPostCode}>
+                주소 검색
+              </Button>
+              {/*모달 생성 기준 div*/}
+              {modalIsOpen && (
+                <Modal
+                  isOpen={true}
+                  onRequestClose={() => setModalIsOpen(false)}
+                  className="mx-auto my-0 w-[650px]"
+                >
+                  <div className="mt-10">
+                    {/* 닫기 버튼 생성*/}
+                    <button
+                      type="button"
+                      onClick={closePostCode}
+                      className="postCode_btn"
                     >
-                    <option value="" selected>-- MBTI를 선택하세요 --</option>
-                    <option value="none">선택안함</option>
-                    <option value="ENFJ">ENFJ</option>
-                    <option value="ENFP">ENFP</option>
-                    <option value="ENTJ">ENTJ</option>
-                    <option value="ENTP">ENTP</option>
-                    <option value="ESFJ">ESFJ</option>
-                    <option value="ESFP">ESFP</option>
-                    <option value="ESTJ">ESTJ</option>
-                    <option value="ESTP">ESTP</option>
-                    <option value="INFJ">INFJ</option>
-                    <option value="INFP">INFP</option>
-                    <option value="INTJ">INTJ</option>
-                    <option value="INTP">INTP</option>
-                    <option value="ISFJ">ISFJ</option>
-                    <option value="ISFP">ISFP</option>
-                    <option value="ISTJ">ISTJ</option>
-                    <option value="ISTP">ISTP</option>
+                      X 닫기
+                    </button>
+                    <DaumPostcode
+                      style={postCodeStyle}
+                      onComplete={handlePostCode}
+                    />
+                  </div>
+                </Modal>
+              )}
+            </div>
+          </div>
+          {/*radio: 성별 */}
+          <div className="flex gap-3 justify-start">
+            <div className="flex gap-1">
+              <Lable type="register-lable">성별 </Lable>
+              <span className="text-[#F60000] mt-[0.350rem]">*</span>
+            </div>
+            <label className="mt-1 ml-3">남</label>
+            <input
+              type="radio"
+              name="gender"
+              value="m"
+              required
+              checked={gender === "m"}
+              onChange={genderChange}
+              className="mt-1"
+            />
 
-                    </select>
+            <label className="mt-1">여</label>
+            <input
+              type="radio"
+              name="gender"
+              value="f"
+              required
+              checked={gender === "f"}
+              onChange={genderChange}
+              className="mt-1"
+            />
+          </div>
+          {/*input: 생년월일 => dateformat : yyyy-mm-dd */}
+          <div className="flex gap-3">
+            <div className="flex gap-1">
+              <Lable type="register-lable">생년월일 </Lable>
+              <span className="text-[#F60000] mt-[0.350rem]">*</span>
             </div>
-            {/*radio: 개인정보 동의 => 어떻게 처리할까? */}
-            <div className="flex gap-3 justify-center">
-                <div className="flex gap-1"> 
-                <label>
-                    <input type="radio" name="policy" value="policy"/>개인 정보 수집 동의
-                </label>
-                </div>
+            <input
+              type="date"
+              name="birth"
+              value={birth}
+              required
+              onChange={birthChange}
+              className="mt-1 ml-3"
+              max={getCurrentDate()}
+            />
+          </div>
+          {/*select: MBTI  */}
+          <div className="flex gap-3">
+            <div className="flex gap-1">
+              <Lable type="register-lable">MBTI 유형:</Lable>
             </div>
-            {/*submit: 클릭 시, form에 입력된 정보들을 벡엔드로 보냄. */}
-            <div className="flex gap-3 justify-center">
-                <button 
-                    type="submit" 
-                    className=" shadow-md rounded-[0.625rem] text-[0.875rem] w-[13.75rem] h-[2.875rem] bg-[#54AB75] text-[#ffffff] cursor-pointer hover:bg-transparent hover:text-[#54AB75] border border-green-500"
-                    >가입하기</button>
-            </div>                
-            </form>
-        </div>    
-    </>      
-    
-    );
+            <select
+              id="mbti"
+              name="mbti"
+              value={mbti}
+              onChange={mbtiChange}
+              className="mt-1 ml-3"
+            >
+              <option value="" selected>
+                -- MBTI를 선택하세요 --
+              </option>
+              <option value="none">선택안함</option>
+              <option value="ENFJ">ENFJ</option>
+              <option value="ENFP">ENFP</option>
+              <option value="ENTJ">ENTJ</option>
+              <option value="ENTP">ENTP</option>
+              <option value="ESFJ">ESFJ</option>
+              <option value="ESFP">ESFP</option>
+              <option value="ESTJ">ESTJ</option>
+              <option value="ESTP">ESTP</option>
+              <option value="INFJ">INFJ</option>
+              <option value="INFP">INFP</option>
+              <option value="INTJ">INTJ</option>
+              <option value="INTP">INTP</option>
+              <option value="ISFJ">ISFJ</option>
+              <option value="ISFP">ISFP</option>
+              <option value="ISTJ">ISTJ</option>
+              <option value="ISTP">ISTP</option>
+            </select>
+          </div>
+          {/*radio: 개인정보 동의 => 어떻게 처리할까? */}
+          <div className="flex gap-3 justify-center">
+            <div className="flex gap-1">
+              <label>
+                <input type="radio" name="policy" value="policy" />
+                개인 정보 수집 동의
+              </label>
+            </div>
+          </div>
+          {/*submit: 클릭 시, form에 입력된 정보들을 벡엔드로 보냄. */}
+          <div className="flex gap-3 justify-center">
+            <button
+              type="submit"
+              className=" shadow-md rounded-[0.625rem] text-[0.875rem] w-[13.75rem] h-[2.875rem] bg-[#54AB75] text-[#ffffff] cursor-pointer hover:bg-transparent hover:text-[#54AB75] border border-green-500"
+            >
+              가입하기
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
+  );
 }
-  export default JoinPage;
+export default JoinPage;
