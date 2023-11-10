@@ -4,10 +4,7 @@ import Button from "../components/Button";
 import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import axios from "axios";
-import React, {useEffect, useState} from "react";
-
-
-
+import React, { useEffect, useState } from "react";
 
 function JoinPage() {
   /*-----주소찾기 API-----*/
@@ -24,28 +21,29 @@ function JoinPage() {
     setModalIsOpen(false);
   };
 
-// 주소 검색 후 주소 클릭 시 실행될 함수, data callback 용(주소찾기)
-const handlePostCode = (data) => {
+  // 주소 검색 후 주소 클릭 시 실행될 함수, data callback 용(주소찾기)
+  const handlePostCode = (data) => {
     let fullAddress = data.address;
-    let extraAddress = ''; 
-    
-    if (data.addressType === 'R') {
-      if (data.bname !== '') {
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
         extraAddress += data.bname;
       }
-      if (data.buildingName !== '') {
-        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
       }
-      fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
-    console.log(data)
+    console.log(data);
     // fullAddress 값을 주소 상태에 저장
     setAddress(fullAddress);
     //모달창을 닫음.
     closePostCode();
-}
-// 주소 찾기 api 스타일
-const postCodeStyle = {
+  };
+  // 주소 찾기 api 스타일
+  const postCodeStyle = {
     display: "block",
     position: "absolute",
     top: "10%",
@@ -133,69 +131,69 @@ const postCodeStyle = {
       });
   };
 
-/*-----이메일 인증(end)-----*/
+  /*-----이메일 인증(end)-----*/
 
-
-//값 세팅 메서드
-//주소
-const addressChange = (e) => {
+  //값 세팅 메서드
+  //주소
+  const addressChange = (e) => {
     e.preventDefault();
-    setAddress(e.target.value); 
-}
-//성별
-const genderChange = (e) => {
+    setAddress(e.target.value);
+  };
+  //성별
+  const genderChange = (e) => {
     //e.preventDefault();
-    setGender(e.target.value); 
-}
-//생년월일
-const birthChange = (e) => {
+    setGender(e.target.value);
+  };
+  //생년월일
+  const birthChange = (e) => {
     e.preventDefault();
-    setBirth(e.target.value); 
-}
-//MBTI
-const mbtiChange = (e) => {
+    setBirth(e.target.value);
+  };
+  //MBTI
+  const mbtiChange = (e) => {
     e.preventDefault();
-    setMbti(e.target.value); 
-}
+    setMbti(e.target.value);
+  };
 
-// 유효성 검사를 위한 선언
-const [isName, setIsName] = useState(false)
-const [isEmail, setIsEmail] = useState(false)
-const [isPassword, setIsPassword] = useState(false)
-const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
-const [isPhoneNum, setIsPhoneNum] = useState(false)
-//폼 제출 전 유효한지 체크
-const [isFormValid, setIsFormValid] = useState(false);
+  // 유효성 검사를 위한 선언
+  const [isName, setIsName] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const [isPhoneNum, setIsPhoneNum] = useState(false);
+  //폼 제출 전 유효한지 체크
+  const [isFormValid, setIsFormValid] = useState(false);
 
-/* 유효성 검사 */
-// 이름
-const userNameChange = (e) => {
+  /* 유효성 검사 */
+  // 이름
+  const userNameChange = (e) => {
     e.preventDefault();
     const userNameRegex = /^[가-힣]{2,6}$/; //한글 이름 2~6자 이내
     const userNameCurrent = e.target.value; // 입력된 이름
     setUserName(userNameCurrent);
     if (!userNameRegex.test(userNameCurrent)) {
-      setNameMessage('한글 이름을 2~6자 이내로 입력해주세요.');
+      setNameMessage("한글 이름을 2~6자 이내로 입력해주세요.");
       setIsName(false);
     } else {
-      setNameMessage('올바른 이름 형식입니다 :)');
+      setNameMessage("올바른 이름 형식입니다 :)");
       setIsName(true);
     }
   };
 
-// 이메일
-const emailChange = (e) => {
+  // 이메일
+  const emailChange = (e) => {
     e.preventDefault();
     //이메일 형식만 가능
-    const emailRegex =/([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    const emailCurrent = e.target.value;// 입력된 이메일
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const emailCurrent = e.target.value; // 입력된 이메일
     setEmail(emailCurrent);
-  
+
     if (!emailRegex.test(emailCurrent)) {
-      setEmailMessage('이메일 형식이 맞지 않습니다.');
+      setEmailMessage("이메일 형식이 맞지 않습니다.");
       setIsEmail(false);
     } else {
-      setEmailMessage('올바른 이메일 형식이에요 : )');
+      setEmailMessage("올바른 이메일 형식이에요 : )");
       setIsEmail(true);
     }
   };
@@ -206,13 +204,15 @@ const emailChange = (e) => {
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/; //숫자+영문자+특수문자 조합으로 8자리 이상
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
-    
+
     if (!passwordRegex.test(passwordCurrent)) {
-        setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!');
-        setIsPassword(false);
+      setPasswordMessage(
+        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
+      );
+      setIsPassword(false);
     } else {
-        setPasswordMessage('안전한 비밀번호에요 : )');
-        setIsPassword(true);
+      setPasswordMessage("안전한 비밀번호에요 : )");
+      setIsPassword(true);
     }
 
     if (password !== passwordConfirm) {
@@ -221,41 +221,40 @@ const emailChange = (e) => {
     }
   };
 
-// 비밀번호 확인
-const onChangePasswordConfirm = (e) => {
+  // 비밀번호 확인
+  const onChangePasswordConfirm = (e) => {
+    const passwordConfirmCurrent = e.target.value;
+    setPasswordConfirm(passwordConfirmCurrent);
 
-    const passwordConfirmCurrent = e.target.value
-    setPasswordConfirm(passwordConfirmCurrent)
-    
     if (password === passwordConfirmCurrent) {
-        setPasswordConfirmMessage('비밀번호를 똑같이 입력했어요 : )')
-        setIsPasswordConfirm(true)
+      setPasswordConfirmMessage("비밀번호를 똑같이 입력했어요 : )");
+      setIsPasswordConfirm(true);
     } else {
-        setPasswordConfirmMessage('비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ')
-        setIsPasswordConfirm(false)
-    }
-}
-
-// 전화번호
-const phoneChange = (e) => {
-    e.preventDefault();
-    //전화번호(숫자) 형식만 가능
-    const phoneRegex =/^(01[0|1|6|7|8|9]{1})-?([0-9]{3,4})-?([0-9]{4})$/;
-    const phoneCurrent = e.target.value;// 입력된 전화번호
-    setPhone(phoneCurrent);
-  
-    if (!phoneRegex.test(phoneCurrent)) {
-        setPhoneMessage('전화번호 형식이 맞지 않습니다.');
-        setIsPhoneNum(false);
-    } else {
-        setPhoneMessage('올바른 전화번호 형식이에요 : )');
-        setIsPhoneNum(true);
+      setPasswordConfirmMessage("비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ");
+      setIsPasswordConfirm(false);
     }
   };
 
-//생년월일
-// 현재 날짜를 "YYYY-MM-DD" 형식의 문자열로 반환하는 함수
-function getCurrentDate() {
+  // 전화번호
+  const phoneChange = (e) => {
+    e.preventDefault();
+    //전화번호(숫자) 형식만 가능
+    const phoneRegex = /^(01[0|1|6|7|8|9]{1})-?([0-9]{3,4})-?([0-9]{4})$/;
+    const phoneCurrent = e.target.value; // 입력된 전화번호
+    setPhone(phoneCurrent);
+
+    if (!phoneRegex.test(phoneCurrent)) {
+      setPhoneMessage("전화번호 형식이 맞지 않습니다.");
+      setIsPhoneNum(false);
+    } else {
+      setPhoneMessage("올바른 전화번호 형식이에요 : )");
+      setIsPhoneNum(true);
+    }
+  };
+
+  //생년월일
+  // 현재 날짜를 "YYYY-MM-DD" 형식의 문자열로 반환하는 함수
+  function getCurrentDate() {
     const now = new Date(); // 현재 시간을 가져옴
     const year = now.getFullYear(); // 연도를 가져옴
     const month = String(now.getMonth() + 1).padStart(2, "0"); // 월을 가져옴 (0부터 시작하므로 +1 필요), 두 자리로 만듦
@@ -267,11 +266,11 @@ function getCurrentDate() {
   useEffect(() => {
     setIsFormValid(
       isPassword &&
-        isPasswordConfirm &&
-        isName &&
-        isEmail &&
-        isPhoneNum &&
-        isEmailVerified
+      isPasswordConfirm &&
+      isName &&
+      isEmail &&
+      isPhoneNum &&
+      isEmailVerified
     );
   }, [
     isPassword,
@@ -282,77 +281,81 @@ function getCurrentDate() {
     isEmailVerified,
   ]);
 
-//백엔드 통신
-const baseUrl = "http://localhost:8080";
-const handleSubmit = async (e) => {
+  //백엔드 통신
+  const baseUrl = "http://localhost:8080";
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(birth)
-    console.log(gender)
-    console.log(userName)
+    console.log(birth);
+    console.log(gender);
+    console.log(userName);
 
     //폼에 입력된 값이 유효한지 체크한 후, false면 전송 X
     if (!isFormValid) {
-        alert('회원가입 입력이 잘못되었습니다.');
-        return;
-      }
+      alert("회원가입 입력이 잘못되었습니다.");
+      return;
+    }
 
     await axios
-        .post(baseUrl + "/api/users/new", {
-            email: email,
-            userName: userName,
-            phone: phone,
-            password: password,
-            address: address,
-            gender: gender,
-            birth: birth,
-            mbti: mbti
-        })
-        .then((response) => {
-            console.log(response.data)
-            console.log(birth)
-            alert(response.data);
-            window.location.href = "/login"; // 로그인 페이지로 이동.
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-}
+      .post(baseUrl + "/api/users/new", {
+        email: email,
+        userName: userName,
+        phone: phone,
+        password: password,
+        address: address,
+        gender: gender,
+        birth: birth,
+        mbti: mbti,
+      })
+      .then((response) => {
+        console.log(response.data);
+        console.log(birth);
+        alert(response.data);
+        window.location.href = "/login"; // 로그인 페이지로 이동.
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-return (
-    <>  
-    {/*헤더 부분 */}
-        <div className="w-[78.75rem] mx-auto my-0">
-            <div className="flex justify-between mt-4">
-                <img src="img/mainlogo.svg" alt="메인로고" />
-            </div>
+  return (
+    <>
+      {/*헤더 부분 */}
+      <div className="w-[78.75rem] mx-auto my-0">
+        <div className="flex justify-between mt-4">
+          <img src="img/mainlogo.svg" alt="메인로고" />
         </div>
+      </div>
 
-        {/*회원가입 폼 부분 */}
-        <div className="mt-10 w-[35.625rem] rounded-[0.625rem] mx-auto">
-            <h2 className="mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                회원 가입
-            </h2>
-            <form className="space-y-6" onSubmit={handleSubmit}> {/* submit 버튼으로 보냄. */}
-            {/*input: 이메일 */}
-            <div className="flex gap-3">
-                <div className="flex gap-1">    
-                    <Lable type="register-lable">이메일 </Lable>
-                    <span className="text-[#F60000] mt-[0.350rem]">*</span>
-                </div>
-                <div className="flex">
-                <Input 
-                    type="register-input" 
-                    id="email"
-                    name="email"
-                    value={email}
-                    onChange={emailChange}
-                    required
-                    placeholder="이메일을 입력해주세요. (예: aa @ bb.cc)"
-                    ></Input>
-                <Button type="register-emailDoubleCheck"
-                        onClick={handleEmailVerification}
-                        >이메일 인증</Button>
-                </div>
+      {/*회원가입 폼 부분 */}
+      <div className="mt-10 w-[35.625rem] rounded-[0.625rem] mx-auto">
+        <h2 className="mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          회원 가입
+        </h2>
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          {" "}
+          {/* submit 버튼으로 보냄. */}
+          {/*input: 이메일 */}
+          <div className="flex gap-3">
+            <div className="flex gap-1">
+              <Lable type="register-lable">이메일 </Lable>
+              <span className="text-[#F60000] mt-[0.350rem]">*</span>
+            </div>
+            <div className="flex">
+              <Input
+                type="register-input"
+                id="email"
+                name="email"
+                value={email}
+                onChange={emailChange}
+                required
+                placeholder="이메일을 입력해주세요. (예: aa @ bb.cc)"
+              ></Input>
+              <Button
+                type="register-emailDoubleCheck"
+                onClick={handleEmailVerification}
+              >
+                이메일 인증
+              </Button>
             </div>
           </div>
           <div className="flex justify-between mt-0">
