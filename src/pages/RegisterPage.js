@@ -79,11 +79,47 @@ function JoinPage() {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isEmailCodeOpen, setEmailCodeOpen] = useState(false);
   const [authCode, setAuthCode] = useState("");
+  //타이머 설정 초기화
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [timerSeconds, setTimerSeconds] = useState(180); // 3분 (180초)
+
+  //타이머 시작
+  const startTimer = () => {
+    setIsTimerRunning(true);
+  };
+  //타이머 종료
+  const stopTimer = () => {
+    setIsTimerRunning(false);
+    setTimerSeconds(180);
+  };
+
+  //타이머 설정
+  useEffect(() => {
+    let interval = null;
+
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setTimerSeconds((prevSeconds) => prevSeconds - 1); 
+      }, 1000);// timerSeconds 상태를 1초씩 감소
+    }
+
+    if (timerSeconds === 0) {
+      stopTimer();
+      setEmailCodeOpen(false);
+      alert("인증코드가 만료되었습니다.");
+    }
+
+    return () => clearInterval(interval); //타이머 리셋
+  }, [isTimerRunning, timerSeconds]);
 
   // 이메일 인증 버튼 클릭 이벤트 핸들러
   const handleEmailVerification = async (e) => {
     //백엔드 통신
     e.preventDefault();
+    setIsEmailVerified(false); //인증 여부(false)
+    setAuthCode(""); //인증코드 초기화
+    setTimerSeconds(180); //타이머 초기화
+    setCodeCheckedMessage("인증이 필요합니다.");
 
     await axios
       .post(baseUrl + "/api/users/emails/authenticationRequest", {
@@ -94,7 +130,7 @@ function JoinPage() {
         alert(response.data);
         // 인증 코드를 입력받을 새로운 input 태그 생성 및 표시
         setEmailCodeOpen(true);
-        setCodeCheckedMessage("인증이 필요합니다.");
+        startTimer();
       })
       .catch((error) => {
         console.log(error);
@@ -120,13 +156,14 @@ function JoinPage() {
         //인증 완료
         console.log(isEmailVerified);
         alert(response.data);
+        setIsEmailVerified(true); //인증 확인완료(true)
+        stopTimer(); // 타이머 종료
+        
         setCodeCheckedMessage("인증이 완료되었습니다.");
-        setIsEmailVerified(true);
       })
       .catch((error) => {
         console.log(error);
         alert(error.response.data.message);
-        setCodeCheckedMessage("인증 코드를 다시 입력해주세요.");
         setIsEmailVerified(false);
       });
   };
@@ -188,6 +225,7 @@ function JoinPage() {
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const emailCurrent = e.target.value; // 입력된 이메일
     setEmail(emailCurrent);
+
 
     if (!emailRegex.test(emailCurrent)) {
       setEmailMessage("이메일 형식이 맞지 않습니다.");
@@ -358,6 +396,7 @@ function JoinPage() {
                 onChange={emailChange}
                 required
                 placeholder="이메일을 입력해주세요. (예: aa @ bb.cc)"
+                readOnly={isEmailVerified}
               ></Input>
               <Button
                 type="register-emailDoubleCheck"
@@ -390,6 +429,7 @@ function JoinPage() {
                   onChange={(e) => setAuthCode(e.target.value)}
                   placeholder="인증 코드를 입력해주세요."
                   className="w-[10.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
+                  readOnly={isEmailVerified}
                 ></input>
                 <Button
                   type="register-emailDoubleCheck"
@@ -401,19 +441,41 @@ function JoinPage() {
             )}
           </div>
           {/*인증코드 유효성 체크 : 이메일 인증확인 */}
-          {isEmail && (
+          {isEmail && isEmailVerified?(
             <div
-              className={`message ${isEmailVerified ? "success" : "error"}`}
+              className={`message success`}
               style={{
                 marginTop: "0",
                 paddingRight: "4rem",
-                color: isEmailVerified ? "green" : "red", // 에러: 빨강색 / 성공: 초록색
+                color: "green", // 에러: 빨강색 / 성공: 초록색
                 textAlign: "right",
               }}
             >
               {codeCheckedMessage}
             </div>
+          ):isEmailCodeOpen ?(
+            <div
+              className={`message error`}
+              style={{
+                marginTop: "0",
+                paddingRight: "4rem",
+                color: "red", // 에러: 빨강색 / 성공: 초록색
+                textAlign: "right",
+              }}
+            >
+              {isTimerRunning ? (
+            <div className="timer">
+              {Math.floor(timerSeconds / 60)}:
+              {timerSeconds % 60 < 10
+                ? `0${timerSeconds % 60}`
+                : timerSeconds % 60}
+            </div>
+          ) : (
+            codeCheckedMessage
           )}
+            </div>
+          ):null}
+          
           {/*input: 이름 */}
           <div className="flex gap-3">
             <div className="flex gap-1">
