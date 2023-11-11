@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const BoardSideBar = ({
+const BoardSideBarModal = ({
   onSelectPlaceCategory,
   selectedPlaceImg,
   setSelectedPlaceImg,
 }) => {
-  const [selectedLocation, setSelectedLocation] = useState(null); //마우스 오버
-  const [clickedLocation, setClickedLocation] = useState(null); //마우스 클릭
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [clickedLocation, setClickedLocation] = useState(null);
 
   useEffect(() => {
     if (selectedPlaceImg) {
@@ -30,10 +30,10 @@ const BoardSideBar = ({
       setSelectedPlaceImg(imgName);
     }
   };
-  const handleMouseEnter = (imgname) => {
+  const handleMouseEnter = (imageName) => {
     if (!clickedLocation) {
       // 클릭한 항목이 없는 경우에만 selectedLocation을 업데이트
-      setSelectedLocation(imgname);
+      setSelectedLocation(imageName);
     }
   };
   const handleMouseLeave = () => {
@@ -106,10 +106,10 @@ const BoardSideBar = ({
     <>
       <aside
         id="default-sidebar"
-        className="fixed bg-white left-0 z-40 w-[170px] d_s:w-64 h-screen transition-transform -translate-x-full t_ms:translate-x-0 text-lg leading-loose"
+        className="fixed bg-[#F6F6F6] left-0 z-40 w-[170px] h-screen text-lg leading-loose"
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 overflow-y-auto">
+        <div className="mt-[5rem] px-3 overflow-y-auto">
           <ul className="space-y-2 font-medium">
             {locationList.map((location) => (
               <li key={location.alt}>
@@ -142,4 +142,4 @@ const BoardSideBar = ({
   );
 };
 
-export default BoardSideBar;
+export default BoardSideBarModal;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const BoardSideBar = ({
+const FoodBoardSideBar = ({
   onSelectPlaceCategory,
   selectedPlaceImg,
   setSelectedPlaceImg,
@@ -41,64 +41,49 @@ const BoardSideBar = ({
   };
   const locationList = [
     {
-      name: "내 위치",
-      image: "img/myPlaceSideBar.svg",
-      alt: "내 위치 아이콘",
+      name: "양식",
+      image: "img/pastaSideBar.svg",
+      alt: "파스타 아이콘",
     },
     {
-      name: "용산",
-      image: "img/youngsanSideBar.svg",
-      alt: "용산 이미지",
+      name: "카페",
+      image: "img/cafeSideBar.svg",
+      alt: "카페 이미지",
     },
     {
-      name: "성수",
-      image: "img/SengsuSideBar.svg",
-      alt: "성수 이미지",
+      name: "찜",
+      image: "img/zzimSideBar.svg",
+      alt: "찜 이미지",
     },
     {
-      name: "종로",
-      image: "img/JongnoSideBar.svg",
-      alt: "종로 이미지",
+      name: "일식",
+      image: "img/japanSideBar.svg",
+      alt: "일식 이미지",
     },
     {
-      name: "동대문",
-      image: "img/DongdaemunSideBar.svg",
-      alt: "동대문 이미지",
+      name: "피자",
+      image: "img/pizzaSideBar.svg",
+      alt: "피자 이미지",
     },
     {
-      name: "잠실",
-      image: "img/JamsilSideBar.svg",
-      alt: "잠실 이미지",
+      name: "햄버거",
+      image: "img/hambergerSideBar.svg",
+      alt: "햄버거 이미지",
     },
     {
-      name: "여의도",
-      image: "img/YeouidoSideBar.svg",
-      alt: "여의도 이미지",
+      name: "분식",
+      image: "img/dduckbockyBar.svg",
+      alt: "분식 이미지",
     },
     {
-      name: "홍대",
-      image: "img/HongdaeSideBar.svg",
-      alt: "홍대 이미지",
+      name: "아시아",
+      image: "img/asiaSideBar.svg",
+      alt: "아시아 이미지",
     },
     {
-      name: "신사",
-      image: "img/SinsaSideBar.svg",
-      alt: "신사 이미지",
-    },
-    {
-      name: "경복궁",
-      image: "img/GyeongbokgungSideBar.svg",
-      alt: "경복궁 이미지",
-    },
-    {
-      name: "청담",
-      image: "img/CheongdamSideBar.svg",
-      alt: "청담 이미지",
-    },
-    {
-      name: "삼성",
-      image: "img/SamseongSideBar.svg",
-      alt: "삼성 이미지",
+      name: "야식",
+      image: "img/nightfoodSideBar.svg",
+      alt: "야식 이미지",
     },
   ];
 
@@ -142,4 +127,4 @@ const BoardSideBar = ({
   );
 };
 
-export default BoardSideBar;
+export default FoodBoardSideBar;
