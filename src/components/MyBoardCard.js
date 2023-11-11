@@ -25,8 +25,8 @@ const MyBoardCard = ({ myBoards }) => {
         {myBoards.title}
       </p>
       <ul className="list-disc absolute bottom-[3.8rem] left-[2rem] ">
-        <li className="text-[#8B8686] text-[0.5rem]">태그1</li>
-        <li className="text-[#8B8686] text-[0.5rem]">태그2</li>
+        <li className="text-[#8B8686] text-[0.5rem]">{myBoards.restaurantName}</li>
+        <li className="text-[#8B8686] text-[0.5rem]">{myBoards.restaurantAddress}</li>
       </ul>
       <button
         className="rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#54AB75] text-[#ffffff] absolute bottom-[1rem] left-[1rem] shadow-md"

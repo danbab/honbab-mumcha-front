@@ -11,67 +11,70 @@ const MyPage = () => {
     const [myBoard, setMyBoard] = useState([]);
     const [selectMyPageCategory, setSelectMyPageCategory] = useState(null);
     const [user, setUser] = useState(null);
-    //const baseUrl = "http://localhost:8080";
-    // const getCurrentUser = async () => {
-    //     try {
-    //         const storedUser = sessionStorage.getItem("user");
-    //         if (storedUser) {
-    //             // JSON 문자열을 객체로 변환
-    //             const userObject = JSON.parse(storedUser);
-    //             setUser(userObject);
-    //         } else {
-    //             window.location.href = "/login"; // 로그인 페이지로 보내기
-    //         }
-    //     } catch (e) {
-    //         console.error("사용자 정보 가져오기 실패:" + e);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
-    //     getCurrentUser();
-    // }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
+    // const baseUrl = "http://localhost:8080/api/my";
+    const getCurrentUser = async () => {
+        try {
+            const storedUser = sessionStorage.getItem("user");
+            if (storedUser) {
+                // JSON 문자열을 객체로 변환
+                const userObject = JSON.parse(storedUser);
+                setUser(userObject);
+            } else {
+                window.location.href = "/login"; // 로그인 페이지로 보내기
+            }
+        } catch (e) {
+            console.error("사용자 정보 가져오기 실패:" + e);
+        }
+    };
 
     useEffect(() => {
         // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
-        const storedUser = sessionStorage.getItem("user");
-        if (storedUser) {
-            // JSON 문자열을 객체로 변환
-            const userObject = JSON.parse(storedUser);
-            setUser(userObject);
-        } else {
-            window.location.href = "/login"; // 로그인 페이지로 보내기
-        }
-
-        
+        getCurrentUser();
     }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
 
+    // useEffect(() => {
+    //     // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
+    //     const storedUser = sessionStorage.getItem("user");
+    //     if (storedUser) {
+    //         // JSON 문자열을 객체로 변환
+    //         const userObject = JSON.parse(storedUser);
+    //         setUser(userObject);
+    //     } else {
+    //         window.location.href = "/login"; // 로그인 페이지로 보내기
+    //     }
+
+        
+    // }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
+    const fetchBoardData = async () => {
+
+        try {
+            const response = await axios.get("http://localhost:8080/api/my", {
+                params:{
+                    email: user.email
+                }
+            });
+
+            console.log("서버 응답 :", response.data);
+            setMyBoard(response.data);
+        } catch (error) {
+            console.error("서버 요청 에러: ", error);
+        }
+    };
 
 
     useEffect(() => {
-        const fetchBoardData = async () => {
-            try {
-                const response = await axios.post("http://localhost:8080/my", {
-                    
-                        email: user.email
-                    
-                });
+        if (user) {
+            fetchBoardData();
+        }
     
-                console.log("서버 응답 :", response.data);
-                setMyBoard(response.data);
-            } catch (error) {
-                console.error("서버 요청 에러: ", error);
-            }
-        };
-    
-        fetchBoardData();
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user]);
     
 
     const fetchBoardDataMyCategory = async (myCategory) => {
         try {
             const response = await axios.get(
-                `http://localhost:8080/my/board/${myCategory}`
+                `http://localhost:8080/api/my/board/${myCategory}`
             );
             console.log(`${myCategory}에 대한 서버 응답: `, response.data);
             setMyBoard(response.data);
