@@ -12,7 +12,7 @@ function BoardPage() {
   useEffect(() => {
     const fetchBoardData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/board");
+        const response = await axios.get("http://localhost:8080/api/board");
         console.log("서버 응답:", response.data);
         setBoardDtos(response.data);
       } catch (error) {
@@ -26,7 +26,7 @@ function BoardPage() {
   const fetchBoardDataByPlaceCategory = async (placeCategory) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/board/place/${placeCategory}`
+        `http://localhost:8080/api/board/place/${placeCategory}`
       );
       console.log(`${placeCategory}에 대한 서버 응답:`, response.data);
       setBoardDtos(response.data);
@@ -43,7 +43,7 @@ function BoardPage() {
 
   return (
     <>
-      <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
+      <div className="flex mx-[4.7rem] flex-wrap justisfy-between items-center ">
         <Link to="/">
           <img src="img/mainlogo.svg" alt="메인로고" className="ml-[8rem]" />
         </Link>
