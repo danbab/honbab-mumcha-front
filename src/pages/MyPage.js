@@ -74,8 +74,11 @@ const MyPage = () => {
     const fetchBoardDataMyCategory = async (myCategory) => {
         try {
             const response = await axios.get(
-                `http://localhost:8080/api/my/board/${myCategory}`
-            );
+                `http://localhost:8080/api/my/board/${myCategory}`, {
+                    params:{
+                        email: user.email
+                    }
+                });
             console.log(`${myCategory}에 대한 서버 응답: `, response.data);
             setMyBoard(response.data);
             console.log(myCategory);
