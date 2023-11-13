@@ -5,6 +5,7 @@ import axios from "axios";
 import MyBoardCard from "../components/MyBoardCard";
 import MyPageSection from "../components/MyPageSection";
 import Button from "../components/Button";
+import RegisterUpdate from "../components/RegisterUpdate";
 
 
 const MyPage = () => {
@@ -43,13 +44,13 @@ const MyPage = () => {
     //         window.location.href = "/login"; // 로그인 페이지로 보내기
     //     }
 
-        
+
     // }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
     const fetchBoardData = async () => {
 
         try {
             const response = await axios.get("http://localhost:8080/api/my", {
-                params:{
+                params: {
                     email: user.email
                 }
             });
@@ -66,22 +67,22 @@ const MyPage = () => {
         if (user) {
             fetchBoardData();
         }
-    
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
-    
+
 
     const fetchBoardDataMyCategory = async (myCategory) => {
         try {
             const response = await axios.get(
                 `http://localhost:8080/api/my/board/${myCategory}`, {
-                    params:{
-                        email: user.email
-                    }
-                });
+                params: {
+                    email: user.email
+                }
+            });
             console.log(`${myCategory}에 대한 서버 응답: `, response.data);
             setMyBoard(response.data);
-            console.log(myCategory);
+            // console.log(myCategory);
         } catch (error) {
             console.error(`${myCategory}에 대한 서버 요청 에러: `, error);
         }
@@ -89,6 +90,7 @@ const MyPage = () => {
 
     useEffect(() => {
         if (selectMyPageCategory) {
+            console.log("여기?", selectMyPageCategory);
             fetchBoardDataMyCategory(selectMyPageCategory);
         }
     }, [selectMyPageCategory]);
@@ -99,6 +101,7 @@ const MyPage = () => {
         sessionStorage.removeItem("user");
         // 사용자 상태 초기화
         setUser(null);
+        window.location.href = "/";
     };
 
     return (
@@ -114,7 +117,9 @@ const MyPage = () => {
                     {user ? (
                         // 세션이 있는 경우, 로그아웃 버튼 표시
                         <>
-                            <>{user.username}</>
+                            <Link to="/my">
+                                {user.username}
+                            </Link>
                             <Button type="login" onClick={handleLogout}>
                                 로그아웃
                             </Button>
@@ -135,16 +140,20 @@ const MyPage = () => {
 
             <div className="flex">
                 <div className="mr-[1.2rem]">
-                    {user? (
-                    <MyPageSideBar onSelectMyPageCategory={setSelectMyPageCategory} user={user} />
-                    ):[]}
-                    </div>
+                    {user ? (
+                        <MyPageSideBar onSelectMyPageCategory={setSelectMyPageCategory} user={user} />
+                    ) : []}
+                </div>
 
                 <MyPageSection>
 
-                    {myBoard.map((myBoards) => (
-                        <MyBoardCard myBoards={myBoards} />
-                    ))}
+                    {selectMyPageCategory === '정보수정' ? (
+                        <RegisterUpdate user={user} />
+                    ) : (
+                        myBoard.map((myBoards) => (
+                            <MyBoardCard myBoards={myBoards} />
+                        ))
+                    )}
 
                 </MyPageSection>
             </div>

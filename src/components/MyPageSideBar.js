@@ -61,7 +61,9 @@ const MyPageSideBar = ({ onSelectMyPageCategory ,user }) => {
         <div className="h-full px-3 overflow-y-auto">
           <ul className="space-y-2 text-center font-medium">
             {/* 로그인한 회원의 Id를 가지고 와야함 */}
+            <Link to="/my" onClick={() => window.location.reload()}>
             <div className="text-[1.5rem] mb-[3.4rem] ml-[1.2rem]" >{user.username}</div>
+            </Link>
             {myPageList.map((list) => (
               <li key={list.alt}>
                 <Link

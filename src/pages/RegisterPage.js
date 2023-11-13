@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function JoinPage() {
   /*-----주소찾기 API-----*/
@@ -322,7 +323,9 @@ function JoinPage() {
       {/*헤더 부분 */}
       <div className="w-[78.75rem] mx-auto my-0">
         <div className="flex justify-between mt-4">
+          <Link to="/">
           <img src="img/mainlogo.svg" alt="메인로고" />
+          </Link>
         </div>
       </div>
 
