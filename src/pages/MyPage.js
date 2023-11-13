@@ -12,6 +12,7 @@ const MyPage = () => {
     const [myBoard, setMyBoard] = useState([]);
     const [selectMyPageCategory, setSelectMyPageCategory] = useState(null);
     const [user, setUser] = useState(null);
+
     // const baseUrl = "http://localhost:8080/api/my";
     const getCurrentUser = async () => {
         try {
@@ -95,7 +96,6 @@ const MyPage = () => {
         }
     }, [selectMyPageCategory]);
 
-
     const handleLogout = () => {
         // 로그아웃 버튼을 클릭했을 때 세션에서 사용자 정보 삭제
         sessionStorage.removeItem("user");
@@ -149,6 +149,18 @@ const MyPage = () => {
 
                     {selectMyPageCategory === '정보수정' ? (
                         <RegisterUpdate user={user} />
+                    ) : selectMyPageCategory === '내가찜한약속' ? (
+                        <>
+                           <div className="text-red-600">현재 기능 구현 중입니다 </div>
+                        </>
+                    ) : selectMyPageCategory === '내채팅' ? (
+                        <>
+                           <div className="text-red-600">현재 기능 구현 중입니다 </div>
+                        </>
+                    ) : selectMyPageCategory === '회원탈퇴' ? (
+                        <>
+                           <div className="text-red-600">현재 기능 구현 중입니다 </div>
+                        </>
                     ) : (
                         myBoard.map((myBoards) => (
                             <MyBoardCard myBoards={myBoards} />
