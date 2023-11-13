@@ -186,7 +186,7 @@ const WritePage = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
             <textarea
-              className="border bg-[#F9F9F9] rounded-md px-2 h-[36.5rem] mb-5 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] py-3 px-3"
+              className="border bg-[#F9F9F9] rounded-md px-2 h-[36.5rem] mb-5 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] py-3"
               value={content}
               onChange={(e) => setContent(e.target.value)}
             ></textarea>
