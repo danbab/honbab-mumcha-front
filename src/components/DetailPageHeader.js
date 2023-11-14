@@ -10,7 +10,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 
 const DetailPageHeader = ({ boardData, isLoading }) => {
   // 좋아요 버튼 active/inactive
-  console.log(boardData);
+  console.log('이건 props로 준 보드 데이터:' + boardData);
   const [active, setActive] = useState(false);
 
   if (isLoading) {

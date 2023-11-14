@@ -18,8 +18,8 @@ const WritePage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isInputVisible, setInputVisible] = useState(false);
-  // const [lat, setLat] = useState(null);
-  // const [lng, setLng] = useState(null);
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
 
   const handleClick = () => {
     setInputVisible(!isInputVisible);
@@ -70,7 +70,8 @@ const WritePage = () => {
             })
             .then((response) => {
               console.log(response.data);
-              alert(response.data);
+              // alert(response.data);
+              alert('작성이 완료되었습니다.');
             });
         } catch (error) {
           console.error(error);
@@ -194,8 +195,8 @@ const WritePage = () => {
             ></textarea>
           </div>
         </div>
-        {/* <input type="hidden" name="lat" value={lat} />
-        <input type="hidden" name="lng" value={lng} /> */}
+        <input type="hidden" name="lat" value={lat} />
+        <input type="hidden" name="lng" value={lng} />
       </form>
     </>
   );

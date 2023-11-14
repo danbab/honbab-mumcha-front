@@ -17,6 +17,7 @@ const BoardDetailPage = () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/board/${state.id}`);
         setBoardData(response.data);
+        console.log('axios로 값 받아온 후의 보드 데이터:' + boardData);
       } catch (e) {
         console.error("모집글 상세 정보 가져오기 실패!: ", e);
       } finally {
