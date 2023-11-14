@@ -143,13 +143,13 @@ function BoardPage() {
     const handleResize = () => {
       if (window.innerWidth > 878) {
         setIsModalOpen(false);
-//     const fetchBoardData = async () => {
-//       try {
-//         const response = await axios.get("http://localhost:8080/api/board");
-//         console.log("서버 응답:", response.data);
-//         setBoardDtos(response.data);
-//       } catch (error) {
-//         console.error("서버 요청 에러:", error);
+        //     const fetchBoardData = async () => {
+        //       try {
+        //         const response = await axios.get("http://localhost:8080/api/board");
+        //         console.log("서버 응답:", response.data);
+        //         setBoardDtos(response.data);
+        //       } catch (error) {
+        //         console.error("서버 요청 에러:", error);
       }
     };
 
@@ -162,7 +162,7 @@ function BoardPage() {
   //전체 보드 로딩
   const fetchBoardData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/board");
+      const response = await axios.get("http://localhost:8080/api/board");
       console.log("서버 응답:", response.data);
       setBoardDtos(response.data);
     } catch (error) {
@@ -175,14 +175,13 @@ function BoardPage() {
   }, []);
   //카테고리로 검색
   const fetchBoardDataByCategory = async (category) => {
-    let apiURL = "http://localhost:8080/board";
+    let apiURL = "http://localhost:8080/api/board";
     if (JSON.stringify(basicList) === JSON.stringify(foodList)) {
       apiURL = apiURL + `/food/${category}`;
     } else {
       apiURL = apiURL + `/place/${category}`;
     }
     try {
-
       const response = await axios.get(apiURL);
       console.log(`${category}에 대한 서버 응답:`, response.data);
 
@@ -198,7 +197,7 @@ function BoardPage() {
     } else if (keyWord && keyWord.trim() !== "") {
       try {
         const response = await axios.get(
-          `http://localhost:8080/board/findby/${keyWord}`
+          `http://localhost:8080/api/board/findby/${keyWord}`
         );
         console.log(`${keyWord}에 대한 서버 응답:`, response.data);
         setBoardDtos(response.data);
