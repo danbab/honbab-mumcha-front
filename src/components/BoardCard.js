@@ -63,8 +63,8 @@ const Card = ({ boardDto }) => {
       />
 
       <ul className="list-disc absolute bottom-[3.8rem] left-[2rem] ">
-        <li className="text-[#8B8686] text-[0.5rem]">태그1</li>
-        <li className="text-[#8B8686] text-[0.5rem]">태그2</li>
+        <li className="text-[#8B8686] text-[0.6rem]">{boardDto.restaurantName}</li>
+        <li className="text-[#8B8686] text-[0.6rem]">{boardDto.restaurantAddress}</li>
       </ul>
 
       <div className="absolute bottom-[1rem] left-[1rem]">

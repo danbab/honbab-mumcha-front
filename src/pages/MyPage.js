@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react'
 import MyPageSideBar from "../components/MyPageSideBar";
 import axios from "axios";
-import MyBoardCard from "../components/MyBoardCard";
+import BoardCard from "../components/BoardCard";
 import MyPageSection from "../components/MyPageSection";
 import Button from "../components/Button";
 import RegisterUpdate from "../components/RegisterUpdate";
@@ -89,6 +89,24 @@ const MyPage = () => {
         }
     };
 
+    const fetchBoardDataByKeyword = async (keyWord) => {
+
+        if (keyWord === null) {
+            fetchBoardData();
+        } else if (keyWord && keyWord.trim() !== "") {
+            try {
+                const response = await axios.get(
+                  `http://localhost:8080/api/board/findby/${keyWord}`
+                );
+                console.log(`${keyWord}에 대한 서버 응답:`, response.data);
+                setMyBoard(response.data);
+              } catch (error) {
+                console.error(`${keyWord}에 대한 서버 요청 에러:`, error);
+              }
+        } else fetchBoardData();
+
+    };
+
     useEffect(() => {
         if (selectMyPageCategory) {
             console.log("여기?", selectMyPageCategory);
@@ -145,7 +163,7 @@ const MyPage = () => {
                     ) : []}
                 </div>
 
-                <MyPageSection>
+                <MyPageSection fetchBoardDataByKeyword={fetchBoardDataByKeyword}>
 
                     {selectMyPageCategory === '정보수정' ? (
                         <RegisterUpdate user={user} />
@@ -163,7 +181,7 @@ const MyPage = () => {
                         </>
                     ) : (
                         myBoard.map((myBoards) => (
-                            <MyBoardCard myBoards={myBoards} />
+                            <BoardCard boardDto={myBoards} />
                         ))
                     )}
 
