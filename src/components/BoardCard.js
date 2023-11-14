@@ -5,7 +5,15 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
 
-const Card = ({ boardDto, user }) => {
+const Card = ({
+  boardDto,
+  user,
+  participants,
+  bringParticipants,
+  boardDtos,
+  likes,
+  bringLikes,
+}) => {
   const [active, setActive] = useState(false);
   const [joinStatus, setJoinStatus] = useState("join-status-default");
   const [buttonText, setButtonText] = useState("참여하기");
@@ -64,40 +72,123 @@ const Card = ({ boardDto, user }) => {
     }
   };
 
-  const bringStatus = async (e) => {
-    //로그인 되어 있지 않으면 함수 종료, requestStatus는 기본값
+  const [isLiking, setIsLiking] = useState(false); // '좋아요' 요청이 진행 중인지 나타내는 상태 변수 생성
+
+  const enterLikes = async (e) => {
+    //로그인 되어 있지 않으면 로그인 페이지로
     if (user === null) {
-      return;
+      alert("로그인이 필요합니다");
+      sessionStorage.setItem("togoUrl", "/boardList");
+      window.location.href = "/login";
+      return new Promise((resolve, reject) => reject("로그인이 필요합니다"));
     } else {
-      //로그인 되어 있다면 유저와보드로 participants를 검색
-      //status = [1:수락 0:대기 -1:거절 -99:참여정보 없음]
-      await axios
-        .post("http://localhost:8080/api/app/find/participants", {
-          boardNo: boardDto.boardId,
-          email: user.email,
-          username: user.username,
-        })
-        .then((response) => {
-          if (response.data === 1) {
-            setJoinStatus("join-status-accepted");
-            setButtonText("참여중");
-          } else if (response.data === 0) {
-            setJoinStatus("join-status-pending");
-            setButtonText("대기중");
-          } else if (response.data === -1) {
-            setJoinStatus("join-status-rejected");
-            setButtonText("거절됨");
-          } else return;
-        })
-        .then(() => {
-          setIsLoading(false); // axios 통신이 끝나면 isLoading을 false로 설정
-        });
+      if (active) {
+        //이미 '좋아요' 상태라면 '좋아요' 제거 요청
+        return axios
+          .post("http://localhost:8080/api/app/dislikes", {
+            boardNo: boardDto.boardId,
+            email: user.email,
+          })
+          .then((response) => {
+            console.log("what" + response);
+          })
+          .catch((error) => {
+            if (error.response.status === 400) {
+              alert(error.response.data);
+              //console.log(error.response);
+            } else if (error.response.status === 401) {
+              alert("권한이 없습니다. 로그인해주세요.");
+              sessionStorage.setItem("togoUrl", "/boardList");
+              window.location.href = "/login";
+            } else alert("Client : 서버 오류");
+          });
+      } else {
+        //아직 '좋아요' 상태가 아니라면 '좋아요' 요청
+        return axios
+          .post("http://localhost:8080/api/app/likes", {
+            boardNo: boardDto.boardId,
+            email: user.email,
+          })
+          .then((response) => {
+            console.log("what" + response);
+          })
+          .catch((error) => {
+            if (error.response.status === 400) {
+              alert(error.response.data);
+              //console.log(error.response);
+            } else if (error.response.status === 401) {
+              alert("권한이 없습니다. 로그인해주세요.");
+              sessionStorage.setItem("togoUrl", "/boardList");
+              window.location.href = "/login";
+            } else alert("Client : 서버 오류");
+          });
+      }
     }
   };
 
+  // const bringStatus = async (e) => {
+  //   //로그인 되어 있지 않으면 함수 종료, requestStatus는 기본값
+  //   if (user === null) {
+  //     return;
+  //   } else {
+  //     //로그인 되어 있다면 유저와보드로 participants를 검색
+  //     //status = [1:수락 0:대기 -1:거절 -99:참여정보 없음]
+  //     await axios
+  //       .post("http://localhost:8080/api/app/find/participants", {
+  //         boardNo: boardDto.boardId,
+  //         email: user.email,
+  //         username: user.username,
+  //       })
+  //       .then((response) => {
+  //         if (response.data === 1) {
+  //           setJoinStatus("join-status-accepted");
+  //           setButtonText("참여중");
+  //         } else if (response.data === 0) {
+  //           setJoinStatus("join-status-pending");
+  //           setButtonText("대기중");
+  //         } else if (response.data === -1) {
+  //           setJoinStatus("join-status-rejected");
+  //           setButtonText("거절됨");
+  //         } else return;
+  //       })
+  //       .then(() => {
+  //         setIsLoading(false); // axios 통신이 끝나면 isLoading을 false로 설정
+  //       });
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   bringStatus();
+  // }, [joinStatus]);
   useEffect(() => {
-    bringStatus();
-  }, [joinStatus]);
+    if (user === null) return;
+    console.log("BoardCard button setting called :)");
+    setJoinStatus("join-status-default");
+    setButtonText("참여하기");
+    setActive(false);
+    participants.forEach((participant) => {
+      //console.log("dfdfdfdf" + boardDto.boardId);
+      if (participant.board.id === boardDto.boardId) {
+        if (participant.status === 1) {
+          setJoinStatus("join-status-accepted");
+          setButtonText("참여중");
+        } else if (participant.status === 0) {
+          setJoinStatus("join-status-pending");
+          setButtonText("대기중");
+        } else if (participant.status === -1) {
+          setJoinStatus("join-status-rejected");
+          setButtonText("거절됨");
+        } else return;
+      }
+    });
+
+    likes.forEach((like) => {
+      if (like.board.id === boardDto.boardId) {
+        setActive(true);
+      }
+    });
+    setIsLoading(false);
+  }, [user, boardDtos]);
 
   if (isLoading) {
     return <LoadingSpinner />; // 로딩 중일 때는 이 메시지를 표시
@@ -136,8 +227,45 @@ const Card = ({ boardDto, user }) => {
       </Link>
       <Heart
         className="w-[1.5rem] absolute bottom-[6rem] right-[1.1rem]"
+        // isActive={active}
         isActive={active}
-        onClick={() => setActive(!active)}
+        //#v1
+        // onClick={async () => {
+        //   setActive(!active);
+        //   await enterLikes();
+        //   await bringLikes();
+        // }}
+        //#v2
+        // onClick={() => {
+        //   enterLikes().then(() => {
+        //     setActive(!active);
+        //     bringLikes();
+        //   });
+        // }}
+
+        //#v3
+        // onClick={() => {
+        //   setActive(!active); // Immediately update the UI
+        //   enterLikes()
+        //     .catch(() => {
+        //       // If the request fails, revert the UI update
+        //       setActive(active);
+        //     })
+        //     .finally(() => {
+        //       bringLikes(); // Update the likes list once the server request completes
+        //     });
+        // }}
+        //#v4
+        onClick={() => {
+          if (!isLiking) {
+            setIsLiking(true);
+            enterLikes().then(() => {
+              setActive(!active);
+              bringLikes();
+              setIsLiking(false);
+            });
+          }
+        }}
         animationTrigger="both"
         inactiveColor="rgba(255,125,125,.75)"
         activeColor="#E14949"
@@ -151,7 +279,13 @@ const Card = ({ boardDto, user }) => {
 
       <div className="absolute bottom-[1rem] left-[1rem]">
         <div className="w-[14.25rem] h-[2rem] flex justify-between ">
-          <Button type={joinStatus} onClick={enterParty}>
+          <Button
+            type={joinStatus}
+            onClick={async () => {
+              enterParty();
+              await bringParticipants();
+            }}
+          >
             {buttonText}
           </Button>
           {/* 상태에 따라 모집중 또는 모집완료 표시 */}

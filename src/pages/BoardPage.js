@@ -235,6 +235,45 @@ function BoardPage() {
     getCurrentUser();
   }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
 
+  /////임시 작업중
+  const [participants, setParticipants] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const bringParticipants = async (e) => {
+    if (user === null) {
+      return;
+    } else {
+      await axios
+        .post("http://localhost:8080/api/app/find/participants", {
+          email: user.email,
+        })
+        .then((response) => {
+          console.log("아따1" + response);
+          console.log("아따따1" + response.data);
+          setParticipants(response.data);
+        });
+    }
+  };
+  const bringLikes = async (e) => {
+    if (user === null) {
+      return;
+    } else {
+      await axios
+        .post("http://localhost:8080/api/app/find/likes", {
+          email: user.email,
+        })
+        .then((response) => {
+          console.log("아따2" + response);
+          console.log("아따따2" + response.data);
+          setLikes(response.data);
+        });
+    }
+  };
+  useEffect(() => {
+    bringParticipants();
+    bringLikes();
+  }, [user]);
+  ///여기까지 임시
+
   return (
     <>
       <div className="flex mx-[4.7rem] flex-wrap justisfy-between items-center ">
@@ -272,6 +311,11 @@ function BoardPage() {
               key={boardDto.board_id}
               boardDto={boardDto}
               user={user}
+              participants={participants}
+              bringParticipants={bringParticipants}
+              boardDtos={boardDtos}
+              likes={likes}
+              bringLikes={bringLikes}
             />
           ))}
         </BoardSection>
