@@ -143,6 +143,13 @@ function BoardPage() {
     const handleResize = () => {
       if (window.innerWidth > 878) {
         setIsModalOpen(false);
+//     const fetchBoardData = async () => {
+//       try {
+//         const response = await axios.get("http://localhost:8080/api/board");
+//         console.log("서버 응답:", response.data);
+//         setBoardDtos(response.data);
+//       } catch (error) {
+//         console.error("서버 요청 에러:", error);
       }
     };
 
@@ -175,8 +182,10 @@ function BoardPage() {
       apiURL = apiURL + `/place/${category}`;
     }
     try {
+
       const response = await axios.get(apiURL);
       console.log(`${category}에 대한 서버 응답:`, response.data);
+
       setBoardDtos(response.data);
     } catch (error) {
       console.error(`${category}에 대한 서버 요청 에러:`, error);
@@ -209,7 +218,7 @@ function BoardPage() {
 
   return (
     <>
-      <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
+      <div className="flex mx-[4.7rem] flex-wrap justisfy-between items-center ">
         <Link to="/">
           <img src="img/mainlogo.svg" alt="메인로고" className="ml-[8rem]" />
         </Link>

@@ -31,6 +31,15 @@ function BoardPage() {
     const handleResize = () => {
       if (window.innerWidth > 878) {
         setIsModalOpen(false);
+//     const fetchBoardData = async () => {
+//       try {
+//         const response = await axios.get("http://localhost:8080/api/board");
+//         console.log("서버 응답:", response.data);
+//         setBoardDtos(response.data);
+//       } catch (error) {
+//         console.error("서버 요청 에러:", error);
+//         alert("인증이 필요합니다.");
+//         window.location.href = "/login"; // 로그인 페이지로 이동
       }
     };
 
@@ -59,6 +68,7 @@ function BoardPage() {
     try {
       const response = await axios.get(
         `http://localhost:8080/board/food/${placeCategory}`
+
       );
       console.log(`${placeCategory}에 대한 서버 응답:`, response.data);
       setBoardDtos(response.data);

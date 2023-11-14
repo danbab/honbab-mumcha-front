@@ -1,11 +1,11 @@
 import Button from "../components/Button";
 import Heart from "../components/Heart";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Card = ({ boardDto }) => {
   const [active, setActive] = useState(false);
   let date = new Date(boardDto.regDate);
-
   // 날짜 및 시간 형식 지정
   const options = {
     year: "2-digit",
@@ -46,10 +46,12 @@ const Card = ({ boardDto }) => {
         src="img/boardexampleimg.svg"
       />
 
-      {/* 글 제목-title */}
-      <p className="absolute bottom-[6rem] left-[1rem] ml-1 text-[1rem] font-bold">
-        {boardDto.title}
-      </p>
+      <Link to={`/boardDetail`} state={{ id: boardDto.boardId }}>
+        {/* 글 제목-title */}
+        <p className="absolute bottom-[6rem] left-[1rem] ml-1 text-[1rem] font-bold">
+          {boardDto.title}
+        </p>
+      </Link>
       <Heart
         className="w-[1.5rem] absolute bottom-[6rem] right-[1.1rem]"
         isActive={active}

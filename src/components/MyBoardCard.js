@@ -1,6 +1,23 @@
 const MyBoardCard = ({ myBoards }) => {
   let style = "rounded-[0.625rem] shadow-md";
 
+  let date = new Date(myBoards.regDate);
+
+  // 날짜 및 시간 형식 지정
+  const options = {
+    year: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  // 지역화된 문자열로 변환
+  date = date
+    .toLocaleDateString("ko-KR", options)
+    .replace(/\./g, "-")
+    .replace(/ /g, "");
+
   return (
     <div className="bg-[#FDFDFD] w-[15.625rem] h-[24.875rem] rounded-[1.25rem] relative">
       <div className="w-[14.25rem] h-[21.875rem] flex justify-between mx-auto">
@@ -12,9 +29,14 @@ const MyBoardCard = ({ myBoards }) => {
           </div>
         </div>
         {/* 작성일-reg_date */}
-        <div className="text-[#BFBFBF] text-[10px] mt-8 mr-[1.5rem]">
-          {myBoards.reg_date}
+        <div className="text-[#BFBFBF] text-[10px] mt-[2.1rem] mr-[0.5rem]">
+          {date}
         </div>
+        {myBoards.regDate != myBoards.lastModified && (
+          <span className="absolute top-12 right-[1.2rem] text-[#BFBFBF] text-[10px]">
+            수정됨
+          </span>
+          )}
       </div>
       <img
         className="absolute top-[4.5rem] right-0 w-full h-[12.1875rem] "
@@ -25,8 +47,8 @@ const MyBoardCard = ({ myBoards }) => {
         {myBoards.title}
       </p>
       <ul className="list-disc absolute bottom-[3.8rem] left-[2rem] ">
-        <li className="text-[#8B8686] text-[0.5rem]">태그1</li>
-        <li className="text-[#8B8686] text-[0.5rem]">태그2</li>
+        <li className="text-[#8B8686] text-[0.7rem]">{myBoards.restaurantName}</li>
+        <li className="text-[#8B8686] text-[0.7rem]">{myBoards.restaurantAddress}</li>
       </ul>
       <button
         className="rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#54AB75] text-[#ffffff] absolute bottom-[1rem] left-[1rem] shadow-md"

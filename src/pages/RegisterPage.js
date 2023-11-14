@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function JoinPage() {
   /*-----주소찾기 API-----*/
@@ -79,11 +80,47 @@ function JoinPage() {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isEmailCodeOpen, setEmailCodeOpen] = useState(false);
   const [authCode, setAuthCode] = useState("");
+  //타이머 설정 초기화
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [timerSeconds, setTimerSeconds] = useState(180); // 3분 (180초)
+
+  //타이머 시작
+  const startTimer = () => {
+    setIsTimerRunning(true);
+  };
+  //타이머 종료
+  const stopTimer = () => {
+    setIsTimerRunning(false);
+    setTimerSeconds(180);
+  };
+
+  //타이머 설정
+  useEffect(() => {
+    let interval = null;
+
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setTimerSeconds((prevSeconds) => prevSeconds - 1); 
+      }, 1000);// timerSeconds 상태를 1초씩 감소
+    }
+
+    if (timerSeconds === 0) {
+      stopTimer();
+      setEmailCodeOpen(false);
+      alert("인증코드가 만료되었습니다.");
+    }
+
+    return () => clearInterval(interval); //타이머 리셋
+  }, [isTimerRunning, timerSeconds]);
 
   // 이메일 인증 버튼 클릭 이벤트 핸들러
   const handleEmailVerification = async (e) => {
     //백엔드 통신
     e.preventDefault();
+    setIsEmailVerified(false); //인증 여부(false)
+    setAuthCode(""); //인증코드 초기화
+    setTimerSeconds(180); //타이머 초기화
+    setCodeCheckedMessage("인증이 필요합니다.");
 
     await axios
       .post(baseUrl + "/api/users/emails/authenticationRequest", {
@@ -94,11 +131,11 @@ function JoinPage() {
         alert(response.data);
         // 인증 코드를 입력받을 새로운 input 태그 생성 및 표시
         setEmailCodeOpen(true);
-        setCodeCheckedMessage("인증이 필요합니다.");
+        startTimer();
       })
       .catch((error) => {
         console.log(error);
-        alert(error.response.data.message);
+        alert(error.response.data);
       });
   };
 
@@ -120,13 +157,14 @@ function JoinPage() {
         //인증 완료
         console.log(isEmailVerified);
         alert(response.data);
+        setIsEmailVerified(true); //인증 확인완료(true)
+        stopTimer(); // 타이머 종료
+        
         setCodeCheckedMessage("인증이 완료되었습니다.");
-        setIsEmailVerified(true);
       })
       .catch((error) => {
         console.log(error);
         alert(error.response.data.message);
-        setCodeCheckedMessage("인증 코드를 다시 입력해주세요.");
         setIsEmailVerified(false);
       });
   };
@@ -189,6 +227,7 @@ function JoinPage() {
     const emailCurrent = e.target.value; // 입력된 이메일
     setEmail(emailCurrent);
 
+
     if (!emailRegex.test(emailCurrent)) {
       setEmailMessage("이메일 형식이 맞지 않습니다.");
       setIsEmail(false);
@@ -204,6 +243,8 @@ function JoinPage() {
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/; //숫자+영문자+특수문자 조합으로 8자리 이상
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
+    console.log(passwordCurrent)
+
 
     if (!passwordRegex.test(passwordCurrent)) {
       setPasswordMessage(
@@ -215,9 +256,13 @@ function JoinPage() {
       setIsPassword(true);
     }
 
-    if (password !== passwordConfirm) {
+    // 비밀번호 값이 변경된 경우, 비밀번호 확인 값을 다시 확인하여 메시지를 업데이트
+    if (passwordConfirm !== passwordCurrent) {
       setPasswordConfirmMessage("비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ");
       setIsPasswordConfirm(false);
+    } else {
+      setPasswordConfirmMessage("비밀번호를 똑같이 입력했어요 : )");
+      setIsPasswordConfirm(true);
     }
   };
 
@@ -225,6 +270,7 @@ function JoinPage() {
   const onChangePasswordConfirm = (e) => {
     const passwordConfirmCurrent = e.target.value;
     setPasswordConfirm(passwordConfirmCurrent);
+    console.log(passwordConfirmCurrent)
 
     if (password === passwordConfirmCurrent) {
       setPasswordConfirmMessage("비밀번호를 똑같이 입력했어요 : )");
@@ -233,6 +279,8 @@ function JoinPage() {
       setPasswordConfirmMessage("비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ");
       setIsPasswordConfirm(false);
     }
+
+
   };
 
   // 전화번호
@@ -266,11 +314,11 @@ function JoinPage() {
   useEffect(() => {
     setIsFormValid(
       isPassword &&
-        isPasswordConfirm &&
-        isName &&
-        isEmail &&
-        isPhoneNum &&
-        isEmailVerified
+      isPasswordConfirm &&
+      isName &&
+      isEmail &&
+      isPhoneNum &&
+      isEmailVerified
     );
   }, [
     isPassword,
@@ -322,7 +370,9 @@ function JoinPage() {
       {/*헤더 부분 */}
       <div className="w-[78.75rem] mx-auto my-0">
         <div className="flex justify-between mt-4">
+          <Link to="/">
           <img src="img/mainlogo.svg" alt="메인로고" />
+          </Link>
         </div>
       </div>
 
@@ -349,6 +399,7 @@ function JoinPage() {
                 onChange={emailChange}
                 required
                 placeholder="이메일을 입력해주세요. (예: aa @ bb.cc)"
+                readOnly={isEmailVerified}
               ></Input>
               <Button
                 type="register-emailDoubleCheck"
@@ -381,6 +432,7 @@ function JoinPage() {
                   onChange={(e) => setAuthCode(e.target.value)}
                   placeholder="인증 코드를 입력해주세요."
                   className="w-[10.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
+                  readOnly={isEmailVerified}
                 ></input>
                 <Button
                   type="register-emailDoubleCheck"
@@ -392,19 +444,41 @@ function JoinPage() {
             )}
           </div>
           {/*인증코드 유효성 체크 : 이메일 인증확인 */}
-          {isEmail && (
+          {isEmail && isEmailVerified?(
             <div
-              className={`message ${isEmailVerified ? "success" : "error"}`}
+              className={`message success`}
               style={{
                 marginTop: "0",
                 paddingRight: "4rem",
-                color: isEmailVerified ? "green" : "red", // 에러: 빨강색 / 성공: 초록색
+                color: "green", // 에러: 빨강색 / 성공: 초록색
                 textAlign: "right",
               }}
             >
               {codeCheckedMessage}
             </div>
+          ):isEmailCodeOpen ?(
+            <div
+              className={`message error`}
+              style={{
+                marginTop: "0",
+                paddingRight: "4rem",
+                color: "red", // 에러: 빨강색 / 성공: 초록색
+                textAlign: "right",
+              }}
+            >
+              {isTimerRunning ? (
+            <div className="timer">
+              {Math.floor(timerSeconds / 60)}:
+              {timerSeconds % 60 < 10
+                ? `0${timerSeconds % 60}`
+                : timerSeconds % 60}
+            </div>
+          ) : (
+            codeCheckedMessage
           )}
+            </div>
+          ):null}
+          
           {/*input: 이름 */}
           <div className="flex gap-3">
             <div className="flex gap-1">
@@ -642,15 +716,6 @@ function JoinPage() {
               <option value="ISTP">ISTP</option>
             </select>
           </div>
-          {/*radio: 개인정보 동의 => 어떻게 처리할까? */}
-          <div className="flex gap-3 justify-center">
-            <div className="flex gap-1">
-              <label>
-                <input type="radio" name="policy" value="policy" />
-                개인 정보 수집 동의
-              </label>
-            </div>
-          </div>
           {/*submit: 클릭 시, form에 입력된 정보들을 벡엔드로 보냄. */}
           <div className="flex gap-3 justify-center">
             <button
@@ -661,6 +726,9 @@ function JoinPage() {
             </button>
           </div>
         </form>
+          <div className="my-3">
+            <Link to="/login">계정이 있으신가요?</Link>
+          </div>  
       </div>
     </>
   );
