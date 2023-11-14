@@ -62,6 +62,15 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
         " rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#54AB75] text-[#ffffff] absolute bottom-[1rem] left-[3rem]";
       break;
 
+    case "category-green":
+      style +=
+        " rounded-[0.625rem] text-[1rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] hover:bg-[#76C598] text-[#ffffff]";
+      break;
+    case "category-white":
+      style +=
+        " rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#FFFFFF] hover:bg-[#76C598] text-[#2b2b2b]";
+      break;
+
     default:
       style += "bg-[#675D50] text-white";
       break;

@@ -7,9 +7,121 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 function BoardPage() {
+  const locationList = [
+    {
+      name: "내 위치",
+      image: "img/myPlaceSideBar.svg",
+      alt: "내 위치 아이콘",
+    },
+    {
+      name: "용산",
+      image: "img/youngsanSideBar.svg",
+      alt: "용산 이미지",
+    },
+    {
+      name: "성수",
+      image: "img/SengsuSideBar.svg",
+      alt: "성수 이미지",
+    },
+    {
+      name: "종로",
+      image: "img/JongnoSideBar.svg",
+      alt: "종로 이미지",
+    },
+    {
+      name: "동대문",
+      image: "img/DongdaemunSideBar.svg",
+      alt: "동대문 이미지",
+    },
+    {
+      name: "잠실",
+      image: "img/JamsilSideBar.svg",
+      alt: "잠실 이미지",
+    },
+    {
+      name: "여의도",
+      image: "img/YeouidoSideBar.svg",
+      alt: "여의도 이미지",
+    },
+    {
+      name: "홍대",
+      image: "img/HongdaeSideBar.svg",
+      alt: "홍대 이미지",
+    },
+    {
+      name: "신사",
+      image: "img/SinsaSideBar.svg",
+      alt: "신사 이미지",
+    },
+    {
+      name: "경복궁",
+      image: "img/GyeongbokgungSideBar.svg",
+      alt: "경복궁 이미지",
+    },
+    {
+      name: "청담",
+      image: "img/CheongdamSideBar.svg",
+      alt: "청담 이미지",
+    },
+    {
+      name: "삼성",
+      image: "img/SamseongSideBar.svg",
+      alt: "삼성 이미지",
+    },
+  ];
+  const foodList = [
+    {
+      name: "양식",
+      image: "img/pastaSideBar.svg",
+      alt: "파스타 아이콘",
+    },
+    {
+      name: "카페",
+      image: "img/cafeSideBar.svg",
+      alt: "카페 이미지",
+    },
+    {
+      name: "찜",
+      image: "img/zzimSideBar.svg",
+      alt: "찜 이미지",
+    },
+    {
+      name: "일식",
+      image: "img/japanSideBar.svg",
+      alt: "일식 이미지",
+    },
+    {
+      name: "피자",
+      image: "img/pizzaSideBar.svg",
+      alt: "피자 이미지",
+    },
+    {
+      name: "햄버거",
+      image: "img/hambergerSideBar.svg",
+      alt: "햄버거 이미지",
+    },
+    {
+      name: "분식",
+      image: "img/dduckbockyBar.svg",
+      alt: "분식 이미지",
+    },
+    {
+      name: "아시아",
+      image: "img/asiaSideBar.svg",
+      alt: "아시아 이미지",
+    },
+    {
+      name: "야식",
+      image: "img/nightfoodSideBar.svg",
+      alt: "야식 이미지",
+    },
+  ];
+  const lists = [foodList, locationList];
+  const [basicList, setBasicList] = useState(foodList);
+
   const [boardDtos, setBoardDtos] = useState([]);
-  const [selectedPlaceCategory, setSelectedPlaceCategory] = useState();
-  const [selectedPlaceImg, setSelectedPlaceImg] = useState();
+  const [selectedCategory, setSelectedCategory] = useState(); //for 백으로 보낼 카테고리
+  const [selectedImg, setSelectedImg] = useState(); //for 사이드바 와 모달창 동기화
 
   //사이드바 모달창
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,7 +152,7 @@ function BoardPage() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+  //전체 보드 로딩
   const fetchBoardData = async () => {
     try {
       const response = await axios.get("http://localhost:8080/board");
@@ -50,31 +162,50 @@ function BoardPage() {
       console.error("서버 요청 에러:", error);
     }
   };
-
+  //처음 시작할 때 전체 보드 로드
   useEffect(() => {
     fetchBoardData();
   }, []);
-
-  const fetchBoardDataByPlaceCategory = async (placeCategory) => {
+  //카테고리로 검색
+  const fetchBoardDataByCategory = async (category) => {
+    let apiURL = "http://localhost:8080/board";
+    if (JSON.stringify(basicList) === JSON.stringify(foodList)) {
+      apiURL = apiURL + `/food/${category}`;
+    } else {
+      apiURL = apiURL + `/place/${category}`;
+    }
     try {
-      const response = await axios.get(
-        `http://localhost:8080/board/place/${placeCategory}`
-      );
-      console.log(`${placeCategory}에 대한 서버 응답:`, response.data);
+      const response = await axios.get(apiURL);
+      console.log(`${category}에 대한 서버 응답:`, response.data);
       setBoardDtos(response.data);
     } catch (error) {
-      console.error(`${placeCategory}에 대한 서버 요청 에러:`, error);
+      console.error(`${category}에 대한 서버 요청 에러:`, error);
     }
+  };
+  //키워드로 검색
+  const fetchBoardDataByKeyword = async (keyWord) => {
+    if (keyWord === null) {
+      fetchBoardData();
+    } else if (keyWord && keyWord.trim() !== "") {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/board/findby/${keyWord}`
+        );
+        console.log(`${keyWord}에 대한 서버 응답:`, response.data);
+        setBoardDtos(response.data);
+      } catch (error) {
+        console.error(`${keyWord}에 대한 서버 요청 에러:`, error);
+      }
+    } else fetchBoardData();
   };
 
   useEffect(() => {
-    if (selectedPlaceCategory) {
-      fetchBoardDataByPlaceCategory(selectedPlaceCategory);
+    if (selectedCategory) {
+      fetchBoardDataByCategory(selectedCategory);
     } else {
-      //전체보드
       fetchBoardData();
     }
-  }, [selectedPlaceCategory]);
+  }, [selectedCategory]);
 
   return (
     <>
@@ -96,12 +227,15 @@ function BoardPage() {
 
       <div className="flex">
         <BoardSideBar
-          onSelectPlaceCategory={setSelectedPlaceCategory}
-          selectedPlaceImg={selectedPlaceImg} //selectedPlaceImg = 선택된 imgname
-          setSelectedPlaceImg={setSelectedPlaceImg}
+          onSelectCategory={setSelectedCategory}
+          selectedImg={selectedImg} //selectedImg = 선택된 imgname
+          setSelectedImg={setSelectedImg}
+          lists={lists}
+          basicList={basicList}
+          setBasicList={setBasicList}
         />
 
-        <BoardSection>
+        <BoardSection fetchBoardDataByKeyword={fetchBoardDataByKeyword}>
           {boardDtos.map((boardDto) => (
             <BoardCard key={boardDto.board_id} boardDto={boardDto} />
           ))}
@@ -117,9 +251,12 @@ function BoardPage() {
           />
           <div className="h-screen flex items-center justify-center">
             <BoardSideBarModal
-              onSelectPlaceCategory={setSelectedPlaceCategory}
-              selectedPlaceImg={selectedPlaceImg} //selectedPlaceImg = 선택된 imgname
-              setSelectedPlaceImg={setSelectedPlaceImg}
+              onSelectCategory={setSelectedCategory}
+              selectedImg={selectedImg} //selectedImg = 선택된 imgname
+              setSelectedImg={setSelectedImg}
+              lists={lists}
+              basicList={basicList}
+              setBasicList={setBasicList}
             />
           </div>
         </div>

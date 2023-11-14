@@ -1,106 +1,55 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import CategoryTab from "../components/CategoryTab";
 
 const BoardSideBar = ({
-  onSelectPlaceCategory,
-  selectedPlaceImg,
-  setSelectedPlaceImg,
+  onSelectCategory,
+  selectedImg,
+  setSelectedImg,
+  lists,
+  basicList,
+  setBasicList,
 }) => {
-  const [selectedLocation, setSelectedLocation] = useState(null); //마우스 오버
-  const [clickedLocation, setClickedLocation] = useState(null); //마우스 클릭
+  const [selectedItem, setSelectedItem] = useState(null); //마우스 오버
+  const [clickedItem, setClickedItem] = useState(null); //마우스 클릭
 
   useEffect(() => {
-    if (selectedPlaceImg) {
-      setClickedLocation(selectedPlaceImg);
+    if (selectedImg) {
+      setClickedItem(selectedImg);
     }
   }, []);
   useEffect(() => {
-    setClickedLocation(selectedPlaceImg);
-  }, [selectedPlaceImg]);
+    setClickedItem(selectedImg);
+  }, [selectedImg]);
 
-  const handleClick = (imgName, locationName) => {
-    if (clickedLocation === imgName) {
-      setClickedLocation(null);
-      setSelectedPlaceImg(null);
-      onSelectPlaceCategory(null);
+  const handleClick = (imgName, itemName) => {
+    if (clickedItem === imgName) {
+      setClickedItem(null);
+      setSelectedImg(null);
+      onSelectCategory(null);
     } else {
-      setClickedLocation(imgName);
-      setSelectedLocation(null);
-      onSelectPlaceCategory(locationName);
-      setSelectedPlaceImg(imgName);
+      setClickedItem(imgName);
+      setSelectedItem(null);
+      onSelectCategory(itemName);
+      setSelectedImg(imgName);
     }
   };
   const handleMouseEnter = (imgname) => {
-    if (!clickedLocation) {
-      // 클릭한 항목이 없는 경우에만 selectedLocation을 업데이트
-      setSelectedLocation(imgname);
+    if (!clickedItem) {
+      // 클릭한 항목이 없는 경우에만 selectedItem을 업데이트
+      setSelectedItem(imgname);
     }
   };
   const handleMouseLeave = () => {
-    setSelectedLocation(null); // 마우스가 떠날 때 selectedLocation을 null로 설정
+    setSelectedItem(null); // 마우스가 떠날 때 selectedItem을 null로 설정
   };
-  const locationList = [
-    {
-      name: "내 위치",
-      image: "img/myPlaceSideBar.svg",
-      alt: "내 위치 아이콘",
-    },
-    {
-      name: "용산",
-      image: "img/youngsanSideBar.svg",
-      alt: "용산 이미지",
-    },
-    {
-      name: "성수",
-      image: "img/SengsuSideBar.svg",
-      alt: "성수 이미지",
-    },
-    {
-      name: "종로",
-      image: "img/JongnoSideBar.svg",
-      alt: "종로 이미지",
-    },
-    {
-      name: "동대문",
-      image: "img/DongdaemunSideBar.svg",
-      alt: "동대문 이미지",
-    },
-    {
-      name: "잠실",
-      image: "img/JamsilSideBar.svg",
-      alt: "잠실 이미지",
-    },
-    {
-      name: "여의도",
-      image: "img/YeouidoSideBar.svg",
-      alt: "여의도 이미지",
-    },
-    {
-      name: "홍대",
-      image: "img/HongdaeSideBar.svg",
-      alt: "홍대 이미지",
-    },
-    {
-      name: "신사",
-      image: "img/SinsaSideBar.svg",
-      alt: "신사 이미지",
-    },
-    {
-      name: "경복궁",
-      image: "img/GyeongbokgungSideBar.svg",
-      alt: "경복궁 이미지",
-    },
-    {
-      name: "청담",
-      image: "img/CheongdamSideBar.svg",
-      alt: "청담 이미지",
-    },
-    {
-      name: "삼성",
-      image: "img/SamseongSideBar.svg",
-      alt: "삼성 이미지",
-    },
-  ];
+
+  //카테고리가 바뀌면 (음식vs장소) 선택된 것들 초기화
+  useEffect(() => {
+    setClickedItem(null);
+    setSelectedImg(null);
+    onSelectCategory(null);
+  }, [basicList]);
 
   return (
     <>
@@ -110,27 +59,32 @@ const BoardSideBar = ({
         aria-label="Sidebar"
       >
         <div className="h-full px-3 overflow-y-auto">
+          <CategoryTab
+            lists={lists}
+            basicList={basicList}
+            setBasicList={setBasicList}
+          />
+
           <ul className="space-y-2 font-medium">
-            {locationList.map((location) => (
-              <li key={location.alt}>
+            {basicList.map((item) => (
+              <li key={item.alt}>
                 <Link
                   to="#"
                   className="py-2"
-                  onMouseEnter={() => handleMouseEnter(location.image)}
+                  onMouseEnter={() => handleMouseEnter(item.image)}
                   onMouseLeave={handleMouseLeave}
                   onClick={() => {
-                    handleClick(location.image, location.name);
+                    handleClick(item.image, item.name);
                   }}
                 >
-                  {selectedLocation === location.image ||
-                  clickedLocation === location.image ? (
+                  {selectedItem === item.image || clickedItem === item.image ? (
                     <img
-                      src={location.image}
-                      alt={location.name}
+                      src={item.image}
+                      alt={item.name}
                       className="h-[6.625rem] object-cover w-full"
                     />
                   ) : (
-                    <span className="ml-3 text-black">{location.name}</span>
+                    <span className="ml-3 text-black">{item.name}</span>
                   )}
                 </Link>
               </li>

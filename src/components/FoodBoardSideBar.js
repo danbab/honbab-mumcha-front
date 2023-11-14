@@ -39,7 +39,7 @@ const FoodBoardSideBar = ({
   const handleMouseLeave = () => {
     setSelectedLocation(null); // 마우스가 떠날 때 selectedLocation을 null로 설정
   };
-  const locationList = [
+  const foodList = [
     {
       name: "양식",
       image: "img/pastaSideBar.svg",
@@ -96,7 +96,7 @@ const FoodBoardSideBar = ({
       >
         <div className="h-full px-3 overflow-y-auto">
           <ul className="space-y-2 font-medium">
-            {locationList.map((location) => (
+            {foodList.map((location) => (
               <li key={location.alt}>
                 <Link
                   to="#"
