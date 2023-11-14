@@ -68,7 +68,8 @@ const WritePage = () => {
             })
             .then((response) => {
               console.log(response.data);
-              alert(response.data);
+              // alert(response.data);
+              alert('작성이 완료되었습니다.');
             });
         } catch (error) {
           console.error(error);
