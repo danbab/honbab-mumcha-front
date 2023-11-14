@@ -45,7 +45,7 @@ const MenuSquare = () => {
     <>
       <MainSectionTitle type="food-section">음식으로 약속잡기</MainSectionTitle>
       <Link to="boardList">
-        <div className="grid grid-cols-3 mt-[2.7rem] w-[78.75rem] mx-auto my-0">
+        <div className="grid grid-cols-3 gap-y-[0.8rem] mt-[2.7rem] w-[78.75rem] mx-auto my-0">
           {menus.map((menu) => (
             <div className="w-[361px] h-[194px] rounded-[10px] overflow-hidden">
               <img
