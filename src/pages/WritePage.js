@@ -5,7 +5,6 @@ import { pl } from "date-fns/locale";
 import KakaoMapWrite from "../components/KakaoMapWrite";
 const { kakao } = window;
 
-
 const WritePage = () => {
   const [buttonHashTag, setbuttonHashTag] = useState("");
   const [hashTags, setHashTags] = useState([]);
@@ -19,6 +18,8 @@ const WritePage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isInputVisible, setInputVisible] = useState(false);
+  // const [lat, setLat] = useState(null);
+  // const [lng, setLng] = useState(null);
 
   const handleClick = () => {
     setInputVisible(!isInputVisible);
@@ -46,10 +47,9 @@ const WritePage = () => {
     geocoder.addressSearch(restaurantAddress, async (result, status) => {
       // 정상적으로 검색이 완료됐으면
       if (status === kakao.maps.services.Status.OK) {
- 
-        const lat = result[0].y;
-        const lng = result[0].x;
+        const coords = new kakao.maps.LatLng(result[0].x, result[0].y);
 
+        console.log(coords);
 
         try {
           const response = await axios
@@ -63,8 +63,8 @@ const WritePage = () => {
               people: people,
               title: title,
               content: content,
-              lat: result[0].y,
-              lng: result[0].x,
+              locationX: String(coords.getLng()),
+              locationY: String(coords.getLat()),
             })
             .then((response) => {
               console.log(response.data);
@@ -186,12 +186,14 @@ const WritePage = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
             <textarea
-              className="border bg-[#F9F9F9] rounded-md px-2 h-[36.5rem] mb-5 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] py-3 px-3"
+              className="border bg-[#F9F9F9] rounded-md h-[36.5rem] mb-5 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] py-3 px-3"
               value={content}
               onChange={(e) => setContent(e.target.value)}
             ></textarea>
           </div>
         </div>
+        {/* <input type="hidden" name="lat" value={lat} />
+        <input type="hidden" name="lng" value={lng} /> */}
       </form>
     </>
   );
