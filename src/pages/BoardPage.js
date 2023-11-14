@@ -215,6 +215,65 @@ function BoardPage() {
     }
   }, [selectedCategory]);
 
+  //세션에 저장된 로그인 정보 불러오기
+  const [user, setUser] = useState(null);
+  const getCurrentUser = async () => {
+    try {
+      const storedUser = sessionStorage.getItem("user");
+      if (storedUser) {
+        // JSON 문자열을 객체로 변환
+        const userObject = JSON.parse(storedUser);
+        setUser(userObject);
+      }
+    } catch (e) {
+      console.error("사용자 정보 가져오기 실패:" + e);
+    }
+  };
+
+  useEffect(() => {
+    // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
+    getCurrentUser();
+  }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
+
+  /////임시 작업중
+  const [participants, setParticipants] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const bringParticipants = async (e) => {
+    if (user === null) {
+      return;
+    } else {
+      await axios
+        .post("http://localhost:8080/api/app/find/participants", {
+          email: user.email,
+        })
+        .then((response) => {
+          console.log("아따1" + response);
+          console.log("아따따1" + response.data);
+          setParticipants(response.data);
+        });
+    }
+  };
+  const bringLikes = async (e) => {
+    if (user === null) {
+      return;
+    } else {
+      await axios
+        .post("http://localhost:8080/api/app/find/likes", {
+          email: user.email,
+        })
+        .then((response) => {
+          console.log("아따2" + response);
+          console.log("아따따2" + response.data);
+          setLikes(response.data);
+        });
+    }
+  };
+  useEffect(() => {
+    bringParticipants();
+    bringLikes();
+  }, [user]);
+  ///여기까지 임시
+
   return (
     <>
       <div className="flex mx-[4.7rem] flex-wrap justisfy-between items-center ">
@@ -243,9 +302,21 @@ function BoardPage() {
           setBasicList={setBasicList}
         />
 
-        <BoardSection fetchBoardDataByKeyword={fetchBoardDataByKeyword}>
+        <BoardSection
+          fetchBoardDataByKeyword={fetchBoardDataByKeyword}
+          user={user}
+        >
           {boardDtos.map((boardDto) => (
-            <BoardCard key={boardDto.board_id} boardDto={boardDto} />
+            <BoardCard
+              key={boardDto.board_id}
+              boardDto={boardDto}
+              user={user}
+              participants={participants}
+              bringParticipants={bringParticipants}
+              boardDtos={boardDtos}
+              likes={likes}
+              bringLikes={bringLikes}
+            />
           ))}
         </BoardSection>
       </div>

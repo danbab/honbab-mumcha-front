@@ -68,12 +68,14 @@ const LoginPage = () => {
         password: password,
       })
       .then((response) => {
-        //alert("로그인에 성공하였습니다.");
-        //alert("나는 언제쯤..." + responsex.data);
-        //console.log("사용자 정보:", response.data);
         sessionStorage.setItem("user", JSON.stringify(response.data));
-        //alert(sessionStorage.getItem("user"));
-        window.location.href = "/"; // 로그인 성공시 메인페이지로 이동.
+        const togoUrl = sessionStorage.getItem("togoUrl");
+        if (togoUrl) {
+          sessionStorage.removeItem("togoUrl");
+          window.location.href = togoUrl;
+        } else {
+          window.location.href = "/";
+        } // 로그인 성공시 메인페이지로 이동.
       })
       .catch((error) => {
         console.log(error.response);
