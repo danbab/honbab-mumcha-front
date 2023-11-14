@@ -83,12 +83,15 @@ const Header = () => {
         <div className="mt-[2rem]">
           {user ? (
             // 세션이 있는 경우, 로그아웃 버튼 표시
-            <>
-              <>{user.username}</>
-              <Button type="login" onClick={handleLogout}>
+            <div className="flex">
+              <div className="mr-[1rem]">{user.username}</div>
+              <Button type="log-out" onClick={handleLogout}>
                 로그아웃
               </Button>
-            </>
+              <Link to="/my">
+                <Button type="my-page">마이페이지</Button>
+              </Link>
+            </div>
           ) : (
             // 세션이 없는 경우, 로그인과 회원가입 버튼 표시
             <>
