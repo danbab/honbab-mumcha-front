@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import {
+  Map,
+  MapMarker,
+  InfoWindow,
+  CustomOverlayMap,
+} from "react-kakao-maps-sdk";
 import MainSectionTitle from "./MainSectionTitle";
+import axios from "axios";
+import CustomChart from "./CustomChart";
+import BoardCard from "./BoardCard";
 
 const KakaoMap = () => {
   const [level, setLevel] = useState(3);
+  const [boards, setBoards] = useState([]);
   const [state, setState] = useState({
     center: {
       lat: 33.450701,
@@ -12,6 +21,15 @@ const KakaoMap = () => {
     errMsg: null,
     isLoading: true,
   });
+
+  const fetchBoards = async () => {
+    const response = await axios.get("http://localhost:8080/board");
+    setBoards(response.data);
+  };
+
+  useEffect(() => {
+    fetchBoards(); // 컴포넌트가 마운트될 때 DB에서 데이터를 가져옵니다.
+  }, []);
 
   const fetchLocation = () => {
     if (navigator.geolocation) {
@@ -58,133 +76,144 @@ const KakaoMap = () => {
       name: "",
       image: "img/yongsan.svg",
       alt: "용산 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5515,
-          lng: 126.9883,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.5515,
+            lng: 126.9883,
+          },
+        })),
     },
     {
       name: "",
       image: "img/sungsu.svg",
       alt: "성수 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5445,
-          lng: 127.0564,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.5445,
+            lng: 127.0564,
+          },
+        })),
     },
     {
       name: "",
       image: "img/jongro.svg",
       alt: "종로 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5704,
-          lng: 126.9846,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.5704,
+            lng: 126.9846,
+          },
+        })),
     },
     {
       name: "",
       image: "img/dongdaemun.svg",
       alt: "동대문 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5719,
-          lng: 127.0096,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.5719,
+            lng: 127.0096,
+          },
+        })),
     },
     {
       name: "",
       image: "img/jamsil.svg",
       alt: "잠실 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5111,
-          lng: 127.0964,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.5111,
+            lng: 127.0964,
+          },
+        })),
     },
     {
       name: "",
       image: "img/yeouido.svg",
       alt: "여의도 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5210,
-          lng: 126.9244,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.521,
+            lng: 126.9244,
+          },
+        })),
     },
     {
       name: "",
       image: "img/hongdae.svg",
       alt: "홍대 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5572,
-          lng: 126.9250,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.5572,
+            lng: 126.925,
+          },
+        })),
     },
     {
       name: "",
       image: "img/sinsa.svg",
       alt: "신사 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5166,
-          lng: 127.0208,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.5166,
+            lng: 127.0208,
+          },
+        })),
     },
     {
       name: "",
       image: "img/gyeongbokgung.svg",
       alt: "경복궁 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5788,
-          lng: 126.9779,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.5788,
+            lng: 126.9779,
+          },
+        })),
     },
     {
       name: "",
       image: "img/cheongdam.svg",
       alt: "청담 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5194,
-          lng: 127.0560,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.5194,
+            lng: 127.056,
+          },
+        })),
     },
     {
       name: "",
       image: "img/samsung.svg",
       alt: "삼성 이미지",
-      onClick: () => setState(prev => ({
-        ...prev,
-        center: {
-          lat: 37.5133,
-          lng: 127.0581,
-        },
-      })),
+      onClick: () =>
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: 37.5133,
+            lng: 127.0581,
+          },
+        })),
     },
   ];
 
@@ -207,6 +236,7 @@ const KakaoMap = () => {
           </div>
         ))}
       </div>
+      3
       <Map // 지도를 표시할 Container
         center={state.center}
         style={{
@@ -219,21 +249,32 @@ const KakaoMap = () => {
         }}
         level={level} // 지도의 확대 레벨
       >
-        {!state.isLoading && (
-          <MapMarker
-            position={state.center}
-            image={{
-              src: "img/locationicon.png",
-              size: { width: 64, height: 69 },
-              options: { offset: { x: 27, y: 69 } },
-            }}
-          >
-            <div style={{ padding: "5px", color: "#000" }}>
-              {state.errMsg ? state.errMsg : "여기에 계신가요?!"}
-            </div>
-          </MapMarker>
+        {boards.map(
+          (
+            board // DB에서 가져온 데이터를 순회하면서 각 게시물의 위치에 마커를 추가합니다.
+          ) => (
+            // <MapMarker
+            //   key={board.id}
+            //   position={{ lat: board.locationY, lng: board.locationX }}
+            //   // image={{
+            //   //   src: "img/locationicon.png",
+            //   //   size: { width: 64, height: 69 },
+            //   //   options: { offset: { x: 27, y: 69 } },
+            //   // }}
+            // >
+            // </MapMarker>
+              <CustomOverlayMap
+                position={{ lat: board.locationY, lng: board.locationX }}
+                xAnchor={0.3}
+                yAnchor={0.91}
+              >
+                {/* <BoardCard board={board} /> */}
+                <CustomChart board={board} />
+              </CustomOverlayMap>
+          )
         )}
-                <button
+
+        <button
           className="border w-10 h-10 text-center mr-4 ml-4 mt-2"
           onClick={() => setLevel(level + 1)}
         >
