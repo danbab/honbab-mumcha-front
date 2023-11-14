@@ -12,7 +12,7 @@ function BoardFoodPage() {
   useEffect(() => {
     const fetchBoardData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/board");
+        const response = await axios.get("http://localhost:8080/api/board");
         console.log("서버 응답:", response.data);
         setBoardDtos(response.data);
       } catch (error) {
@@ -27,7 +27,7 @@ function BoardFoodPage() {
   const fetchBoardDataByFoodCategory = async (foodCategory) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/board/food/${foodCategory}`
+        `http://localhost:8080/api/board/food/${foodCategory}`
       );
       console.log(`${foodCategory}에 대한 서버 응답:`, response.data);
       setBoardDtos(response.data);

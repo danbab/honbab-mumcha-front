@@ -314,11 +314,11 @@ function JoinPage() {
   useEffect(() => {
     setIsFormValid(
       isPassword &&
-        isPasswordConfirm &&
-        isName &&
-        isEmail &&
-        isPhoneNum &&
-        isEmailVerified
+      isPasswordConfirm &&
+      isName &&
+      isEmail &&
+      isPhoneNum &&
+      isEmailVerified
     );
   }, [
     isPassword,

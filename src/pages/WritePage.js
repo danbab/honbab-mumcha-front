@@ -13,7 +13,7 @@ const WritePage = () => {
   const [foodCategory, setFoodCategory] = useState("");
   const [placeCategory, setPlaceCategory] = useState("");
   const [time, setTime] = useState(null);
-  const [date, setDate] = useState("");
+  const [meetDate, setMeetDate] = useState("");
   const [people, setPeople] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -47,19 +47,21 @@ const WritePage = () => {
     geocoder.addressSearch(restaurantAddress, async (result, status) => {
       // 정상적으로 검색이 완료됐으면
       if (status === kakao.maps.services.Status.OK) {
+        const lat = result[0].y;
+        const lng = result[0].x;
         const coords = new kakao.maps.LatLng(result[0].x, result[0].y);
 
         console.log(coords);
 
         try {
           const response = await axios
-            .post("http://localhost:8080/board/new", {
+            .post("http://localhost:8080/api/board/new", {
               restaurantName: restaurantName,
               restaurantAddress: restaurantAddress,
               foodCategory: foodCategory,
               placeCategory: placeCategory,
               time: time,
-              date: date,
+              meetDate: meetDate,
               people: people,
               title: title,
               content: content,
@@ -167,8 +169,8 @@ const WritePage = () => {
                 className="border bg-[#F9F9F9] rounded-md px-2 w-[15.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
                 type="date"
                 placeholder="날짜"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                value={meetDate}
+                onChange={(e) => setMeetDate(e.target.value)}
               />
               <input
                 className="border bg-[#F9F9F9] rounded-md px-2 w-[6.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"

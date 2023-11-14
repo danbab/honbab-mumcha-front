@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 const { kakao } = window;
 
-const MapContainer = ({ searchPlace }) => {
+const MapContainer = ({ searchPlace}) => {
   useEffect(() => {
     let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
