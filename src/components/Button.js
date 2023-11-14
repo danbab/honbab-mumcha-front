@@ -29,7 +29,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "make-reservation":
       style +=
-        " rounded-[0.625rem] text-[0.8125rem] w-[7.4375rem] h-[2.1875rem] bg-[#365347] text-[#ffffff]";
+        " rounded-[0.625rem] text-[0.6125rem] t_m:text-[0.8125rem] w-[4.4375rem] t_m:w-[7.4375rem] h-[2.1875rem] bg-[#365347] text-[#ffffff]";
       break;
 
     case "search":
