@@ -716,15 +716,6 @@ function JoinPage() {
               <option value="ISTP">ISTP</option>
             </select>
           </div>
-          {/*radio: 개인정보 동의 => 어떻게 처리할까? */}
-          <div className="flex gap-3 justify-center">
-            <div className="flex gap-1">
-              <label>
-                <input type="radio" name="policy" value="policy" />
-                개인 정보 수집 동의
-              </label>
-            </div>
-          </div>
           {/*submit: 클릭 시, form에 입력된 정보들을 벡엔드로 보냄. */}
           <div className="flex gap-3 justify-center">
             <button
@@ -735,6 +726,9 @@ function JoinPage() {
             </button>
           </div>
         </form>
+          <div className="my-3">
+            <Link to="/login">계정이 있으신가요?</Link>
+          </div>  
       </div>
     </>
   );
