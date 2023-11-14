@@ -23,7 +23,7 @@ const KakaoMap = () => {
   });
 
   const fetchBoards = async () => {
-    const response = await axios.get("http://localhost:8080/board");
+    const response = await axios.get("http://localhost:8080/api/board");
     setBoards(response.data);
   };
 
