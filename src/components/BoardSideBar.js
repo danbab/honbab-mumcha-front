@@ -45,11 +45,12 @@ const BoardSideBar = ({
   };
 
   //카테고리가 바뀌면 (음식vs장소) 선택된 것들 초기화
-  useEffect(() => {
-    setClickedItem(null);
-    setSelectedImg(null);
-    onSelectCategory(null);
-  }, [basicList]);
+  // useEffect(() => {
+  //   setClickedItem(null);
+  //   setSelectedImg(null);
+  //   onSelectCategory(null);
+  // }, [basicList]);
+  // -> ux적으로 불필요하다 생각해 주석처리
 
   return (
     <>

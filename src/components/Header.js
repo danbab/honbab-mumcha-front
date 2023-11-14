@@ -7,7 +7,6 @@ import Menu from "./Menu"; // Menu 컴포넌트 import
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState(null);
-  //const baseUrl = "http://localhost:8080";
   const getCurrentUser = async () => {
     try {
       const storedUser = sessionStorage.getItem("user");
