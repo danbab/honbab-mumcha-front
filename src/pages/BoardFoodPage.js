@@ -77,6 +77,21 @@ function BoardPage() {
     }
   };
 
+  const fetchBoardDataByKeyword = async (keyWord) => {
+    alert(keyWord);
+    if (keyWord.trim() !== "") {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/board/findby/${keyWord}`
+        );
+        console.log(`${keyWord}에 대한 서버 응답:`, response.data);
+        setBoardDtos(response.data);
+      } catch (error) {
+        console.error(`${keyWord}에 대한 서버 요청 에러:`, error);
+      }
+    } else fetchBoardData();
+  };
+
   useEffect(() => {
     if (selectedPlaceCategory) {
       fetchBoardDataByPlaceCategory(selectedPlaceCategory);
@@ -111,7 +126,7 @@ function BoardPage() {
           setSelectedPlaceImg={setSelectedPlaceImg}
         />
 
-        <FoodBoardSection>
+        <FoodBoardSection fetchBoardDataByKeyword={fetchBoardDataByKeyword}>
           {boardDtos.map((boardDto) => (
             <BoardCard key={boardDto.board_id} boardDto={boardDto} />
           ))}

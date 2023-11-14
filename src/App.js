@@ -5,14 +5,9 @@ import RegisterPage from "./pages/RegisterPage";
 import BoardPage from "./pages/BoardPage";
 import BoardDetailPage from "./pages/BoardDetailPage";
 import ChatPage from "./pages/ChatPage";
-import BoardFoodPage from "./pages/BoardFoodPage";
 import Menu from "./components/Menu";
 import WritePage from "./pages/WritePage";
 import MyPage from "./pages/MyPage";
-
-
-
-
 
 function App() {
   return (
@@ -22,7 +17,6 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/boardList" element={<BoardPage />} />
-        <Route path="/boardFoodPage" element={<BoardFoodPage />} />
         <Route path="/boardDetail" element={<BoardDetailPage />} />
         <Route path="/write" element={<WritePage />} />
         <Route path="/my" element={<MyPage />} />
