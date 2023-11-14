@@ -12,10 +12,10 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
         " rounded-[0.625rem] text-[0.6875rem] mr-[2.44rem] w-[5.25rem] h-[2.0625rem] bg-[#ACC830] text-[#464646]";
       break;
 
-      case "log-out":
-        style +=
-          " rounded-[0.625rem] text-[0.6875rem] mr-[3.44rem] w-[5.25rem] h-[2.0625rem] bg-[#ACC830] text-[#464646]";
-        break;
+    case "log-out":
+      style +=
+        " rounded-[0.625rem] text-[0.6875rem] mr-[3.44rem] w-[5.25rem] h-[2.0625rem] bg-[#ACC830] text-[#464646]";
+      break;
 
     case "mini-join":
       style +=
@@ -71,16 +71,16 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
       style +=
         " rounded-[0.625rem] text-[1rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] hover:bg-[#76C598] text-[#ffffff]";
       break;
-      
+
     case "category-white":
       style +=
-        " rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#FFFFFF] hover:bg-[#76C598] text-[#2b2b2b]";
+        " mx-2 rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#FFFFFF] hover:bg-[#76C598] text-[#2b2b2b]";
       break;
 
-      case "my-page":
-        style +=
-          " rounded-[0.625rem] text-[0.6875rem] w-[5.25rem] h-[2.0625rem] bg-[#54AB75] text-[#ffffff] absolute top-[2rem] right-[19rem]";
-        break;
+    case "my-page":
+      style +=
+        " rounded-[0.625rem] text-[0.6875rem] w-[5.25rem] h-[2.0625rem] bg-[#54AB75] text-[#ffffff] absolute top-[2rem] right-[19rem]";
+      break;
 
     default:
       style += "bg-[#675D50] text-white";
