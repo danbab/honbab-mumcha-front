@@ -17,6 +17,8 @@ function BoardFoodPage() {
         setBoardDtos(response.data);
       } catch (error) {
         console.error("서버 요청 에러:", error);
+        alert("인증이 필요합니다.");
+        window.location.href = "/login"; // 로그인 페이지로 이동
       }
     };
     fetchBoardData();
