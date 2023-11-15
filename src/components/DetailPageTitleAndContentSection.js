@@ -30,19 +30,19 @@ const DetailPageTitleAndContentSection = ({ boardData, isLoading }) => {
 
                 </div>
             </div>
-            <div className="md:w-full h-full md:mt-10 text-black bg-neutral-100 rounded-md p-5">
+            <div className="md:w-full h-full md:p-5 md:mt-10 text-black bg-neutral-100 rounded-md">
                 {/* 모집글 내용 */}
                 <p>{boardData.content}</p>
             </div>
 
-            <div className="md:w-full md:h-full md:mt-28 bg-neutral-50 rounded-md">
+            <div className="md:w-full md:h-full md:p-3 md:mt-20 bg-neutral-100 rounded-md">
                 {/* 식당 이름 */}
-                <p>{boardData.restaurantName}</p>
+                <p>식당 : {boardData.restaurantName}</p>
             </div>
 
-            <div className="md:w-full md:h-full md:mt-7 bg-neutral-50 rounded-md">
+            <div className="md:w-full md:h-full md:p-3 md:mt-7 bg-neutral-100 rounded-md">
                 {/* 식당 주소 */}
-                <p>{boardData.restaurantAddress}</p>
+                <p>주소 : {boardData.restaurantAddress}</p>
             </div>
         </div>
     );
