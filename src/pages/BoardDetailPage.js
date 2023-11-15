@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import DetailPageHeader from "../components/DetailPageHeader";
 import DetailPageTitleAndContentSection from "../components/DetailPageTitleAndContentSection";
-import MapContainer from "../components/MapContainer";
 import axios from 'axios';
 import LoadingSpinner from "../components/LoadingSpinner";
+import DetailPageMapContainer from "../components/DetailPageMapContainer";
 
 const BoardDetailPage = () => {
   let { state } = useLocation();
@@ -17,7 +17,7 @@ const BoardDetailPage = () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/board/${state.id}`);
         setBoardData(response.data);
-        console.log('axios로 값 받아온 후의 보드 데이터:' + boardData);
+        console.log('axios로 값 받아온 후의 보드 데이터:' + JSON.stringify(response.data));
       } catch (e) {
         console.error("모집글 상세 정보 가져오기 실패!: ", e);
       } finally {
@@ -36,9 +36,10 @@ const BoardDetailPage = () => {
       <DetailPageHeader boardData={boardData} isLoading={isLoading} />
       <DetailPageTitleAndContentSection boardData={boardData} isLoading={isLoading} />
 
-      <div className="flex max-w-screen-xl xl:mx-auto xl:justify-between">
-        <div className="w-full h-full my-20">
-          <MapContainer boardData={boardData} isLoading={isLoading} />
+      <div className="flex max-w-screen-d_l d_l:mx-auto d_l:justify-between">
+        <div className="w-full h-full mt-20">
+          {/* <DetailPageMapContainer boardData={boardData} /> */}
+          
         </div>
       </div>
     </div>

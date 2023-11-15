@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { pl } from "date-fns/locale";
 import KakaoMapWrite from "../components/KakaoMapWrite";
 const { kakao } = window;
 
@@ -21,17 +20,17 @@ const WritePage = () => {
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
 
-  const handleClick = () => {
-    setInputVisible(!isInputVisible);
-  };
+  // const handleClick = () => {
+  //   setInputVisible(!isInputVisible);
+  // };
 
-  const handleButtonHashTag = (val) => {
-    setbuttonHashTag(val);
-  };
+  // const handleButtonHashTag = (val) => {
+  //   setbuttonHashTag(val);
+  // };
 
-  const handleHashTags = (val) => {
-    setHashTags(val);
-  };
+  // const handleHashTags = (val) => {
+  //   setHashTags(val);
+  // };
 
   const handleSelectPlace = (name, address) => {
     setRestaurantName(name);
@@ -49,7 +48,7 @@ const WritePage = () => {
       if (status === kakao.maps.services.Status.OK) {
         const lat = result[0].y;
         const lng = result[0].x;
-        const coords = new kakao.maps.LatLng(result[0].x, result[0].y);
+        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
         console.log(coords);
 
@@ -88,7 +87,7 @@ const WritePage = () => {
         </Link>
         <div className="flex">
           <img src="img/Bell.svg" alt="이미지" />
-          <p>여~! 쓰~벌 브라더~</p>
+          <p></p>
         </div>
       </div>
       <div className="w-[50.5rem] mx-auto my-0">
@@ -100,7 +99,7 @@ const WritePage = () => {
           <div className="flex justify-between border-b-2 border-[#000000] pb-3">
             <div className="text-[1.25rem] mt-[0.5rem]">글쓰기</div>
             <button
-              className="rounded-[0.625rem] text-[0.75rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] text-[#ffffff] shadow-md"
+              className="rounded-[0.625rem] text-[0.75rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] hover:bg-green-600 text-[#ffffff] shadow-md"
               type="submit"
             >
               약속 만들기
