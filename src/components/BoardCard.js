@@ -48,7 +48,7 @@ const Card = ({ boardDto }) => {
 
       <Link to={`/boardDetail`} state={{ id: boardDto.boardId }}>
         {/* 글 제목-title */}
-        <p className="absolute bottom-[6rem] left-[1rem] ml-1 text-[1rem] font-bold">
+        <p className="absolute bottom-[6rem] left-[1rem] ml-1 text-[1rem] font-bold overflow-hidden overflow-ellipsis whitespace-nowrap w-[10.2rem]">
           {boardDto.title}
         </p>
       </Link>
