@@ -29,11 +29,14 @@ function timeDifference(current, previous) {
   }
 }
 
+  
 const DetailPageHeader = ({ boardData, isLoading }) => {
   // 좋아요 버튼 active/inactive
   console.log('이건 props로 준 보드 데이터:' + boardData);
   const [active, setActive] = useState(false);
-
+  
+  if(boardData.hit === null) {return boardData.hit ===0;}
+  
   if (isLoading) {
     return <LoadingSpinner />;  //로딩 중일 때는 LoadingSpinner 컴포넌트를 렌더링
   }
@@ -56,6 +59,11 @@ const DetailPageHeader = ({ boardData, isLoading }) => {
       </div>
 
       <div className="flex items-center space-x-5">
+        {/* 조회수 */}
+        <div className="text-neutral-400 text-lg font-extralight font-['Inter']">
+          <p>조회수: {boardData.hit}</p>
+        </div>
+
         <p><Button type="big-join" >참여하기</Button></p>
         <div className="inline-block">
           <p>
