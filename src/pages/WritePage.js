@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import KakaoMapWrite from "../components/KakaoMapWrite";
+
 const { kakao } = window;
 
+
 const WritePage = () => {
-  const [buttonHashTag, setbuttonHashTag] = useState("");
-  const [hashTags, setHashTags] = useState([]);
   const [restaurantName, setRestaurantName] = useState("");
   const [restaurantAddress, setRestaurantAddress] = useState("");
   const [foodCategory, setFoodCategory] = useState("");
@@ -16,21 +16,27 @@ const WritePage = () => {
   const [people, setPeople] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isInputVisible, setInputVisible] = useState(false);
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
+  const [writer, setWriter] = useState(null);
 
-  // const handleClick = () => {
-  //   setInputVisible(!isInputVisible);
-  // };
+  const getCurrentUser = async () => {
+    try {
+      const storedUser = sessionStorage.getItem("user");
+      if (storedUser) {
+        // JSON 문자열을 객체로 변환
+        const userObject = JSON.parse(storedUser);
+        setWriter(userObject);
+      }
+    } catch (e) {
+      console.error("사용자 정보 가져오기 실패:" + e);
+    }
+  };
 
-  // const handleButtonHashTag = (val) => {
-  //   setbuttonHashTag(val);
-  // };
-
-  // const handleHashTags = (val) => {
-  //   setHashTags(val);
-  // };
+  useEffect(() => {
+    // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
+    getCurrentUser();
+  }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
 
   const handleSelectPlace = (name, address) => {
     setRestaurantName(name);
@@ -66,6 +72,7 @@ const WritePage = () => {
               content: content,
               locationX: String(coords.getLng()),
               locationY: String(coords.getLat()),
+              writer: writer
             })
             .then((response) => {
               console.log(response.data);
@@ -196,6 +203,7 @@ const WritePage = () => {
         </div>
         <input type="hidden" name="lat" value={lat} />
         <input type="hidden" name="lng" value={lng} />
+        <input type="hidden" name="writer" value={writer} />
       </form>
     </>
   );

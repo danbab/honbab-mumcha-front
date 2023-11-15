@@ -36,10 +36,9 @@ const BoardDetailPage = () => {
       <DetailPageHeader boardData={boardData} isLoading={isLoading} />
       <DetailPageTitleAndContentSection boardData={boardData} isLoading={isLoading} />
 
-      <div className="flex max-w-screen-d_l d_l:mx-auto d_l:justify-between">
-        <div className="w-full h-full mt-20">
-          {/* <DetailPageMapContainer boardData={boardData} /> */}
-          
+      <div className="flex justify-between max-w-screen-xl mx-auto">
+        <div className="w-full h-full mt-20 my-5">
+          <DetailPageMapContainer boardData={boardData} />
         </div>
       </div>
     </div>
