@@ -118,9 +118,9 @@ const MyPage = () => {
                         // 세션이 있는 경우, 로그아웃 버튼 표시
                         <>
                             <Link to="/my">
-                                {user.username}
+                                <p className="mt-1.5 mx-5">{user.username}</p>
                             </Link>
-                            <Button type="login" onClick={handleLogout}>
+                            <Button type="log-out" onClick={handleLogout}>
                                 로그아웃
                             </Button>
                         </>
@@ -151,15 +151,15 @@ const MyPage = () => {
                         <RegisterUpdate user={user} />
                     ) : selectMyPageCategory === '내가찜한약속' ? (
                         <>
-                           <div className="text-red-600">현재 기능 구현 중입니다 </div>
+                            <div className="text-red-600">현재 기능 구현 중입니다 </div>
                         </>
                     ) : selectMyPageCategory === '내채팅' ? (
                         <>
-                           <div className="text-red-600">현재 기능 구현 중입니다 </div>
+                            <div className="text-red-600">현재 기능 구현 중입니다 </div>
                         </>
                     ) : selectMyPageCategory === '회원탈퇴' ? (
                         <>
-                           <div className="text-red-600">현재 기능 구현 중입니다 </div>
+                            <div className="text-red-600">현재 기능 구현 중입니다 </div>
                         </>
                     ) : (
                         myBoard.map((myBoards) => (

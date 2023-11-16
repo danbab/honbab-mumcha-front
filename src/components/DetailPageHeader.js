@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../components/Button";
-import { useState } from "react";
 import Heart from "react-heart"
 import LoadingSpinner from "../components/LoadingSpinner";
 /*
@@ -29,14 +28,12 @@ function timeDifference(current, previous) {
   }
 }
 
-  
-const DetailPageHeader = ({ boardData, isLoading }) => {
+const DetailPageHeader = ({ boardData }) => {
   // 좋아요 버튼 active/inactive
   console.log('이건 props로 준 보드 데이터:' + boardData);
   const [active, setActive] = useState(false);
-  
-  if(boardData.hit === null) {return boardData.hit ===0;}
-  
+
+
   if (isLoading) {
     return <LoadingSpinner />;  //로딩 중일 때는 LoadingSpinner 컴포넌트를 렌더링
   }
