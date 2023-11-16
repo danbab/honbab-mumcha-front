@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, unstable_HistoryRouter, useNavigate } from "react-router-dom";
 import axios from "axios";
 import KakaoMapWrite from "../components/KakaoMapWrite";
 
@@ -19,6 +21,7 @@ const WritePage = () => {
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
   const [writer, setWriter] = useState(null);
+  const navigate = useNavigate();
 
   const getCurrentUser = async () => {
     try {
@@ -77,7 +80,8 @@ const WritePage = () => {
             .then((response) => {
               console.log(response.data);
               // alert(response.data);
-              alert('작성이 완료되었습니다.');
+              alert("작성이 완료되었습니다.");
+              navigate("/boardDetail/${response.data.id}");
             });
         } catch (error) {
           console.error(error);

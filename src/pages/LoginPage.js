@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
+import { useCookies } from "react-cookie";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,10 @@ const LoginPage = () => {
 
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
+
+  //토큰 사용을 위한 초기화
+  const [cookies, setCookies] = useCookies();
+  
   // 이메일
   const emailChange = (e) => {
     e.preventDefault();
@@ -73,13 +78,31 @@ const LoginPage = () => {
         //console.log("사용자 정보:", response.data);
         sessionStorage.setItem("user", JSON.stringify(response.data));
         //alert(sessionStorage.getItem("user"));
+        const responseData = response.data;
+        console.log(responseData);
+        const {expireTime, token, user } = responseData;
+        const expires = new Date();
+        expires.setMilliseconds(expires.getMilliseconds() + expireTime)
+        sessionStorage.setItem("user", JSON.stringify(response.data.user));
+        console.log(user);
+
+        setCookies("token", token, { expires });
         window.location.href = "/"; // 로그인 성공시 메인페이지로 이동.
+        sessionStorage.setItem("user", JSON.stringify(response.data));
+        const togoUrl = sessionStorage.getItem("togoUrl");
+        if (togoUrl) {
+          sessionStorage.removeItem("togoUrl");
+          window.location.href = togoUrl;
+        } else {
+          window.location.href = "/";
+        } // 로그인 성공시 메인페이지로 이동.
       })
       .catch((error) => {
         console.log(error.response);
-        if (error.response.status === 401) {
+        if (error.response) {
           alert("이메일 또는 비밀번호가 일치하지 않습니다.");
         } else {
+          console.log(error.response);
           alert("Client : 서버 오류");
         }
       });

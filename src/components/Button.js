@@ -82,6 +82,26 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
         " rounded-[0.625rem] text-[0.6875rem] w-[5.25rem] h-[2.0625rem] text-[#ffffff] transition-colors duration-300 bg-green-700 hover:bg-green-600";
       break;
 
+    case "join-status-default":
+      style +=
+        " rounded-[0.625rem] text-[0.8rem] w-[4rem] h-[1.85rem] bg-[#54AB75] text-[#ffffff]  shadow-md";
+      break;
+
+    case "join-status-accepted":
+      style +=
+        " rounded-[0.625rem] text-[0.8rem] w-[4rem] h-[1.85rem] bg-[#ff7e00] text-[#ffffff]  shadow-md";
+      break;
+
+    case "join-status-pending":
+      style +=
+        " rounded-[0.625rem] text-[0.8rem] w-[4rem] h-[1.85rem] bg-[#4b89dc] text-[#ffffff]  shadow-md";
+      break;
+
+    case "join-status-rejected":
+      style +=
+        " rounded-[0.625rem] text-[0.8rem] w-[4rem] h-[1.85rem] bg-[#DB4455] text-[#ffffff]  shadow-md";
+      break;
+
     default:
       style += "bg-[#675D50] text-white";
       break;
