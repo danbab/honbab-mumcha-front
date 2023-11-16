@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react'
 import MyPageSideBar from "../components/MyPageSideBar";
 import axios from "axios";
+import BoardCard from "../components/BoardCard";
 import MyBoardCard from "../components/MyBoardCard";
 import MyPageSection from "../components/MyPageSection";
 import Button from "../components/Button";
@@ -12,6 +13,8 @@ const MyPage = () => {
     const [myBoard, setMyBoard] = useState([]);
     const [selectMyPageCategory, setSelectMyPageCategory] = useState(null);
     const [user, setUser] = useState(null);
+    const [partyUser, setPartyUser] = useState([]);
+    const [boardId, setBoardId] = useState(null);
 
     // const baseUrl = "http://localhost:8080/api/my";
     const getCurrentUser = async () => {
@@ -34,44 +37,43 @@ const MyPage = () => {
         getCurrentUser();
     }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
 
-    // useEffect(() => {
-    //     // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
-    //     const storedUser = sessionStorage.getItem("user");
-    //     if (storedUser) {
-    //         // JSON 문자열을 객체로 변환
-    //         const userObject = JSON.parse(storedUser);
-    //         setUser(userObject);
-    //     } else {
-    //         window.location.href = "/login"; // 로그인 페이지로 보내기
-    //     }
+//    --------------------------------------------- 구분선 ----------------------------
 
-
-    // }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
-    const fetchBoardData = async () => {
-
-        try {
-            const response = await axios.get("http://localhost:8080/api/my", {
-                params: {
-                    email: user.email
-                }
-            });
-
-            console.log("서버 응답 :", response.data);
-            setMyBoard(response.data);
-        } catch (error) {
-            console.error("서버 요청 에러: ", error);
+const fetchBoardData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/my", {
+        params: {
+          email: user.email
         }
-    };
-
-
-    useEffect(() => {
-        if (user) {
-            fetchBoardData();
+      });
+  
+      console.log(response.data);
+      setMyBoard(response.data);
+      response.data.forEach((board) => {
+        if (user.username === board.writer.name) {
+          console.log("이건 뭐야? 누구야?", board.writer.name);
+          setBoardId(board.boardId);
         }
+      });
+      console.log("이름찍혀?", user.username); 
+      
+    } catch (error) {
+      console.error("서버 요청 에러: ", error);
+    }
+  };
+  
+  useEffect(() => {
+    if (user) {
+      fetchBoardData();
+    } 
+  }, [user]);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user]);
-
+  //    --------------------------------------------- 구분선 ----------------------------
+  
+//   useEffect(() => {
+//     console.log("이름찍혀?", boardId);
+//   }, [boardId]);
+    //    --------------------------------------------- 구분선 ----------------------------
 
     const fetchBoardDataMyCategory = async (myCategory) => {
         try {
@@ -89,11 +91,53 @@ const MyPage = () => {
         }
     };
 
+    //    --------------------------------------------- 구분선 ----------------------------
+
+    const fetchBoardDataByKeyword = async (keyWord) => {
+
+        if (keyWord === null) {
+            fetchBoardData();
+        } else if (keyWord && keyWord.trim() !== "") {
+            try {
+                const response = await axios.get(
+                    `http://localhost:8080/api/board/findby/${keyWord}`
+                );
+                console.log(`${keyWord}에 대한 서버 응답:`, response.data);
+                setMyBoard(response.data);
+            } catch (error) {
+                console.error(`${keyWord}에 대한 서버 요청 에러:`, error);
+            }
+        } else fetchBoardData();
+
+    };
+
+    //    --------------------------------------------- 구분선 ----------------------------
+
+    const fetchBoardDataId = async (boardId) => {
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/api/my/party/${boardId}`
+            );
+            console.log(`${boardId}파티 유저 응답 :`, response.data);
+            setPartyUser(response.data);
+        } catch (error) {
+            console.error(`에 대한 서버 요청 에러`, error);
+        }
+    };
+
+
+//    --------------------------------------------- 구분선 ----------------------------
+
     useEffect(() => {
         if (selectMyPageCategory) {
             console.log("여기?", selectMyPageCategory);
             fetchBoardDataMyCategory(selectMyPageCategory);
-        }
+        
+            if (selectMyPageCategory === "내파티") {
+                fetchBoardDataId(boardId);
+            }
+        };
+        
     }, [selectMyPageCategory]);
 
     const handleLogout = () => {
@@ -145,25 +189,27 @@ const MyPage = () => {
                     ) : []}
                 </div>
 
-                <MyPageSection>
+                <MyPageSection fetchBoardDataByKeyword={fetchBoardDataByKeyword}>
 
                     {selectMyPageCategory === '정보수정' ? (
                         <RegisterUpdate user={user} />
                     ) : selectMyPageCategory === '내가찜한약속' ? (
                         <>
-                           <div className="text-red-600">현재 기능 구현 중입니다 </div>
+                            <div className="text-red-600">현재 기능 구현 중입니다 </div>
                         </>
                     ) : selectMyPageCategory === '내채팅' ? (
                         <>
-                           <div className="text-red-600">현재 기능 구현 중입니다 </div>
+                            <div className="text-red-600">현재 기능 구현 중입니다 </div>
                         </>
-                    ) : selectMyPageCategory === '회원탈퇴' ? (
-                        <>
-                           <div className="text-red-600">현재 기능 구현 중입니다 </div>
-                        </>
+                    ) : selectMyPageCategory === '내파티' ? (
+
+                        partyUser.map((partyUser) => (
+                            <MyBoardCard partyUser={partyUser} user={user} />
+                        ))
+
                     ) : (
                         myBoard.map((myBoards) => (
-                            <MyBoardCard myBoards={myBoards} />
+                            <BoardCard boardDto={myBoards} />
                         ))
                     )}
 

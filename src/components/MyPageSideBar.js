@@ -45,7 +45,7 @@ const MyPageSideBar = ({ onSelectMyPageCategory ,user }) => {
       alt: "동대문 이미지",
     },
     {
-      name: "회원탈퇴",
+      name: "내파티",
       image: "",
       alt: "잠실 이미지",
     }
