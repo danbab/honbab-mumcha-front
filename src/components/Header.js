@@ -8,9 +8,11 @@ import { useCookies } from "react-cookie";
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState(null);
+
   //쿠키에 있는 토큰을 활용하기 위한 선언
   const [cookies, setCookies] = useCookies();
   //const baseUrl = "http://localhost:8080";
+
   const getCurrentUser = async () => {
     try {
       const storedUser = sessionStorage.getItem("user");
