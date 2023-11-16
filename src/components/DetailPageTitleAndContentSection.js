@@ -12,36 +12,37 @@ const DetailPageTitleAndContentSection = ({ boardData, isLoading }) => {
     }
 
     return (
-        <div className="max-w-screen-md mx-auto md:px-16 md:mt-14">
-            <div className="text-lg md:text-xl font-bold">
+        <div className="max-w-screen-md mx-auto md:px-16 md:mt-20 md:text-2xl">
+            <div className="font-bold">
                 {/* 모집글 제목 */}
                 <p>{boardData.title}</p>
             </div>
+            <div className="flex md:mt-7 text-black text-center font-bold">약속 일시
+                <div className="flex md:w-1/2 border border-black rounded-sm ml-3">
+                    <div className="flex-grow border-r border-black text-black text-center font-bold">
+                        {/* 모임 약속 날짜 */}
+                        <p>{boardData.meetDate}</p>
+                    </div>
+                    <div className="md:px-5 text-black text-center font-bold">
+                        {/* 모임 약속 시간 */}
+                        <p>{boardData.time}</p>
+                    </div>
 
-            <div className="flex md:w-1/2 border border-black rounded-sm md:mt-7">
-                <div className="flex-grow border-r border-black text-black text-center font-bold">
-                    {/* 모임 약속 시간 */}
-                    <p>{boardData.time}</p>
-                </div>
-                <div className="md:px-5 text-black text-center text-base font-bold">
-                    {/* 모임 약속 시간 */}
-                    <p>{boardData.time}</p>
                 </div>
             </div>
-
-            <div className="md:w-full md:h-full md:mt-10 text-black text-base md:text-lg bg-neutral-100 rounded-md p-5">
+            <div className="md:w-full h-full md:p-5 md:mt-10 text-black bg-neutral-100 rounded-md">
                 {/* 모집글 내용 */}
                 <p>{boardData.content}</p>
             </div>
 
-            <div className="md:w-full md:h-full md:mt-28 bg-neutral-50 rounded-md">
+            <div className="md:w-full md:h-full md:p-3 md:mt-20 bg-neutral-100 rounded-md">
                 {/* 식당 이름 */}
-                <p>{boardData.restaurantName}</p>
+                <p>식당 : {boardData.restaurantName}</p>
             </div>
 
-            <div className="md:w-full md:h-full md:mt-7 bg-neutral-50 rounded-md">
+            <div className="md:w-full md:h-full md:p-3 md:mt-7 bg-neutral-100 rounded-md">
                 {/* 식당 주소 */}
-                <p>{boardData.restaurantAddress}</p>
+                <p>주소 : {boardData.restaurantAddress}</p>
             </div>
         </div>
     );

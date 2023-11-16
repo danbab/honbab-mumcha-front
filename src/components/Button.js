@@ -4,17 +4,17 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
   switch (type) {
     case "register":
       style +=
-        " rounded-[0.625rem] text-[0.6875rem] w-[5.25rem] h-[2.0625rem] bg-[#365347] text-[#ffffff]";
+        " rounded-[0.625rem] text-[0.6875rem] w-[5.25rem] h-[2.0625rem] bg-[#365347] text-[#ffffff] transition-colors duration-300 bg-green-700 hover:bg-green-600";
       break;
 
     case "login":
       style +=
-        " rounded-[0.625rem] text-[0.6875rem] mr-[2.44rem] w-[5.25rem] h-[2.0625rem] bg-[#ACC830] text-[#464646]";
+        " rounded-[0.625rem] text-[0.6875rem] w-[5.25rem] h-[2.0625rem] bg-[#ACC830] hover:bg-[#567D46] text-[#464646] transition-colors duration-300";
       break;
 
     case "log-out":
       style +=
-        " rounded-[0.625rem] text-[0.6875rem] mr-[3.44rem] w-[5.25rem] h-[2.0625rem] bg-[#ACC830] text-[#464646]";
+        " rounded-[0.625rem] text-[0.6875rem] w-[5.25rem] h-[2.0625rem] bg-[#ACC830] hover:bg-[#567D46] text-[#464646] transition-colors duration-300";
       break;
 
     case "mini-join":
@@ -29,7 +29,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "make-reservation":
       style +=
-        " rounded-[0.625rem] text-[0.6125rem] t_m:text-[0.8125rem] w-[4.4375rem] t_m:w-[7.4375rem] h-[2.1875rem] bg-[#365347] text-[#ffffff]";
+        " rounded-[0.625rem] text-[0.6125rem] t_m:text-[0.8125rem] w-[4.4375rem] t_m:w-[7.4375rem] h-[2.1875rem] bg-[#365347] hover:bg-[#54AB80] text-[#ffffff] transform transition duration-500 hover:scale-110";
       break;
 
     case "search":
@@ -79,7 +79,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "my-page":
       style +=
-        " rounded-[0.625rem] text-[0.6875rem] w-[5.25rem] h-[2.0625rem] bg-[#54AB75] text-[#ffffff] absolute top-[2rem] right-[19rem]";
+        " rounded-[0.625rem] text-[0.6875rem] w-[5.25rem] h-[2.0625rem] text-[#ffffff] transition-colors duration-300 bg-green-700 hover:bg-green-600";
       break;
 
     case "join-status-default":

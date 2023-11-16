@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
+import { Link } from "react-router-dom";
 
 const BoardSection = ({ children, fetchBoardDataByKeyword, user }) => {
   const [searchKeyword, setSearchKeyword] = useState();
@@ -19,6 +20,8 @@ const BoardSection = ({ children, fetchBoardDataByKeyword, user }) => {
 
   return (
     <div className="p-4 ml-[170px] m_lm:w-[500px] m_s:ml-0 d_s:ml-64 bg-[#F6F6F6] flex-grow">
+      <div className="flex mb-5 ml-12 t_s2:ml-[5.25rem] t_ms:ml-[4.85rem] d_l:ml-[1.5rem] justify-between items-center">
+        <Button type="make-reservation"><Link to="/write">지금 약속잡기</Link></Button>
       <div className="flex mb-5 ml-12 t_s2:ml-[5.25rem] t_ms:ml-[4.85rem] d_l:ml-[2.5rem] justify-between items-center">
         <Button type="make-reservation" onClick={writeBoard}>
           지금 약속잡기

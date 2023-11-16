@@ -73,6 +73,11 @@ const LoginPage = () => {
         password: password,
       })
       .then((response) => {
+        //alert("로그인에 성공하였습니다.");
+        //alert("나는 언제쯤..." + response.data);
+        //console.log("사용자 정보:", response.data);
+        sessionStorage.setItem("user", JSON.stringify(response.data));
+        //alert(sessionStorage.getItem("user"));
         const responseData = response.data;
         console.log(responseData);
         const {expireTime, token, user } = responseData;
