@@ -5,6 +5,7 @@ import BoardSideBar from "../components/BoardSideBar";
 import BoardSideBarModal from "../components/BoardSideBarModal";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 function BoardPage() {
   const locationList = [
@@ -123,6 +124,10 @@ function BoardPage() {
   const [selectedCategory, setSelectedCategory] = useState(); //for 백으로 보낼 카테고리
   const [selectedImg, setSelectedImg] = useState(); //for 사이드바 와 모달창 동기화
 
+  const [cookies] = useCookies();
+  //쿠키에 담긴 토큰 정보 변수에 할당
+  const token = cookies.token;
+
   //사이드바 모달창
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef();
@@ -181,13 +186,26 @@ function BoardPage() {
     } else {
       apiURL = apiURL + `/place/${category}`;
     }
+    
+    console.log('토큰 확인'+token);
+
+    //요청 헤더에 토큰 값 넘기기
+    const requestOption = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+
     try {
-      const response = await axios.get(apiURL);
+      const response = await axios.get(apiURL,requestOption);
       console.log(`${category}에 대한 서버 응답:`, response.data);
 
       setBoardDtos(response.data);
     } catch (error) {
       console.error(`${category}에 대한 서버 요청 에러:`, error);
+      //토큰이 없을 시, alert 후, 로그인 페이지로 이동
+      alert('인증이 필요합니다.'); 
+      window.location.href = "/login";
     }
   };
   //키워드로 검색

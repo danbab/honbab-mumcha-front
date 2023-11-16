@@ -3,10 +3,16 @@ import Button from "./Button";
 import Input from "./Input";
 import { Link } from "react-router-dom";
 import Menu from "./Menu"; // Menu 컴포넌트 import
+import { useCookies } from "react-cookie";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState(null);
+
+  //쿠키에 있는 토큰을 활용하기 위한 선언
+  const [cookies, setCookies] = useCookies();
+  //const baseUrl = "http://localhost:8080";
+
   const getCurrentUser = async () => {
     try {
       const storedUser = sessionStorage.getItem("user");
@@ -34,6 +40,8 @@ const Header = () => {
   };
 
   const handleLogout = () => {
+    // 로그아웃 버튼을 클릭했을 때 쿠키에 저장된 토큰 삭제 (만료시간을 현재로 바꾸어 토큰이 유효하지 않게 함.)
+    setCookies("token", "", { expires: new Date() });
     // 로그아웃 버튼을 클릭했을 때 세션에서 사용자 정보 삭제
     sessionStorage.removeItem("user");
     // 사용자 상태 초기화

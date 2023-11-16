@@ -67,12 +67,11 @@ function BoardPage() {
   const fetchBoardDataByPlaceCategory = async (placeCategory) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/board/food/${placeCategory}`
-      );
+        `http://localhost:8080/api/board/food/${placeCategory}`,requestOption);
       console.log(`${placeCategory}에 대한 서버 응답:`, response.data);
       setBoardDtos(response.data);
     } catch (error) {
-      console.error(`${placeCategory}에 대한 서버 요청 에러:`, error);
+      console.error(`${placeCategory}에 대한 서버 요청 에러:`, error); 
     }
   };
 
