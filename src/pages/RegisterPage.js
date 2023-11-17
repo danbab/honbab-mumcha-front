@@ -128,14 +128,14 @@ function JoinPage() {
       })
       .then((response) => {
         console.log(response.data);
-        alert(response.data.message);
+        alert(response.data);
         // 인증 코드를 입력받을 새로운 input 태그 생성 및 표시
         setEmailCodeOpen(true);
         startTimer();
       })
       .catch((error) => {
-        console.log(error);
-        alert(error.response.data.message);
+        console.log(error.response.data);
+        alert(error.response.data);
       });
   };
 
@@ -164,7 +164,7 @@ function JoinPage() {
       })
       .catch((error) => {
         console.log(error);
-        alert(error.response.data.message);
+        alert(error.response.data);
         setIsEmailVerified(false);
       });
   };
