@@ -40,7 +40,6 @@ const BoardSection = ({ children, fetchBoardDataByKeyword, user }) => {
         {children}
       </div>
     </div>
-    </div >
   );
 };
 

@@ -27,8 +27,7 @@
     "react-transition-group": "^4.4.5",
     "socket.io": "^4.7.2",
     "swiper": "^11.0.3",
-    "web-vitals": "^2.1.4",
-    "zustand": "^4.4.6"
+    "web-vitals": "^2.1.4"
   },
   "proxy": "http://localhost:8080",
   "scripts": {
