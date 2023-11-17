@@ -113,6 +113,13 @@ function JoinPage() {
     return () => clearInterval(interval); //타이머 리셋
   }, [isTimerRunning, timerSeconds]);
 
+  //enter 키 누르면 적용 안되게끔 설정
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  }
+
   // 이메일 인증 버튼 클릭 이벤트 핸들러
   const handleEmailVerification = async (e) => {
     //백엔드 통신
@@ -142,10 +149,8 @@ function JoinPage() {
   // 확인 버튼 클릭 이벤트 핸들러
   // 서버로 인증 코드 전송 등의 로직 수행
   const handleVerificationConfirmation = async (e) => {
-    console.log("authCode:", authCode);
     // TODO : 이후 필요한 서버 요청 등을 처리하도록 구현
     //백엔드 통신
-    e.preventDefault();
 
     await axios
       .post(baseUrl + "/api/users/emails/codeChecked", {
@@ -404,6 +409,7 @@ function JoinPage() {
               <Button
                 type="register-emailDoubleCheck"
                 onClick={handleEmailVerification}
+                disabled={isEmailVerified}
               >
                 이메일 인증
               </Button>
@@ -437,6 +443,7 @@ function JoinPage() {
                 <Button
                   type="register-emailDoubleCheck"
                   onClick={handleVerificationConfirmation}
+                  disabled={isEmailVerified}
                 >
                   인증 확인
                 </Button>
@@ -610,7 +617,7 @@ function JoinPage() {
                 required
                 placeholder="주소를 입력해주세요."
               ></Input>
-              <Button type="register-addressSearch" onClick={openPostCode}>
+              <Button type="register-addressSearch" onClick={openPostCode} onKeyDown={handleKeyDown}>
                 주소 검색
               </Button>
               {/*모달 생성 기준 div*/}
@@ -721,6 +728,7 @@ function JoinPage() {
             <button
               type="submit"
               className=" shadow-md rounded-[0.625rem] text-[0.875rem] w-[13.75rem] h-[2.875rem] bg-[#54AB75] text-[#ffffff] cursor-pointer hover:bg-transparent hover:text-[#54AB75] border border-green-500"
+              onKeyDown={handleKeyDown}
             >
               가입하기
             </button>
