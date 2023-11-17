@@ -521,7 +521,7 @@ function JoinPage() {
               required
               placeholder="비밀번호를 입력해주세요."
               onChange={onChangePassword}
-              className="border-2 rounded-[0.3125rem] border-gray-300 w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
+              className="border-2 rounded-[0.3125rem] border-gray-300 w-[25.3125rem] h-[1.9375rem] border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
             ></Input>
           </div>
           {/*비밀번호 유효성 체크 : 숫자+영문자+특수문자 조합으로 8자리 이상 */}
@@ -549,7 +549,7 @@ function JoinPage() {
               required
               placeholder="비밀번호를 한 번 더 입력해주세요."
               onChange={onChangePasswordConfirm}
-              className="border-2 rounded-[0.3125rem] border-gray-300 w-[25.3125rem] h-[1.9375rem] rounded-[0.3125rem] border border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
+              className="border-2 rounded-[0.3125rem] border-gray-300 w-[25.3125rem] h-[1.9375rem] border-[#010101] bg-[#FFFBFB] placeholder:text-xs pl-[0.3rem] focus:border-[#54AB75]"
             ></Input>
           </div>
           {/*비밀번호 유효성 체크 : 비밀번호가 일치하는지 체크*/}
