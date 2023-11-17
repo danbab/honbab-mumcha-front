@@ -161,6 +161,7 @@ const Card = ({
   //   bringStatus();
   // }, [joinStatus]);
   useEffect(() => {
+    setIsLoading(false);
     if (user === null) return;
     console.log("BoardCard button setting called :)");
     setJoinStatus("join-status-default");
@@ -273,8 +274,12 @@ const Card = ({
       />
 
       <ul className="list-disc absolute bottom-[3.8rem] left-[2rem] ">
-        <li className="text-[#8B8686] text-[0.6rem]">{boardDto.restaurantName}</li>
-        <li className="text-[#8B8686] text-[0.6rem]">{boardDto.restaurantAddress}</li>
+        <li className="text-[#8B8686] text-[0.6rem]">
+          {boardDto.restaurantName}
+        </li>
+        <li className="text-[#8B8686] text-[0.6rem]">
+          {boardDto.restaurantAddress}
+        </li>
       </ul>
 
       <div className="absolute bottom-[1rem] left-[1rem]">

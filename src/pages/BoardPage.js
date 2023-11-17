@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import BoardCard from "../components/BoardCard";
+import Button from "../components/Button";
 import BoardSection from "../components/BoardSection";
 import BoardSideBar from "../components/BoardSideBar";
 import BoardSideBarModal from "../components/BoardSideBarModal";
@@ -121,10 +122,14 @@ function BoardPage() {
   const [basicList, setBasicList] = useState(foodList);
 
   const [boardDtos, setBoardDtos] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(); //for 백으로 보낼 카테고리
-  const [selectedImg, setSelectedImg] = useState(); //for 사이드바 와 모달창 동기화
+  const [selectedCategory, setSelectedCategory] = useState(
+    sessionStorage.getItem("categoryName")
+  ); //for 백으로 보낼 카테고리
+  const [selectedImg, setSelectedImg] = useState(
+    sessionStorage.getItem("categoryImage")
+  ); //for 사이드바 와 모달창 동기화
 
-  const [cookies] = useCookies();
+  const [cookies, setCookies] = useCookies();
   //쿠키에 담긴 토큰 정보 변수에 할당
   const token = cookies.token;
 
@@ -174,10 +179,24 @@ function BoardPage() {
       console.error("서버 요청 에러:", error);
     }
   };
-  //처음 시작할 때 전체 보드 로드
+
+  //처음 시작할 때 getCurrentUser(세션에서 유저정보 불러오기) 실행
+  //메인페이지에서 세션에 저장한 카테고리 초기화
   useEffect(() => {
-    fetchBoardData();
+    getCurrentUser();
+    sessionStorage.removeItem("categoryName");
+    sessionStorage.removeItem("categoryImage");
   }, []);
+
+  //카테고리가 바뀔때마다 업데이트
+  useEffect(() => {
+    if (selectedCategory) {
+      fetchBoardDataByCategory(selectedCategory);
+    } else {
+      fetchBoardData();
+    }
+  }, [selectedCategory]);
+
   //카테고리로 검색
   const fetchBoardDataByCategory = async (category) => {
     let apiURL = "http://localhost:8080/api/board";
@@ -186,25 +205,25 @@ function BoardPage() {
     } else {
       apiURL = apiURL + `/place/${category}`;
     }
-    
-    console.log('토큰 확인'+token);
+
+    console.log("토큰 확인" + token);
 
     //요청 헤더에 토큰 값 넘기기
     const requestOption = {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     };
 
     try {
-      const response = await axios.get(apiURL,requestOption);
+      const response = await axios.get(apiURL, requestOption);
       console.log(`${category}에 대한 서버 응답:`, response.data);
 
       setBoardDtos(response.data);
     } catch (error) {
       console.error(`${category}에 대한 서버 요청 에러:`, error);
       //토큰이 없을 시, alert 후, 로그인 페이지로 이동
-      alert('인증이 필요합니다.'); 
+      alert("인증이 필요합니다.");
       window.location.href = "/login";
     }
   };
@@ -225,14 +244,6 @@ function BoardPage() {
     } else fetchBoardData();
   };
 
-  useEffect(() => {
-    if (selectedCategory) {
-      fetchBoardDataByCategory(selectedCategory);
-    } else {
-      fetchBoardData();
-    }
-  }, [selectedCategory]);
-
   //세션에 저장된 로그인 정보 불러오기
   const [user, setUser] = useState(null);
   const getCurrentUser = async () => {
@@ -247,11 +258,14 @@ function BoardPage() {
       console.error("사용자 정보 가져오기 실패:" + e);
     }
   };
-
-  useEffect(() => {
-    // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
-    getCurrentUser();
-  }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
+  const handleLogout = () => {
+    // 로그아웃 버튼을 클릭했을 때 쿠키에 저장된 토큰 삭제 (만료시간을 현재로 바꾸어 토큰이 유효하지 않게 함.)
+    setCookies("token", "", { expires: new Date() });
+    // 로그아웃 버튼을 클릭했을 때 세션에서 사용자 정보 삭제
+    sessionStorage.removeItem("user");
+    // 사용자 상태 초기화
+    setUser(null);
+  };
 
   /////임시 작업중
   const [participants, setParticipants] = useState([]);
@@ -266,7 +280,7 @@ function BoardPage() {
         })
         .then((response) => {
           console.log("아따1" + response);
-          console.log("아따따1" + response.data);
+          console.log("아따따1" + JSON.stringify(response.data));
           setParticipants(response.data);
         });
     }
@@ -294,15 +308,36 @@ function BoardPage() {
 
   return (
     <>
-      <div className="flex mx-[4.7rem] flex-wrap justisfy-between items-center ">
-        <Link to="/">
-          <img src="img/mainlogo.svg" alt="메인로고" className="ml-[8rem]" />
-        </Link>
-        {/* 다시 추가 */}
-        {/* <div className="flex">
-          <img src="img/Bell.svg" alt="이미지" />
-          <p>여~! 쓰~벌 브라더~</p>
-        </div> */}{" "}
+      <div className="flex mx-[4.7rem] flex-wrap justify-between items-center ">
+        <div>
+          <Link to="/">
+            <img src="img/mainlogo.svg" alt="메인로고" className="ml-[8rem]" />
+          </Link>
+        </div>
+        <div>
+          {user ? (
+            // 세션이 있는 경우, 로그아웃 버튼 표시
+            <div className="flex">
+              <div className="mr-2 mt-1">{user.username}</div>
+              <Button type="log-out" onClick={handleLogout}>
+                로그아웃
+              </Button>
+              <Link to="/my" className="ml-[2.44rem]">
+                <Button type="my-page">마이페이지</Button>
+              </Link>
+            </div>
+          ) : (
+            // 세션이 없는 경우, 로그인과 회원가입 버튼 표시
+            <>
+              <Link to="/login" className="mr-[2.44rem]">
+                <Button type="login">로그인</Button>
+              </Link>
+              <Link to="/register">
+                <Button type="register">회원가입</Button>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
       <img
         src="img/menubarButton.svg"
