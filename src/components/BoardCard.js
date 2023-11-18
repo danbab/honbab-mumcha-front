@@ -126,50 +126,21 @@ const Card = ({
     }
   };
 
-  // const bringStatus = async (e) => {
-  //   //로그인 되어 있지 않으면 함수 종료, requestStatus는 기본값
-  //   if (user === null) {
-  //     return;
-  //   } else {
-  //     //로그인 되어 있다면 유저와보드로 participants를 검색
-  //     //status = [1:수락 0:대기 -1:거절 -99:참여정보 없음]
-  //     await axios
-  //       .post("http://localhost:8080/api/app/find/participants", {
-  //         boardNo: boardDto.boardId,
-  //         email: user.email,
-  //         username: user.username,
-  //       })
-  //       .then((response) => {
-  //         if (response.data === 1) {
-  //           setJoinStatus("join-status-accepted");
-  //           setButtonText("참여중");
-  //         } else if (response.data === 0) {
-  //           setJoinStatus("join-status-pending");
-  //           setButtonText("대기중");
-  //         } else if (response.data === -1) {
-  //           setJoinStatus("join-status-rejected");
-  //           setButtonText("거절됨");
-  //         } else return;
-  //       })
-  //       .then(() => {
-  //         setIsLoading(false); // axios 통신이 끝나면 isLoading을 false로 설정
-  //       });
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   bringStatus();
-  // }, [joinStatus]);
   useEffect(() => {
-    setIsLoading(false);
-    if (user === null) return;
+    if (user === null) {
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(true);
     console.log("BoardCard button setting called :)");
     setJoinStatus("join-status-default");
     setButtonText("참여하기");
     setActive(false);
+    console.log("I was called intermidately::" + participants);
     participants.forEach((participant) => {
       //console.log("dfdfdfdf" + boardDto.boardId);
       if (participant.board.id === boardDto.boardId) {
+        console.log("BoardCard button setting called twice :)");
         if (participant.status === 1) {
           setJoinStatus("join-status-accepted");
           setButtonText("참여중");
@@ -199,7 +170,11 @@ const Card = ({
     <div className="bg-[#FDFDFD] w-[15.625rem] h-[24.875rem] rounded-[1.25rem] relative">
       <div className="w-[14.25rem] h-[21.875rem] flex justify-between mx-auto">
         <div className="flex gap-2 ml-2 mt-[1.25rem]">
-          <img className="w-[2.125rem] h-[2.125rem]" src="img/iamlogo.svg" />
+          <img
+            className="w-[2.125rem] h-[2.125rem]"
+            src="img/iamlogo.svg"
+            alt="로고"
+          />
           {/* 작성자 이름 */}
           <div className="text-[#000] text-[12px] mt-3">
             {boardDto.writer.name}
@@ -209,7 +184,7 @@ const Card = ({
         <div className="text-[#BFBFBF] text-[10px] mt-[2.1rem] mr-[0.5rem]">
           {date}
         </div>
-        {boardDto.regDate != boardDto.lastModified && (
+        {boardDto.regDate !== boardDto.lastModified && (
           <span className="absolute top-12 right-[1.2rem] text-[#BFBFBF] text-[10px]">
             수정됨
           </span>
@@ -218,6 +193,7 @@ const Card = ({
       <img
         className="absolute top-[4.5rem] right-0 w-full h-[12.1875rem] "
         src="img/boardexampleimg.svg"
+        alt="대표 이미지"
       />
 
       <Link to={`/boardDetail`} state={{ id: boardDto.boardId }}>

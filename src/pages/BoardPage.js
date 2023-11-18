@@ -7,6 +7,7 @@ import BoardSideBarModal from "../components/BoardSideBarModal";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function BoardPage() {
   const locationList = [
@@ -188,11 +189,29 @@ function BoardPage() {
     sessionStorage.removeItem("categoryImage");
   }, []);
 
+  //메인페이지의 헤더로부터 키워드가 입력되면 키워드검색 실시
+  const [keywordFromSession, setKeywordFromSession] = useState(
+    sessionStorage.getItem("keyword")
+  );
+  const [isKeywordLoaded, setIsKeywordLoaded] = useState(false);
+  useEffect(() => {
+    const storedSearchKeyword = sessionStorage.getItem("keyword");
+    if (storedSearchKeyword) {
+      setKeywordFromSession(storedSearchKeyword);
+      fetchBoardDataByKeyword(storedSearchKeyword);
+      setIsKeywordLoaded(true);
+      sessionStorage.removeItem("keyword");
+    } else {
+      setIsKeywordLoaded(true);
+    }
+    setKeywordFromSession(null);
+  }, [keywordFromSession]);
+
   //카테고리가 바뀔때마다 업데이트
   useEffect(() => {
     if (selectedCategory) {
       fetchBoardDataByCategory(selectedCategory);
-    } else {
+    } else if (!keywordFromSession) {
       fetchBoardData();
     }
   }, [selectedCategory]);
@@ -236,10 +255,10 @@ function BoardPage() {
         const response = await axios.get(
           `http://localhost:8080/api/board/findby/${keyWord}`
         );
-        console.log(`${keyWord}에 대한 서버 응답:`, response.data);
+        console.log(`키워드 [${keyWord}]에 대한 서버 응답:`, response.data);
         setBoardDtos(response.data);
       } catch (error) {
-        console.error(`${keyWord}에 대한 서버 요청 에러:`, error);
+        console.error(`키워드 [${keyWord}]에 대한 서버 요청 에러:`, error);
       }
     } else fetchBoardData();
   };
@@ -265,16 +284,18 @@ function BoardPage() {
     sessionStorage.removeItem("user");
     // 사용자 상태 초기화
     setUser(null);
+    // 현재 페이지 리로드
+    window.location.reload();
   };
 
-  /////임시 작업중
+  //참가자 리스트와 찜하기 리스트 불러오기
   const [participants, setParticipants] = useState([]);
   const [likes, setLikes] = useState([]);
   const bringParticipants = async (e) => {
     if (user === null) {
-      return;
+      return Promise.resolve(); //로그인되지 않은 경우, 빈 Promise를 반환
     } else {
-      await axios
+      return await axios
         .post("http://localhost:8080/api/app/find/participants", {
           email: user.email,
         })
@@ -282,6 +303,7 @@ function BoardPage() {
           console.log("아따1" + response);
           console.log("아따따1" + JSON.stringify(response.data));
           setParticipants(response.data);
+          setIsParticipantsLoaded(true);
         });
     }
   };
@@ -289,7 +311,7 @@ function BoardPage() {
     if (user === null) {
       return;
     } else {
-      await axios
+      return await axios
         .post("http://localhost:8080/api/app/find/likes", {
           email: user.email,
         })
@@ -297,14 +319,39 @@ function BoardPage() {
           console.log("아따2" + response);
           console.log("아따따2" + response.data);
           setLikes(response.data);
+          setIsLikesLoaded(true);
         });
     }
   };
+  const [isLoading, setIsLoading] = useState(true);
+  const [isParticipantsLoaded, setIsParticipantsLoaded] = useState(false);
+  const [isLikesLoaded, setIsLikesLoaded] = useState(false);
+
   useEffect(() => {
-    bringParticipants();
-    bringLikes();
+    const fetchParticipantsAndLikes = async () => {
+      const results = await Promise.all([
+        bringParticipants(),
+        bringLikes(),
+      ]).catch((error) => {
+        console.error(error);
+        return [null, null];
+      });
+
+      if (results.every((result) => result !== null)) {
+        setIsLoading(false);
+      }
+    };
+
+    fetchParticipantsAndLikes();
   }, [user]);
-  ///여기까지 임시
+
+  // useEffect(() => {
+  //   bringParticipants();
+  //   bringLikes();
+  // }, [user]);
+  if (isLoading) {
+    return <LoadingSpinner />; // 로딩 중일 때는 이 메시지를 표시
+  }
 
   return (
     <>
@@ -358,19 +405,25 @@ function BoardPage() {
         <BoardSection
           fetchBoardDataByKeyword={fetchBoardDataByKeyword}
           user={user}
+          boardDtos={boardDtos}
         >
-          {boardDtos.map((boardDto) => (
-            <BoardCard
-              key={boardDto.board_id}
-              boardDto={boardDto}
-              user={user}
-              participants={participants}
-              bringParticipants={bringParticipants}
-              boardDtos={boardDtos}
-              likes={likes}
-              bringLikes={bringLikes}
-            />
-          ))}
+          {user &&
+          (!isParticipantsLoaded || !isLikesLoaded || !isKeywordLoaded) ? (
+            <LoadingSpinner />
+          ) : (
+            boardDtos.map((boardDto) => (
+              <BoardCard
+                key={boardDto.board_id}
+                boardDto={boardDto}
+                user={user}
+                participants={participants}
+                bringParticipants={bringParticipants}
+                boardDtos={boardDtos}
+                likes={likes}
+                bringLikes={bringLikes}
+              />
+            ))
+          )}
         </BoardSection>
       </div>
 
