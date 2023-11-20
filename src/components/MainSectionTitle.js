@@ -19,7 +19,11 @@ const MainSectionTitle = ({ children, type = "" }) => {
   }
 
   return (
-    <div className={style} type={type}>
+    <div
+      className={style}
+      type={type}
+      onClick={() => (window.location.href = "/boardList")}
+    >
       {children}
     </div>
   );

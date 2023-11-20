@@ -1,11 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, unstable_HistoryRouter, useNavigate } from "react-router-dom";
 import axios from "axios";
 import KakaoMapWrite from "../components/KakaoMapWrite";
 
 const { kakao } = window;
-
 
 const WritePage = () => {
   const [restaurantName, setRestaurantName] = useState("");
@@ -59,6 +57,7 @@ const WritePage = () => {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
         console.log(coords);
+        console.log("안녕하세요" + JSON.stringify(writer));
 
         try {
           const response = await axios
@@ -74,7 +73,7 @@ const WritePage = () => {
               content: content,
               locationX: String(coords.getLng()),
               locationY: String(coords.getLat()),
-              writer: writer
+              writer: writer,
             })
             .then((response) => {
               console.log(response.data);
