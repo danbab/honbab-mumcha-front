@@ -91,7 +91,7 @@ const Header = () => {
           {user ? (
             // 세션이 있는 경우, 로그아웃 버튼 표시
             <div className="flex">
-              <div className="mr-2 mt-1">{user.username}</div>
+              <div className="mr-[1rem] mt-[0.37rem]">{user.name}</div>
               <Button type="log-out" onClick={handleLogout}>
                 로그아웃
               </Button>
