@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import Button from "../components/Button";
 import Heart from "../components/Heart"
 import LoadingSpinner from "../components/LoadingSpinner";
+import axios from 'axios';
+import { useCookies } from "react-cookie";
+
 /*
  * 게시글 상세 페이지 헤더
- * 구성 요소: 유저 아이콘, 유저 닉네임, 게시글 작성시간, 참여하기 버튼, 좋아요 버튼
+ * 구성 요소: 유저 아이콘, 유저 닉네임, 게시글 작성시간, 참여하기 버튼, 좋아요 버튼, 삭제 버튼
  */
 
 const DetailPageHeader = ({ boardData, isLoading, userId }) => {
   // 게시글 작성시간 N시간 전으로 변경하는 함수
   const [regDate, setRegDate] = useState("");
-
   useEffect(() => {
     const date = new Date(boardData.regDate);
     const now = new Date();
@@ -22,6 +24,43 @@ const DetailPageHeader = ({ boardData, isLoading, userId }) => {
       setRegDate(`${hours}시간 전`);
     }
   }, [boardData.regDate]);
+
+  //토큰 사용을 위한 초기화
+  const [cookies] = useCookies();
+  const token = cookies.token;
+
+  console.log("세션에 담긴 유저 아이디:" + userId);
+
+  //요청 헤더에 토큰 값과 userId를 함께 전달
+  const requestOption = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'User-Id': userId
+    }
+  };
+
+  // 삭제 상태를 저장할 상태를 추가합니다.
+  const [deleteStatus, setDeleteStatus] = useState(null);
+
+  // 삭제 함수를 useEffect 밖으로 빼냅니다.
+  const deleteBoard = async () => {
+    try {
+      const response = await axios.delete(`http://localhost:8080/api/board/boardDetails/delete/${boardData.boardId}`, requestOption);
+      setDeleteStatus(response.data); // 결과를 상태에 저장합니다.
+    } catch (e) {
+      console.error("에러메시지: ", e);
+    }
+  };
+
+  // 삭제 버튼 클릭 핸들러
+  const handleDeleteClick = () => {
+    // 사용자에게 삭제 여부를 묻습니다.
+    const confirmDelete = window.confirm("삭제하시겠습니까?");
+    if (confirmDelete) {
+      // 사용자가 '확인'을 클릭하면 삭제 함수를 호출합니다.
+      deleteBoard();
+    }
+  };
 
   // 좋아요 버튼 active/inactive
   const [active, setActive] = useState(false);
@@ -66,7 +105,7 @@ const DetailPageHeader = ({ boardData, isLoading, userId }) => {
         {userId === boardData.writer.id && (
           <div className="flex space-x-2">
             {/* <p><Button type="board-modify">수정</Button></p> */}
-            <p><Button type="board-delete">삭제</Button></p>
+            <p><Button type="board-delete" onClick={handleDeleteClick}>삭제</Button></p>
           </div>
         )}
       </div>
