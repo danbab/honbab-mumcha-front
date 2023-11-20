@@ -134,6 +134,7 @@ function BoardPage() {
   //쿠키에 담긴 토큰 정보 변수에 할당
   const token = cookies.token;
 
+
   //사이드바 모달창
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef();
