@@ -65,15 +65,15 @@ const MyPage = () => {
 
             console.log(response.data);
             setMyBoard(response.data);
-            // response.data가 존재할 때만 실행
-            response.data.forEach((board) => {
-                if (user.username === board.writer.name) {
-                    console.log("이건 뭐야? 누구야?", board.writer.name);
-                    setBoardId(board.boardId);
-                }
-            });
+            // // response.data가 존재할 때만 실행
+            // response.data.forEach((board) => {
+            //     if (user.username === board.writer.name) {
+            //         console.log("이건 뭐야? 누구야?", board.writer.name);
+            //         setBoardId(board.boardId);
+            //     }
+            // });
 
-            console.log("이름찍혀?", boardId);
+            // console.log("이름찍혀?", boardId);
 
         } catch (error) {
             console.error("서버 요청 에러: ", error);
@@ -223,19 +223,30 @@ const MyPage = () => {
             if (selectMyPageCategory === "내파티") {
                 console.log("여기는 확인되는거야???");
                 console.log(myBoard);
+                let newBoardIds = []; // 새로운 boardId를 저장할 배열
+
                 myBoard.forEach((board) => {
-                    if (user.username === board.writer.name) {
+                    if (user.name === board.writer.name) {
                         console.log("이건 뭐야? 누구야?", board.writer.name);
-                        setBoardId(board.boardId);
+                        newBoardIds.push(board.boardId); // 배열에 새로운 boardId 추가
                     }
-                });            
-                fetchBoardDataId(boardId);
+                });
+
+                setBoardId(newBoardIds); // 새로운 boardId 배열을 상태로 저장
             }
         };
 
     }, [selectMyPageCategory]);
-    
 
+    useEffect(() => {
+        if (boardId.length > 0) {
+            boardId.forEach(id => {
+                fetchBoardDataId(id);
+            });
+        }
+    }, [boardId]);
+
+    //    --------------------------------------------- 구분선 ----------------------------
     const handleLogout = () => {
         // 로그아웃 버튼을 클릭했을 때 세션에서 사용자 정보 삭제
         sessionStorage.removeItem("user");
@@ -289,8 +300,8 @@ const MyPage = () => {
                     {selectMyPageCategory === '정보수정' ? (
                         <RegisterUpdate user={user} />
                     ) : selectMyPageCategory === '내가찜한약속' ? (
-                        
-                            myBoard.map((myBoards) => (
+
+                        myBoard.map((myBoards) => (
                             <BoardCard boardDto={myBoards}
                                 user={user}
                                 participants={participants}
@@ -298,7 +309,7 @@ const MyPage = () => {
                                 likes={likes}
                                 bringLikes={bringLikes} />
                         ))
-                        
+
                     ) : selectMyPageCategory === '내채팅' ? (
                         <>
                             <div className="text-red-600">현재 기능 구현 중입니다 </div>
