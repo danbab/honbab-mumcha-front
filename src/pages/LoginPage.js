@@ -88,7 +88,7 @@ const LoginPage = () => {
 
         setCookies("token", token, { expires });
         window.location.href = "/"; // 로그인 성공시 메인페이지로 이동.
-        sessionStorage.setItem("user", JSON.stringify(response.data));
+        //sessionStorage.setItem("user", JSON.stringify(response.data));
         const togoUrl = sessionStorage.getItem("togoUrl");
         if (togoUrl) {
           sessionStorage.removeItem("togoUrl");

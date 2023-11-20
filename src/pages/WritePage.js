@@ -80,7 +80,7 @@ const WritePage = () => {
               console.log(response.data);
               // alert(response.data);
               alert("작성이 완료되었습니다.");
-              navigate("/boardDetail/${response.data.id}");
+              // navigate("/boardDetail/${response.data.id}");
             });
         } catch (error) {
           console.error(error);
