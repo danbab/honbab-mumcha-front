@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 
 const MyPageSideBar = ({ onSelectMyPageCategory ,user }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [clickedLocation, setClickedLocation] = useState(null);
-
+  
   const handleClick = (imageName) => {
     setClickedLocation(imageName);
     setSelectedLocation(null);
@@ -62,7 +62,7 @@ const MyPageSideBar = ({ onSelectMyPageCategory ,user }) => {
           <ul className="space-y-2 text-center font-medium">
             {/* 로그인한 회원의 Id를 가지고 와야함 */}
             <Link to="/my" onClick={() => window.location.reload()}>
-            <div className="text-[1.5rem] mb-[3.4rem] ml-[1.2rem]" >{user.username}</div>
+            <div className="text-[1.5rem] mb-[3.4rem] ml-[1.2rem]" >{user.name}</div>
             </Link>
             {myPageList.map((list) => (
               <li key={list.alt}>
