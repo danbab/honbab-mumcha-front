@@ -36,7 +36,7 @@ const MenuSquare = () => {
     },
     {
       name: "분식",
-      image: "img/dduckbockyBar.svg",
+      image: "img/dduckbockySideBar.svg",
       alt: "분식 이미지",
     },
     {
