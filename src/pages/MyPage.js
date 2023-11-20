@@ -7,6 +7,7 @@ import MyBoardCard from "../components/MyBoardCard";
 import MyPageSection from "../components/MyPageSection";
 import Button from "../components/Button";
 import RegisterUpdate from "../components/RegisterUpdate";
+import { useCookies } from "react-cookie";
 
 
 const MyPage = () => {
@@ -14,7 +15,10 @@ const MyPage = () => {
     const [selectMyPageCategory, setSelectMyPageCategory] = useState(null);
     const [user, setUser] = useState(null);
     const [partyUser, setPartyUser] = useState([]);
-    const [boardId, setBoardId] = useState(null);
+    const [boardId, setBoardId] = useState([]);
+    const [cookies, setCookies] = useCookies();
+    //쿠키에 담긴 토큰 정보 변수에 할당
+    const token = cookies.token;
 
     // const baseUrl = "http://localhost:8080/api/my";
     const getCurrentUser = async () => {
@@ -35,47 +39,62 @@ const MyPage = () => {
     useEffect(() => {
         // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
         getCurrentUser();
+
     }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
 
-//    --------------------------------------------- 구분선 ----------------------------
+    //요청 헤더에 토큰 값 넘기기
+    const requestOption = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
 
-const fetchBoardData = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/api/my", {
-        params: {
-          email: user.email
+    //    --------------------------------------------- 구분선 ----------------------------
+
+    const fetchBoardData = async () => {
+        console.log(user);
+        try {
+            const response = await axios.get("http://localhost:8080/api/my", {
+                params: {
+                    email: user.email
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            console.log(response.data);
+            setMyBoard(response.data);
+            // response.data가 존재할 때만 실행
+            response.data.forEach((board) => {
+                if (user.username === board.writer.name) {
+                    console.log("이건 뭐야? 누구야?", board.writer.name);
+                    setBoardId(board.boardId);
+                }
+            });
+
+            console.log("이름찍혀?", boardId);
+
+        } catch (error) {
+            console.error("서버 요청 에러: ", error);
         }
-      });
-      
-      console.log(response.data);
-      setMyBoard(response.data);
-      if(response.data) {
-        // response.data가 존재할 때만 실행
-        response.data.forEach((board) => {
-          if (user.username === board.writer.name) {
-            console.log("이건 뭐야? 누구야?", board.writer.name);
-            setBoardId(board.boardId);
-          }
-        });
-    }
-      console.log("이름찍혀?", user.name);
-      
-    } catch (error) {
-      console.error("서버 요청 에러: ", error);
-    }
-  };
-  
-  useEffect(() => {
-    if (user) {
-      fetchBoardData();
-    } 
-  }, [user]);
+    };
 
-  //    --------------------------------------------- 구분선 ----------------------------
-  
-//   useEffect(() => {
-//     console.log("이름찍혀?", boardId);
-//   }, [boardId]);
+    useEffect(() => {
+        if (user) {
+            fetchBoardData();
+        }
+    }, [user]);
+
+    useEffect(() => {
+        console.log("이름찍혀?", boardId);
+    }, [boardId]);
+
+    //    --------------------------------------------- 구분선 ----------------------------
+
+    //   useEffect(() => {
+    //     console.log("이름찍혀?", boardId);
+    //   }, [boardId]);
     //    --------------------------------------------- 구분선 ----------------------------
 
     const fetchBoardDataMyCategory = async (myCategory) => {
@@ -84,11 +103,19 @@ const fetchBoardData = async () => {
                 `http://localhost:8080/api/my/board/${myCategory}`, {
                 params: {
                     email: user.email
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
             });
             console.log(`${myCategory}에 대한 서버 응답: `, response.data);
             setMyBoard(response.data);
-            // console.log(myCategory);
+            response.data.forEach((board) => {
+                if (user.username === board.writer.name) {
+                    console.log("이건 뭐야? 누구야?", board.writer.name);
+                    setBoardId(board.boardId);
+                }
+            });
         } catch (error) {
             console.error(`${myCategory}에 대한 서버 요청 에러: `, error);
         }
@@ -103,7 +130,7 @@ const fetchBoardData = async () => {
         } else if (keyWord && keyWord.trim() !== "") {
             try {
                 const response = await axios.get(
-                    `http://localhost:8080/api/board/findby/${keyWord}`
+                    `http://localhost:8080/api/board/findby/${keyWord}`, requestOption
                 );
                 console.log(`${keyWord}에 대한 서버 응답:`, response.data);
                 setMyBoard(response.data);
@@ -116,10 +143,67 @@ const fetchBoardData = async () => {
 
     //    --------------------------------------------- 구분선 ----------------------------
 
+
+    //참가자 리스트와 찜하기 리스트 불러오기
+    const [participants, setParticipants] = useState([]);
+    const [likes, setLikes] = useState([]);
+    const bringParticipants = async (e) => {
+        if (user === null) {
+            return Promise.resolve(); //로그인되지 않은 경우, 빈 Promise를 반환
+        } else {
+            return await axios
+                .post("http://localhost:8080/api/app/find/participants", {
+                    email: user.email,
+                })
+                .then((response) => {
+                    setParticipants(response.data);
+                    //   setIsParticipantsLoaded(true);
+                });
+        }
+    };
+
+    //    --------------------------------------------- 구분선 ----------------------------
+
+    const bringLikes = async (e) => {
+        if (user === null) {
+            return;
+        } else {
+            return await axios
+                .post("http://localhost:8080/api/app/find/likes", {
+                    email: user.email,
+                })
+                .then((response) => {
+                    setLikes(response.data);
+                    //   setIsLikesLoaded(true);
+                });
+        }
+    };
+
+    useEffect(() => {
+        const fetchParticipantsAndLikes = async () => {
+            const results = await Promise.all([
+                bringParticipants(),
+                bringLikes(),
+            ]).catch((error) => {
+                console.error(error);
+                return [null, null];
+            });
+
+            if (results.every((result) => result !== null)) {
+                // setIsLoading(false);
+            }
+        };
+
+        fetchParticipantsAndLikes();
+    }, [user]);
+
+    //    --------------------------------------------- 구분선 ----------------------------
+
+
     const fetchBoardDataId = async (boardId) => {
         try {
             const response = await axios.get(
-                `http://localhost:8080/api/my/party/${boardId}`
+                `http://localhost:8080/api/my/party/${boardId}`, requestOption
             );
             console.log(`${boardId}파티 유저 응답 :`, response.data);
             setPartyUser(response.data);
@@ -129,19 +213,28 @@ const fetchBoardData = async () => {
     };
 
 
-//    --------------------------------------------- 구분선 ----------------------------
+    //    --------------------------------------------- 구분선 ----------------------------
 
     useEffect(() => {
         if (selectMyPageCategory) {
             console.log("여기?", selectMyPageCategory);
             fetchBoardDataMyCategory(selectMyPageCategory);
-        
+
             if (selectMyPageCategory === "내파티") {
+                console.log("여기는 확인되는거야???");
+                console.log(myBoard);
+                myBoard.forEach((board) => {
+                    if (user.username === board.writer.name) {
+                        console.log("이건 뭐야? 누구야?", board.writer.name);
+                        setBoardId(board.boardId);
+                    }
+                });            
                 fetchBoardDataId(boardId);
             }
         };
-        
+
     }, [selectMyPageCategory]);
+    
 
     const handleLogout = () => {
         // 로그아웃 버튼을 클릭했을 때 세션에서 사용자 정보 삭제
@@ -196,14 +289,17 @@ const fetchBoardData = async () => {
                     {selectMyPageCategory === '정보수정' ? (
                         <RegisterUpdate user={user} />
                     ) : selectMyPageCategory === '내가찜한약속' ? (
-                        <>
-                            <div className="text-red-600">현재 기능 구현 중입니다 </div>
-                        </>
+                        
+                            myBoard.map((myBoards) => (
+                            <BoardCard boardDto={myBoards}
+                                user={user}
+                                participants={participants}
+                                bringParticipants={bringParticipants}
+                                likes={likes}
+                                bringLikes={bringLikes} />
+                        ))
+                        
                     ) : selectMyPageCategory === '내채팅' ? (
-                        <>
-                            <div className="text-red-600">현재 기능 구현 중입니다 </div>
-                        </>
-                    ) : selectMyPageCategory === '회원탈퇴' ? (
                         <>
                             <div className="text-red-600">현재 기능 구현 중입니다 </div>
                         </>
@@ -215,9 +311,15 @@ const fetchBoardData = async () => {
 
                     ) : (
                         myBoard.map((myBoards) => (
-                            <BoardCard boardDto={myBoards} />
+                            <BoardCard boardDto={myBoards}
+                                user={user}
+                                participants={participants}
+                                bringParticipants={bringParticipants}
+                                likes={likes}
+                                bringLikes={bringLikes} />
                         ))
                     )}
+
 
                 </MyPageSection>
             </div>
