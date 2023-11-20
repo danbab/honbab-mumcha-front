@@ -105,7 +105,7 @@ function BoardPage() {
     },
     {
       name: "분식",
-      image: "img/dduckbockyBar.svg",
+      image: "img/dduckbockySideBar.svg",
       alt: "분식 이미지",
     },
     {
@@ -133,7 +133,6 @@ function BoardPage() {
   const [cookies, setCookies] = useCookies();
   //쿠키에 담긴 토큰 정보 변수에 할당
   const token = cookies.token;
-
 
   //사이드바 모달창
   const [isModalOpen, setIsModalOpen] = useState(false);
