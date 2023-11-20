@@ -46,7 +46,7 @@ const fetchBoardData = async () => {
           email: user.email
         }
       });
-  
+      
       console.log(response.data);
       setMyBoard(response.data);
       if(response.data) {

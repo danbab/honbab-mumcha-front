@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import Input from "./Input";
 import { Link } from "react-router-dom";
@@ -9,9 +10,12 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState(null);
 
+  //검색어를 저장하기 위한 상태선언
+  const navigate = useNavigate();
+  const [searchKeyword, setSearchKeyword] = useState("");
+
   //쿠키에 있는 토큰을 활용하기 위한 선언
   const [cookies, setCookies] = useCookies();
-  //const baseUrl = "http://localhost:8080";
 
   const getCurrentUser = async () => {
     try {
@@ -24,6 +28,15 @@ const Header = () => {
     } catch (e) {
       console.error("사용자 정보 가져오기 실패:" + e);
     }
+  };
+
+  const handleInputChange = (e) => {
+    setSearchKeyword(e.target.value); // 검색어가 입력될 때마다 state 업데이트
+    sessionStorage.setItem("keyword", e.target.value); // 세션에 검색어 저장
+  };
+  const handleSearch = (e) => {
+    e.preventDefault(); // form의 기본 동작인 페이지 리로딩을 막기 위해 추가
+    navigate("/boardList"); // boardList 페이지로 이동
   };
 
   useEffect(() => {
@@ -112,16 +125,23 @@ const Header = () => {
           )}
         </div>
       </div>
-      <div className="relative">
-        <Input type="main-search-input" name="검색창" placeholder="검색" />
-        <button>
+
+      <form className="relative" onSubmit={handleSearch}>
+        <Input
+          type="main-search-input"
+          name="검색창"
+          placeholder="검색"
+          onChange={handleInputChange}
+          value={searchKeyword}
+        />
+        <button type="submit">
           <img
             className="w-[1.25rem] h-[1.25rem] absolute top-[0.5rem] right-[1.3rem]"
             src="img/search.svg"
             alt="검색버튼"
           />
         </button>
-      </div>
+      </form>
     </div>
   );
 };

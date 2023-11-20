@@ -236,7 +236,7 @@ const KakaoMap = () => {
           </div>
         ))}
       </div>
-      3
+
       <Map // 지도를 표시할 Container
         center={state.center}
         style={{
@@ -263,14 +263,14 @@ const KakaoMap = () => {
             //   // }}
             // >
             // </MapMarker>
-              <CustomOverlayMap
-                position={{ lat: board.locationY, lng: board.locationX }}
-                xAnchor={0.3}
-                yAnchor={0.91}
-              >
-                {/* <BoardCard board={board} /> */}
-                <CustomChart board={board} />
-              </CustomOverlayMap>
+            <CustomOverlayMap
+              position={{ lat: board.locationY, lng: board.locationX }}
+              xAnchor={0.3}
+              yAnchor={0.91}
+            >
+              {/* <BoardCard board={board} /> */}
+              <CustomChart board={board} />
+            </CustomOverlayMap>
           )
         )}
 

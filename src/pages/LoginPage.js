@@ -16,7 +16,7 @@ const LoginPage = () => {
 
   //토큰 사용을 위한 초기화
   const [cookies, setCookies] = useCookies();
-  
+
   // 이메일
   const emailChange = (e) => {
     e.preventDefault();
@@ -80,15 +80,15 @@ const LoginPage = () => {
         //alert(sessionStorage.getItem("user"));
         const responseData = response.data;
         console.log(responseData);
-        const {expireTime, token, user } = responseData;
+        const { expireTime, token, user } = responseData;
         const expires = new Date();
-        expires.setMilliseconds(expires.getMilliseconds() + expireTime)
+        expires.setMilliseconds(expires.getMilliseconds() + expireTime);
         sessionStorage.setItem("user", JSON.stringify(response.data.user));
         console.log(user);
 
         setCookies("token", token, { expires });
         window.location.href = "/"; // 로그인 성공시 메인페이지로 이동.
-        //sessionStorage.setItem("user", JSON.stringify(response.data));
+
         const togoUrl = sessionStorage.getItem("togoUrl");
         if (togoUrl) {
           sessionStorage.removeItem("togoUrl");
