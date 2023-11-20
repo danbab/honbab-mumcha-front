@@ -38,7 +38,7 @@ const DetailPageJoinList = ({ boardData, isLoading }) => {
 
   return (
     <div className="grid grid-cols-2 gap-4 text-center justify-between max-w-screen-sm mx-auto my-10 rounded-[2rem] border-2 border-gray-200 bg-white">
-      <p className="col-span-2 mt-2 text-xl text-center font-sans ">참가 현황</p>
+      <p className="col-span-2 mt-2 text-xl text-center font-sans">참여 현황</p>
       {participationData.length > 0 ? (
         <div className='col-span-2'>
           <ul className='grid grid-cols-2 gap-4 justify-items-center items-center'>
@@ -64,7 +64,7 @@ const DetailPageJoinList = ({ boardData, isLoading }) => {
           </ul>
         </div>
       ) : (
-        <p className="grid-cols-2">참가자 정보가 없습니다.</p>
+        <p className="col-span-2 mt-2 text-xl text-center font-sans">참여자 정보가 없습니다.</p>
       )}
     </div>
   );
