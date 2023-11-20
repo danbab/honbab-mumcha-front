@@ -81,6 +81,7 @@ const Header = () => {
             {user ? (
               // 세션이 있는 경우, 회원 이름과 마이페이지 버튼 표시
               <>
+                Menu
                 {showMenu && (
                   <div className="animate-slide-down2 absolute top-full left-0 z-10">
                     <Menu />
