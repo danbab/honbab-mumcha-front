@@ -31,7 +31,7 @@ const MyPage = () => {
             console.error("사용자 정보 가져오기 실패:" + e);
         }
     };
-
+    console.log("유저어어어::" + JSON.stringify(user));
     useEffect(() => {
         // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
         getCurrentUser();
@@ -49,13 +49,16 @@ const fetchBoardData = async () => {
   
       console.log(response.data);
       setMyBoard(response.data);
-      response.data.forEach((board) => {
-        if (user.username === board.writer.name) {
-          console.log("이건 뭐야? 누구야?", board.writer.name);
-          setBoardId(board.boardId);
-        }
-      });
-      console.log("이름찍혀?", user.username); 
+      if(response.data) {
+        // response.data가 존재할 때만 실행
+        response.data.forEach((board) => {
+          if (user.username === board.writer.name) {
+            console.log("이건 뭐야? 누구야?", board.writer.name);
+            setBoardId(board.boardId);
+          }
+        });
+    }
+      console.log("이름찍혀?", user.name);
       
     } catch (error) {
       console.error("서버 요청 에러: ", error);
@@ -157,12 +160,11 @@ const fetchBoardData = async () => {
                 <div className="flex">
                     <img src="img/Bell.svg" alt="이미지" />
                     {/* <p>{user.username}</p> */}
-
                     {user ? (
                         // 세션이 있는 경우, 로그아웃 버튼 표시
                         <>
                             <Link to="/my">
-                                <p className="mt-1.5 mx-5">{user.username}</p>
+                                <p className="mt-1.5 mx-5">{user.name}</p>
                             </Link>
                             <Button type="log-out" onClick={handleLogout}>
                                 로그아웃
