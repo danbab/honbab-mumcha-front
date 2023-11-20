@@ -5,6 +5,7 @@ import DetailPageTitleAndContentSection from "../components/DetailPageTitleAndCo
 import axios from 'axios';
 import LoadingSpinner from "../components/LoadingSpinner";
 import DetailPageMapContainer from "../components/DetailPageMapContainer";
+import { useCookies } from "react-cookie";
 
 const BoardDetailPage = () => {
   let { state } = useLocation();
@@ -12,10 +13,21 @@ const BoardDetailPage = () => {
   console.log("state.id: " + state.id);
   const [isLoading, setIsLoading] = useState(true);  // 로딩 상태를 관리하는 state
 
+    //토큰 사용을 위한 초기화
+    const [cookies] = useCookies();
+    const token = cookies.token;
+
+    //요청 헤더에 토큰 값 넘기기
+    const requestOption = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+
   useEffect(() => {
     const fetchBoardData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/board/${state.id}`);
+        const response = await axios.get(`http://localhost:8080/api/board/boardDetails/${state.id}`,requestOption);
         setBoardData(response.data);
         console.log('axios로 값 받아온 후의 보드 데이터:' + JSON.stringify(response.data));
       } catch (e) {
