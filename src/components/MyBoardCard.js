@@ -13,6 +13,9 @@ const MyBoardCard = ({ partyUser, user, boardId }) => {
     age--;
   }
 
+  //남자 여자 변경
+  let gender = partyUser.gender === 'm' ? '남자' : '여자';
+
   // 지역화된 문자열로 변환
   // date = date
   //   .toLocaleDateString("ko-KR", options)
@@ -87,8 +90,8 @@ const MyBoardCard = ({ partyUser, user, boardId }) => {
         {boardDto.title}
       </p> */}
       <ul className="list-disc absolute bottom-[3.8rem] left-[2rem] ">
-        <li className="text-[#8B8686] text-[0.7rem]">{partyUser.birth}</li>
-        <li className="text-[#8B8686] text-[0.7rem]">{partyUser.gender}</li>
+        <li className="text-[#8B8686] text-[0.8rem]">{partyUser.birth}</li>
+        <li className="text-[#8B8686] text-[0.8rem]">{gender}</li>
       </ul>
       <Button type="join-status-pending" onClick={acceptParticipant}>
         수락
@@ -96,6 +99,7 @@ const MyBoardCard = ({ partyUser, user, boardId }) => {
       <Button type="join-status-rejected" onClick={denyParticipant}>
         거절
       </Button>
+   
     </div>
   );
 };
