@@ -24,7 +24,7 @@ const BoardEditPage = () => {
   const [writer, setWriter] = useState(null);
 
   const navigate = useNavigate();
-  
+
   //쿠키에 담긴 토큰 정보 변수에 할당
   const [cookies, setCookies] = useCookies();
   const token = cookies.token;
@@ -69,7 +69,7 @@ const BoardEditPage = () => {
 
         try {
           const response = await axios.put(
-            `http://localhost:8080/api/board/edit/${boardId}`,
+            `http://localhost:8080/api/board/boardDetails/edit/${boardId}`,
             {
               restaurantName: restaurantName,
               restaurantAddress: restaurantAddress,
@@ -93,6 +93,7 @@ const BoardEditPage = () => {
             .then((response) => {
               console.log(response.data);
               alert("수정이 완료되었습니다.");
+              navigate(`/board/boardDetail/${boardId}`);
             });
         } catch (error) {
           console.error(error);
