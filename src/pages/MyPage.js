@@ -100,7 +100,7 @@ const MyPage = () => {
             console.log(`${myCategory}에 대한 서버 응답: `, response.data);
             setMyBoard(response.data);
             response.data.forEach((board) => {
-                if (user.username === board.writer.name) {
+                if (user.name === board.writer.name) {
 
                     setBoardId(board.boardId);
                 }
