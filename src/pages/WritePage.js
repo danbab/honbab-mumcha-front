@@ -95,6 +95,9 @@ const WritePage = () => {
           .then((response) => {
             console.log(response.data);
             alert("작성이 완료되었습니다.");
+            const postId = response.data.boardId;
+            // 글 상세페이지로 이동
+            navigate(`/board/boardDetail/${postId}`);
           });
         } catch (error) {
           console.error(error);
