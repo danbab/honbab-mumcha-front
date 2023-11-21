@@ -104,7 +104,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "board-modify":
       style +=
-        " rounded-[0.625rem] text-[0.9rem] w-[6.3125rem] h-[2.4375rem] bg-[#365347] hover:bg-[#76C598] text-[#ffffff]";
+        " rounded-[0.625rem] text-[0.9rem] w-[6.3125rem] h-[2.4375rem] bg-[#48A9A6] hover:bg-[#1B4B3A] text-[#ffffff]";
       break;
 
     case "board-delete":
