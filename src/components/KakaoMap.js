@@ -80,8 +80,8 @@ const KakaoMap = () => {
         setState((prev) => ({
           ...prev,
           center: {
-            lat: 37.5515,
-            lng: 126.9883,
+            lat: 37.5344,
+            lng: 126.9945,
           },
         })),
     },

@@ -5,6 +5,7 @@ import Input from "./Input";
 import { Link } from "react-router-dom";
 import Menu from "./Menu"; // Menu 컴포넌트 import
 import { useCookies } from "react-cookie";
+import { TweenMax } from "gsap";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -44,12 +45,8 @@ const Header = () => {
     getCurrentUser();
   }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
 
-  const handleMouseOver = () => {
-    setShowMenu(true);
-  };
-
-  const handleMouseOut = () => {
-    setShowMenu(false);
+  const handleMenuClick = () => {
+    setShowMenu((prevShowMenu) => !prevShowMenu); // showMenu 상태를 토글
   };
 
   const handleLogout = () => {
@@ -74,29 +71,21 @@ const Header = () => {
             />
           </Link>
           <div
-            className="mt-[2.8rem] text-[1.25rem] text-normal relative"
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
+            className="mt-[2.8rem] text-[1.25rem] text-normal relative cursor-pointer"
+            onClick={handleMenuClick}
           >
             {user ? (
               // 세션이 있는 경우, 회원 이름과 마이페이지 버튼 표시
-              <>
-                {showMenu && (
-                  <div className="animate-slide-down2 absolute top-full left-0 z-10">
-                    <Menu />
-                  </div>
-                )}
-              </>
+              <div className="cursor-pointer">
+                Menu
+                {showMenu && <Menu />}
+              </div>
             ) : (
               // 세션이 없는 경우, 로그인과 회원가입 버튼 표시
-              <>
+              <div className="cursor-pointer">
                 Menu
-                {showMenu && (
-                  <div className="animate-slide-down2 absolute top-full left-0 z-10">
-                    <Menu />
-                  </div>
-                )}
-              </>
+                {showMenu && <Menu />}
+              </div>
             )}
           </div>
         </div>
@@ -126,7 +115,7 @@ const Header = () => {
         </div>
       </div>
 
-      <form className="relative" onSubmit={handleSearch}>
+      <form className="relative flex justify-end" onSubmit={handleSearch}>
         <Input
           type="main-search-input"
           name="검색창"
