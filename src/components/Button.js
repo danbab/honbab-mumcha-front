@@ -24,7 +24,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "big-join":
       style +=
-        " rounded-[0.625rem] text-[0.75rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] hover:bg-[#76C598] text-[#ffffff]";
+        " rounded-[0.625rem] text-[0.9rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] hover:bg-[#76C598] text-[#ffffff]";
       break;
 
     case "make-reservation":
@@ -100,6 +100,16 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
     case "join-status-rejected":
       style +=
         " rounded-[0.625rem] text-[0.8rem] w-[4rem] h-[1.85rem] bg-[#DB4455] text-[#ffffff]  shadow-md";
+      break;
+
+    case "board-modify":
+      style +=
+        " rounded-[0.625rem] text-[0.9rem] w-[6.3125rem] h-[2.4375rem] bg-[#365347] hover:bg-[#76C598] text-[#ffffff]";
+      break;
+
+    case "board-delete":
+      style +=
+        " rounded-[0.625rem] text-[0.9rem] w-[6.3125rem] h-[2.4375rem] bg-[#DB4437] hover:bg-[#C33C23] text-[#ffffff]";
       break;
 
     default:

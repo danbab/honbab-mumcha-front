@@ -17,7 +17,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/boardList" element={<BoardPage />} />
-        <Route path="/boardDetail" element={<BoardDetailPage />} />
+        <Route path="/board/boardDetail/:boardId" element={<BoardDetailPage />} />
         <Route path="/write" element={<WritePage />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/chat" element={<ChatPage />} />
