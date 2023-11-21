@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, unstable_HistoryRouter, useNavigate } from "react-router-dom";
 import axios from "axios";
 import KakaoMapWrite from "../components/KakaoMapWrite";
-import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 const { kakao } = window;
 
@@ -70,35 +70,36 @@ const WritePage = () => {
         console.log("안녕하세요" + JSON.stringify(writer));
 
         try {
-          const response = await axios.post(
-            "http://localhost:8080/api/board/new", 
-            {
-              restaurantName: restaurantName,
-              restaurantAddress: restaurantAddress,
-              foodCategory: foodCategory,
-              placeCategory: placeCategory,
-              time: time,
-              meetDate: meetDate,
-              people: people,
-              title: title,
-              content: content,
-              locationX: String(coords.getLng()),
-              locationY: String(coords.getLat()),
-              writer: writer,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
+          const response = await axios
+            .post(
+              "http://localhost:8080/api/board/new",
+              {
+                restaurantName: restaurantName,
+                restaurantAddress: restaurantAddress,
+                foodCategory: foodCategory,
+                placeCategory: placeCategory,
+                time: time,
+                meetDate: meetDate,
+                people: people,
+                title: title,
+                content: content,
+                locationX: String(coords.getLng()),
+                locationY: String(coords.getLat()),
+                writer: writer,
               },
-            }
-          )
-          .then((response) => {
-            console.log(response.data);
-            alert("작성이 완료되었습니다.");
-            const postId = response.data.boardId;
-            // 글 상세페이지로 이동
-            navigate(`/board/boardDetail/${postId}`);
-          });
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            )
+            .then((response) => {
+              console.log(response.data);
+              alert("작성이 완료되었습니다.");
+              const postId = response.data.boardId;
+              // 글 상세페이지로 이동
+              navigate(`/board/boardDetail/${postId}`);
+            });
         } catch (error) {
           console.error(error);
         }
@@ -109,10 +110,9 @@ const WritePage = () => {
   // 오늘 날짜를 yyyy-mm-dd 형태로 가져오기
   const today = new Date();
   const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
-  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1 필요
+  const dd = String(today.getDate()).padStart(2, "0");
   const currentDate = `${yyyy}-${mm}-${dd}`;
-
 
   return (
     <>
@@ -127,6 +127,9 @@ const WritePage = () => {
       </div>
       <div className="w-[50.5rem] mx-auto my-0">
         <div className="text-[1.25rem] mt-[0.5rem]">식당찾기</div>
+        <div className="text-xs text-slate-400">
+          마커를 클릭하시면 식당 상세정보를 보실 수 있습니다
+        </div>
         <KakaoMapWrite onSelectPlace={handleSelectPlace} />
       </div>
       <form onSubmit={handleSubmit}>
