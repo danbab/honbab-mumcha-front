@@ -66,7 +66,7 @@ const BoardDetailPage = () => {
       <DetailPageJoinList boardData={boardData} isLoading={isLoading} />
       <div className="flex justify-between max-w-screen-lg mx-auto">
         <div className="lg: w-full lg: h-full">
-          <DetailPageMapContainer boardData={boardData} isLoading={isLoading} />
+          <DetailPageMapContainer boardData={boardData} />
         </div>
       </div>
     </div>
