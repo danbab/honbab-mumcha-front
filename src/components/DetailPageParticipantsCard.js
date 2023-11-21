@@ -5,9 +5,8 @@ const DetailPageParticipantsCard = ({ participants, isLoading, age }) => {
     console.log(participants);
     console.log(age);
 
-    if (participants.gender === 'm') {
-        participants.gender = '남자'
-    } else { participants.gender = '여자' }
+    //남자 여자 변경
+    let gender = participants.gender === 'm' ? '남자' : '여자';
 
     if (isLoading) {
         return <LoadingSpinner />;  //로딩 중일 때는 LoadingSpinner 컴포넌트를 렌더링
@@ -24,7 +23,7 @@ const DetailPageParticipantsCard = ({ participants, isLoading, age }) => {
                 <div className="text-gray-700 list-disc mx-3 font-sans">
                     <li>{participants.name}</li>
                     <li>{age}세</li>
-                    <li>{participants.gender}</li>
+                    <li>{gender}</li>
                 </div>
             </div>
         </div>
