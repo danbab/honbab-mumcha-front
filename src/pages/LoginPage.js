@@ -117,9 +117,10 @@ const LoginPage = () => {
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <Link to={"/"}>
                 <img
-                  className="mx-auto h-10 w-auto"
+                  className="mx-auto h-[7.5rem] block"
                   src="img/mainlogo.svg"
                   alt="메인 로고"
+                  width="500px"
                 />
               </Link>
 
@@ -129,11 +130,9 @@ const LoginPage = () => {
             </div>
             {/*로그인 폼 */}
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              <form className="space-y-6" onSubmit={handleSubmit}>
-                {" "}
-                {/*TODO: action에 요청을 보낼 경로 지정 */}
+              <form className="my-8" onSubmit={handleSubmit}>
                 {/*이메일 */}
-                <div>
+                <div className="mb-8">
                   <label
                     htmlFor="email"
                     className="block text-sm font-medium leading-6 text-gray-900"
@@ -152,21 +151,9 @@ const LoginPage = () => {
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focu s:ring-[#54AB75] sm:text-sm sm:leading-6"
                     />
                   </div>
-                  {/* 이메일 유효성 검사 */}
-                  {email.length > 0 && (
-                    <span
-                      className={`message ${isEmail ? "success" : "error"}`}
-                      style={{
-                        marginLeft: "7rem", // margin 값을 원하는 값으로 설정
-                        color: isEmail ? "green" : "red", // 에러: 빨강색 / 성공: 초록색
-                      }}
-                    >
-                      {emailMessage}
-                    </span>
-                  )}
                 </div>
                 {/*비밀번호 */}
-                <div>
+                <div className="mb-8">
                   <div className="flex items-center justify-between">
                     <label
                       htmlFor="password"
@@ -175,12 +162,6 @@ const LoginPage = () => {
                       Password
                     </label>
                     <div className="text-sm">
-                      <a
-                        href="#"
-                        className="font-semibold text-[#54AB75] hover:text-[#49965F]"
-                      >
-                        비밀번호를 잊어버리셨나요?
-                      </a>
                     </div>
                   </div>
                   <div className="mt-2">
@@ -195,21 +176,9 @@ const LoginPage = () => {
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#54AB75] sm:text-sm sm:leading-6"
                     />
                   </div>
-                  {/*비밀번호 유효성 체크 : 숫자+영문자+특수문자 조합으로 8자리 이상 */}
-                  {password.length > 0 && (
-                    <span
-                      className={`message ${isPassword ? "success" : "error"}`}
-                      style={{
-                        marginLeft: "0rem", // margin 값을 원하는 값으로 설정
-                        color: isPassword ? "green" : "red", // 에러: 빨강색 / 성공: 초록색
-                      }}
-                    >
-                      {passwordMessage}
-                    </span>
-                  )}
                 </div>
                 {/*로그인 버튼 */}
-                <div>
+                <div className="mt-10">
                   <button
                     type="submit"
                     className="flex w-full justify-center rounded-md bg-[#54AB75] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#49965F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -218,14 +187,9 @@ const LoginPage = () => {
                   </button>
                 </div>
               </form>
-              {/*구글 로그인 버튼 */}
-              <div className="my-10">
-                <Link to="/oauth2/authorization/google">
-                  <img
-                    className="mx-auto h-10 w-auto"
-                    src="img/googleLogin.svg"
-                    alt="구글 로그인"
-                  />
+              <div className="mt-3 text-center text-white hover:text-[#54AB75]">
+                <Link to="/register">
+                  아직 회원이 아니신가요?
                 </Link>
               </div>
             </div>
