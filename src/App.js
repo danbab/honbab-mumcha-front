@@ -8,6 +8,7 @@ import ChatPage from "./pages/ChatPage";
 import Menu from "./components/Menu";
 import WritePage from "./pages/WritePage";
 import MyPage from "./pages/MyPage";
+import BoardEditPage from "./pages/BoardEditPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/boardList" element={<BoardPage />} />
         <Route path="/board/boardDetail/:boardId" element={<BoardDetailPage />} />
         <Route path="/write" element={<WritePage />} />
+        <Route path="/edit/:boardId" element={<BoardEditPage />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/chat" element={<ChatPage />} />
       </Routes>
