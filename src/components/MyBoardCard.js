@@ -6,11 +6,14 @@ const MyBoardCard = ({ partyUser, user }) => {
   let birthDate = new Date(partyUser.birth);
   let today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();
-  
+
   let month = today.getMonth() - birthDate.getMonth();
   if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+    age--;
   }
+
+  //남자 여자 변경
+  let gender = partyUser.gender === 'm' ? '남자' : '여자';
 
   // 지역화된 문자열로 변환
   // date = date
@@ -30,7 +33,7 @@ const MyBoardCard = ({ partyUser, user }) => {
         </div>
         {/* 작성일-reg_date */}
         <div className="text-[#0e0a0a] text-[10px] mt-[2.1rem] mr-[0.5rem]">
-          {"나이: "+age}
+          {"나이: " + age}
         </div>
         {/* {boardDto.regDate != boardDto.lastModified && (
           <span className="absolute top-12 right-[1.2rem] text-[#BFBFBF] text-[10px]">
@@ -47,11 +50,11 @@ const MyBoardCard = ({ partyUser, user }) => {
         {boardDto.title}
       </p> */}
       <ul className="list-disc absolute bottom-[3.8rem] left-[2rem] ">
-        <li className="text-[#8B8686] text-[0.7rem]">{partyUser.birth}</li>
-        <li className="text-[#8B8686] text-[0.7rem]">{partyUser.gender}</li>
+        <li className="text-[#8B8686] text-[0.8rem]">{partyUser.birth}</li>
+        <li className="text-[#8B8686] text-[0.8rem]">{gender}</li>
       </ul>
       <button
-        className="rounded-[0.625rem] text-[0.5rem] w-[3rem] h-[1.50rem] bg-[#54AB75] text-[#ffffff] absolute bottom-[1rem] left-[1rem] shadow-md"
+        className="rounded-[0.625rem] text-[0.8rem] w-[4rem] h-[1.85rem] bg-[#ff7e00] text-[#ffffff] absolute bottom-[1rem] left-[1rem] shadow-md"
         type="button"
       >
         참여중

@@ -35,7 +35,7 @@ const MyPage = () => {
             console.error("사용자 정보 가져오기 실패:" + e);
         }
     };
-    console.log("유저어어어::" + JSON.stringify(user));
+
     useEffect(() => {
         // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
         getCurrentUser();
@@ -63,17 +63,11 @@ const MyPage = () => {
                 }
             });
 
-            console.log(response.data);
             setMyBoard(response.data);
-            // // response.data가 존재할 때만 실행
-            // response.data.forEach((board) => {
-            //     if (user.username === board.writer.name) {
-            //         console.log("이건 뭐야? 누구야?", board.writer.name);
-            //         setBoardId(board.boardId);
-            //     }
-            // });
 
-            // console.log("이름찍혀?", boardId);
+            // 참가자 리스트와 찜하기 리스트도 불러옵니다.
+            bringParticipants();
+            bringLikes();
 
         } catch (error) {
             console.error("서버 요청 에러: ", error);
@@ -92,11 +86,6 @@ const MyPage = () => {
 
     //    --------------------------------------------- 구분선 ----------------------------
 
-    //   useEffect(() => {
-    //     console.log("이름찍혀?", boardId);
-    //   }, [boardId]);
-    //    --------------------------------------------- 구분선 ----------------------------
-
     const fetchBoardDataMyCategory = async (myCategory) => {
         try {
             const response = await axios.get(
@@ -111,8 +100,8 @@ const MyPage = () => {
             console.log(`${myCategory}에 대한 서버 응답: `, response.data);
             setMyBoard(response.data);
             response.data.forEach((board) => {
-                if (user.username === board.writer.name) {
-                    console.log("이건 뭐야? 누구야?", board.writer.name);
+                if (user.name === board.writer.name) {
+
                     setBoardId(board.boardId);
                 }
             });
@@ -195,7 +184,7 @@ const MyPage = () => {
         };
 
         fetchParticipantsAndLikes();
-    }, [user]);
+    }, [myBoard]);
 
     //    --------------------------------------------- 구분선 ----------------------------
 
@@ -217,17 +206,16 @@ const MyPage = () => {
 
     useEffect(() => {
         if (selectMyPageCategory) {
-            console.log("여기?", selectMyPageCategory);
+
             fetchBoardDataMyCategory(selectMyPageCategory);
 
             if (selectMyPageCategory === "내파티") {
-                console.log("여기는 확인되는거야???");
-                console.log(myBoard);
+
                 let newBoardIds = []; // 새로운 boardId를 저장할 배열
 
                 myBoard.forEach((board) => {
                     if (user.name === board.writer.name) {
-                        console.log("이건 뭐야? 누구야?", board.writer.name);
+
                         newBoardIds.push(board.boardId); // 배열에 새로운 boardId 추가
                     }
                 });
