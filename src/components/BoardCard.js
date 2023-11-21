@@ -196,7 +196,7 @@ const Card = ({
         alt="대표 이미지"
       />
 
-      <Link to={`/board/boardDetail/${boardDto.boardId}`} >
+      <Link to={`/board/boardDetail/${boardDto.boardId}`}>
         {/* 글 제목-title */}
         <p className="absolute bottom-[6rem] left-[1rem] ml-1 text-[1rem] font-bold overflow-hidden overflow-ellipsis whitespace-nowrap w-[10.2rem]">
           {boardDto.title}
