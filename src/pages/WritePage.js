@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, unstable_HistoryRouter, useNavigate } from "react-router-dom";
 import axios from "axios";
 import KakaoMapWrite from "../components/KakaoMapWrite";
+import { useCookies } from 'react-cookie';
 
 const { kakao } = window;
 
@@ -19,6 +20,9 @@ const WritePage = () => {
   const [lng, setLng] = useState(null);
   const [writer, setWriter] = useState(null);
   const navigate = useNavigate();
+  const [cookies, setCookies] = useCookies();
+  //쿠키에 담긴 토큰 정보 변수에 할당
+  const token = cookies.token;
 
   const getCurrentUser = async () => {
     try {
@@ -45,6 +49,12 @@ const WritePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //요청 헤더에 토큰 값 넘기기
+    // const requestOption = {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // };
 
     const geocoder = new kakao.maps.services.Geocoder();
 
@@ -60,8 +70,9 @@ const WritePage = () => {
         console.log("안녕하세요" + JSON.stringify(writer));
 
         try {
-          const response = await axios
-            .post("http://localhost:8080/api/board/new", {
+          const response = await axios.post(
+            "http://localhost:8080/api/board/new", 
+            {
               restaurantName: restaurantName,
               restaurantAddress: restaurantAddress,
               foodCategory: foodCategory,
@@ -74,13 +85,17 @@ const WritePage = () => {
               locationX: String(coords.getLng()),
               locationY: String(coords.getLat()),
               writer: writer,
-            })
-            .then((response) => {
-              console.log(response.data);
-              // alert(response.data);
-              alert("작성이 완료되었습니다.");
-              // navigate("/boardDetail/${response.data.id}");
-            });
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response.data);
+            alert("작성이 완료되었습니다.");
+          });
         } catch (error) {
           console.error(error);
         }

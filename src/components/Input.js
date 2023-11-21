@@ -3,7 +3,7 @@ const Input = ({ children, type = "button", name = "", ...restProps }) => {
 
   switch (type) {
     case "main-search-input":
-      style += " w-[28rem] h-[2.38rem] ml-auto block px-3";
+      style += " w-[28rem] h-[2.38rem] block px-3";
       break;
 
     case "board-search-input":
