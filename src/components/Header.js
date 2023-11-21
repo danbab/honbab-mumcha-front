@@ -5,7 +5,6 @@ import Input from "./Input";
 import { Link } from "react-router-dom";
 import Menu from "./Menu"; // Menu 컴포넌트 import
 import { useCookies } from "react-cookie";
-import { TweenMax } from "gsap";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
