@@ -10,6 +10,8 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
   const [map, setMap] = useState();
   const [places, setPlaces] = useState([]);
   const [overlay, setOverlay] = useState(null);
+  const [selectedMarker, setSelectedMarker] = useState(null);
+
 
   const handlePlaceClick = (place) => {
     // 선택된 장소의 이름과 주소를 onSelectPlace로 전달합니다.
@@ -21,6 +23,8 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
     // 지도의 중심 위치와 확대 수준을 변경합니다.
     map.setCenter(new kakao.maps.LatLng(place.y, place.x));
     map.setLevel(3);
+
+    setSelectedMarker(place.place_name);
   };
 
   useEffect(() => {
@@ -70,7 +74,7 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
           <MapMarker
             key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
             image={{
-              src: "img/locationicon.png",
+              src: selectedMarker === marker.content ? "img/locationicon2.png" : "img/locationicon.png",
               size: {
                 width: 60,
                 height: 65,
