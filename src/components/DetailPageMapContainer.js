@@ -52,7 +52,7 @@ const DetailPageMapContainer = ({ boardData }) => {
       <div>
         <div
           id="myMap"
-          className="w-full h-[40rem] overflow-hidden"
+          className="w-full h-[40rem] rounded-[0.5rem] overflow-hidden"
         ></div>
       </div>
     </>
