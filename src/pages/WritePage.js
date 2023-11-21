@@ -103,6 +103,14 @@ const WritePage = () => {
     });
   };
 
+  // 오늘 날짜를 yyyy-mm-dd 형태로 가져오기
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
+  const dd = String(today.getDate()).padStart(2, '0');
+  const currentDate = `${yyyy}-${mm}-${dd}`;
+
+
   return (
     <>
       <div className="flex flex-wrap justify-between items-center w-[74.9375rem] mx-auto my-0">
@@ -193,6 +201,7 @@ const WritePage = () => {
                 className="border bg-[#F9F9F9] rounded-md px-2 w-[15.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
                 type="date"
                 placeholder="날짜"
+                min={currentDate} // 오늘 날짜 이후만 선택 가능
                 value={meetDate}
                 onChange={(e) => setMeetDate(e.target.value)}
               />
