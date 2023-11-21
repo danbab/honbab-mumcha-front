@@ -334,15 +334,15 @@ function BoardPage() {
         bringLikes(),
       ]).catch((error) => {
         console.error(error);
-        return [null, null];
+        // return [null, null];
       });
 
-      if (results.every((result) => result !== null)) {
-        setIsLoading(false);
-      }
+      // if (results.every((result) => result !== null)) {
+      //   setIsLoading(false);
+      // }
     };
-
     fetchParticipantsAndLikes();
+    setIsLoading(false);
   }, [user]);
 
   // useEffect(() => {
