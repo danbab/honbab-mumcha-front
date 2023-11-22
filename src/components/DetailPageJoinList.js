@@ -37,11 +37,11 @@ const DetailPageJoinList = ({ boardData, isLoading }) => {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4 text-center justify-between max-w-screen-sm mx-auto my-10 rounded-[2rem] border-2 border-gray-200 bg-white">
-      <p className="col-span-2 mt-2 text-xl text-center font-sans">참여 현황</p>
+    <div className="grid grid-cols-2 gap-4 text-center justify-between max-w-screen-sm mx-auto my-10 rounded-[1rem] bg-neutral-100">
+      <p className="col-span-2 p-1 text-lg text-center font-sans bg-neutral-200 rounded-tl-[16px] rounded-tr-[16px]">참여 현황</p>
       {participationData.length > 0 ? (
         <div className='col-span-2'>
-          <ul className='grid grid-cols-2 gap-4 justify-items-center items-center'>
+          <ul className='grid grid-cols-2 gap-4 justify-items-center'>
             {participationData.map((participant, index) => {
               // 참가자 생년월일 -> 나이로 변환해주는 로직
               const birthDate = new Date(participant.birth);
@@ -55,8 +55,8 @@ const DetailPageJoinList = ({ boardData, isLoading }) => {
               return (
                 <DetailPageParticipantsCard
                   key={index}
-                  isLoading={isLoading}
                   participants={participant}
+                  isLoading={isLoading}
                   age={age}
                 />
               );
@@ -64,7 +64,7 @@ const DetailPageJoinList = ({ boardData, isLoading }) => {
           </ul>
         </div>
       ) : (
-        <p className="col-span-2 mt-2 text-xl text-center font-sans">참여자 정보가 없습니다.</p>
+        <p className="col-span-2 text-xl font-sans p-2">참여자 정보가 없습니다.</p>
       )}
     </div>
   );

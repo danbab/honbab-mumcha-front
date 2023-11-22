@@ -1,0 +1,229 @@
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import KakaoMapWrite from "../components/KakaoMapWrite";
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
+
+const { kakao } = window;
+
+const BoardEditPage = () => {
+  //세션에 담은 보드 데이터를 가져옴
+  const [boardData, setBoardData] = useState(JSON.parse(sessionStorage.getItem("boardData")));
+  console.log(boardData);
+
+  const { boardId } = useParams();
+  console.log(boardId);
+
+  const [restaurantName, setRestaurantName] = useState(boardData.restaurantName);
+  const [restaurantAddress, setRestaurantAddress] = useState(boardData.restaurantAddress);
+  const [foodCategory, setFoodCategory] = useState(boardData.foodCategory);
+  const [placeCategory, setPlaceCategory] = useState(boardData.placeCategory);
+  const [time, setTime] = useState(boardData.time);
+  const [meetDate, setMeetDate] = useState(boardData.meetDate);
+  const [people, setPeople] = useState(boardData.people);
+  const [title, setTitle] = useState(boardData.title);
+  const [content, setContent] = useState(boardData.content);
+  const [lat, setLat] = useState(boardData.locationY);
+  const [lng, setLng] = useState(boardData.locationX);
+  const [hit, setHit] = useState(boardData.hit);
+  const [writer, setWriter] = useState(boardData.writer);
+
+  const navigate = useNavigate();
+
+  //쿠키에 담긴 토큰 정보 변수에 할당
+  const [cookies, setCookies] = useCookies();
+  const token = cookies.token;
+
+  const getCurrentUser = async () => {
+    try {
+      const storedUser = sessionStorage.getItem("user");
+      if (storedUser) {
+        // JSON 문자열을 객체로 변환
+        const userObject = JSON.parse(storedUser);
+        setWriter(userObject);
+      }
+    } catch (e) {
+      console.error("사용자 정보 가져오기 실패:" + e);
+    }
+  };
+
+  useEffect(() => {
+    // 컴포넌트가 처음으로 렌더링될 때 getCurrentUser 실행
+    getCurrentUser();
+  }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
+
+  const handleSelectPlace = (name, address) => {
+    setRestaurantName(name);
+    setRestaurantAddress(address);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    // 주소를 좌표로 변환합니다
+    geocoder.addressSearch(restaurantAddress, async (result, status) => {
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+        const lat = result[0].y;
+        const lng = result[0].x;
+        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        console.log(coords);
+
+        try {
+          const response = await axios.put(
+            `http://localhost:8080/api/board/boardDetails/edit/${boardId}`,
+            {
+              restaurantName: restaurantName,
+              restaurantAddress: restaurantAddress,
+              foodCategory: foodCategory,
+              placeCategory: placeCategory,
+              time: time,
+              meetDate: meetDate,
+              people: people,
+              title: title,
+              content: content,
+              locationX: String(coords.getLng()),
+              locationY: String(coords.getLat()),
+              writer: writer,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+            .then((response) => {
+              console.log(response.data);
+              alert("수정이 완료되었습니다.");
+              navigate(`/board/boardDetail/${boardId}`);
+            });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    });
+  };
+
+  return (
+    <>
+      <div className="flex flex-wrap justify-between items-center w-[74.9375rem] mx-auto my-0">
+        <Link to="/">
+          <img src="/img/mainlogo.svg" alt="메인로고" />
+        </Link>
+      </div>
+      <div className="w-[50.5rem] mx-auto my-0">
+        <div className="text-[1.25rem] mt-[0.5rem]">식당찾기</div>
+        <KakaoMapWrite onSelectPlace={handleSelectPlace} />
+      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="w-[50.5rem] h-[46.75rem] mt-[3rem] mx-auto my-0">
+          <div className="flex justify-between border-b-2 border-[#000000] pb-3">
+            <div className="text-[1.25rem] mt-[0.5rem]">글쓰기</div>
+            <button
+              className="rounded-[0.625rem] text-[0.75rem] w-[6.3125rem] h-[2.4375rem] bg-[#54AB75] hover:bg-green-600 text-[#ffffff] shadow-md"
+              type="submit"
+            >
+              수정 완료
+            </button>
+          </div>
+          <div className="flex flex-col mt-5">
+            <div className="flex flex-row justify-between mb-4">
+              <input
+                className="border w-[15.9375rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                type="text"
+                placeholder="식당 이름"
+                value={restaurantName}
+                onChange={(e) => setRestaurantName(e.target.value)}
+              />
+              <input
+                className="border w-[33.9375rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                type="text"
+                placeholder="주소"
+                value={restaurantAddress}
+                onChange={(e) => setRestaurantAddress(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-row justify-between gap-12 mb-4">
+              <select
+                className="border w-[12.875rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                value={foodCategory}
+                onChange={(e) => setFoodCategory(e.target.value)}
+                defaultValue={"음식테마 선택"}
+              >
+                <option value="음식테마 선택">음식테마 선택</option>
+                <option value="양식">양식</option>
+                <option value="카페">카페</option>
+                <option value="찜">찜</option>
+                <option value="일식">일식</option>
+                <option value="피자">피자</option>
+                <option value="햄버거">햄버거</option>
+                <option value="떡볶이">떡볶이</option>
+                <option value="아시아">아시아</option>
+                <option value="족발">족발</option>
+              </select>
+              <select
+                className="border w-[12.875rem] h-[2.0625rem] bg-[#F9F9F9] rounded-md px-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                value={placeCategory}
+                onChange={(e) => setPlaceCategory(e.target.value)}
+                defaultValue={"장소 선택"}
+              >
+                <option value="음식테마 선택">장소 선택</option>
+                <option value="용산">용산</option>
+                <option value="성수">성수</option>
+                <option value="종로">종로</option>
+                <option value="동대문">동대문</option>
+                <option value="잠실">잠실</option>
+                <option value="여의도">여의도</option>
+                <option value="홍대">홍대</option>
+                <option value="신사">신사</option>
+                <option value="청담">청담</option>
+                <option value="삼성">삼성</option>
+              </select>
+              <input
+                className="border bg-[#F9F9F9] rounded-md w-[16rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] px-2"
+                type="time"
+                placeholder="시간"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+              />
+              <input
+                className="border bg-[#F9F9F9] rounded-md px-2 w-[15.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                type="date"
+                placeholder="날짜"
+                value={meetDate}
+                onChange={(e) => setMeetDate(e.target.value)}
+              />
+              <input
+                className="border bg-[#F9F9F9] rounded-md px-2 w-[6.875rem] h-[2.0625rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                type="text"
+                placeholder="인원수(숫자)"
+                value={people}
+                onChange={(e) => setPeople(e.target.value)}
+              />
+            </div>
+            <input
+              className="border bg-[#F9F9F9] rounded-md px-2 h-[2.0625rem] mb-4 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+              type="text"
+              placeholder="제목"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <textarea
+              className="border bg-[#F9F9F9] rounded-md h-[36.5rem] mb-5 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] py-3 px-3"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            ></textarea>
+          </div>
+        </div>
+        <input type="hidden" name="lat" value={lat} />
+        <input type="hidden" name="lng" value={lng} />
+        <input type="hidden" name="writer" value={writer} />
+      </form>
+    </>
+  );
+};
+
+export default BoardEditPage;

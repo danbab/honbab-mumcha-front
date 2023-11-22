@@ -61,12 +61,12 @@ const BoardDetailPage = () => {
 
   return (
     <div>
-      <DetailPageHeader boardData={boardData} isLoading={isLoading} userId={userId} />
+      <DetailPageHeader boardData={boardData} isLoading={isLoading} userId={userId} userInfo={userInfo}/>
       <DetailPageTitleAndContentSection boardData={boardData} isLoading={isLoading} />
       <DetailPageJoinList boardData={boardData} isLoading={isLoading} />
-      <div className="flex justify-between max-w-screen-lg mx-auto">
+      <div className="flex justify-between max-w-screen-xl mx-auto">
         <div className="lg: w-full lg: h-full">
-          <DetailPageMapContainer boardData={boardData} isLoading={isLoading} />
+          <DetailPageMapContainer boardData={boardData} />
         </div>
       </div>
     </div>
