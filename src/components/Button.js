@@ -94,7 +94,7 @@ const Button = ({ children, type = "button", name = "", ...restProps }) => {
 
     case "join-status-pending":
       style +=
-        " rounded-[0.625rem] text-[0.8rem] w-[4rem] h-[1.85rem] bg-[#4b89dc] text-[#ffffff]  shadow-md ml-[1rem] mr-[0.7rem]";
+        " rounded-[0.625rem] text-[0.8rem] w-[4rem] h-[1.85rem] bg-[#4b89dc] text-[#ffffff]  shadow-md ml-[1rem]";
       break;
 
     case "join-status-rejected":
