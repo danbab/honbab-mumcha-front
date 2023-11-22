@@ -74,15 +74,15 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
           <MapMarker
             key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
             image={{
-              src: selectedMarker === marker.content ? "img/locationicon2.png" : "img/locationicon.png",
+              src: selectedMarker === marker.content ? "/img/locationicon2.png" : "/img/locationicon.png",
               size: {
                 width: 60,
                 height: 65,
               },
               options: {
                 offset: {
-                  x: 27,
-                  y: 69,
+                  x: 30,
+                  y: 58,
                 },
               },
             }}
