@@ -96,7 +96,7 @@ const Header = () => {
               <Button type="log-out" onClick={handleLogout}>
                 로그아웃
               </Button>
-              <Link to="/my" className="ml-[2.44rem]">
+              <Link to="/my" className="ml-[1.44rem]">
                 <Button type="my-page">마이페이지</Button>
               </Link>
             </div>
