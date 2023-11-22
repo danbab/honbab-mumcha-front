@@ -17,6 +17,12 @@ const DetailPageHeader = ({ boardData, isLoading, userId, userInfo }) => {
   const boardId = boardData.boardId;
   const navigate = useNavigate();
 
+  //boardData 세션에 담아서 editPage로 navigate
+  const tempStorage = () => {
+    sessionStorage.setItem("boardData" , JSON.stringify(boardData));
+    navigate(`/edit/${boardId}`)
+  }
+
   // 게시글 작성시간 N시간 전으로 변경하는 함수
   const [regDate, setRegDate] = useState("");
   useEffect(() => {
@@ -132,7 +138,7 @@ const DetailPageHeader = ({ boardData, isLoading, userId, userInfo }) => {
 
           {/* 수정 버튼 */}
           {userId === boardData.writer.id && (
-            <Button type="board-modify" onClick={() => navigate(`/edit/${boardId}`)}>수정</Button>
+            <Button type="board-modify" onClick={tempStorage}>수정</Button>
           )}
         </div>
       </div>

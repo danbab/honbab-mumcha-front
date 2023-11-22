@@ -7,21 +7,26 @@ import axios from 'axios';
 const { kakao } = window;
 
 const BoardEditPage = () => {
+  //세션에 담은 보드 데이터를 가져옴
+  const [boardData, setBoardData] = useState(JSON.parse(sessionStorage.getItem("boardData")));
+  console.log(boardData);
+
   const { boardId } = useParams();
   console.log(boardId);
 
-  const [restaurantName, setRestaurantName] = useState("");
-  const [restaurantAddress, setRestaurantAddress] = useState("");
-  const [foodCategory, setFoodCategory] = useState("");
-  const [placeCategory, setPlaceCategory] = useState("");
-  const [time, setTime] = useState(null);
-  const [meetDate, setMeetDate] = useState("");
-  const [people, setPeople] = useState("");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
-  const [writer, setWriter] = useState(null);
+  const [restaurantName, setRestaurantName] = useState(boardData.restaurantName);
+  const [restaurantAddress, setRestaurantAddress] = useState(boardData.restaurantAddress);
+  const [foodCategory, setFoodCategory] = useState(boardData.foodCategory);
+  const [placeCategory, setPlaceCategory] = useState(boardData.placeCategory);
+  const [time, setTime] = useState(boardData.time);
+  const [meetDate, setMeetDate] = useState(boardData.meetDate);
+  const [people, setPeople] = useState(boardData.people);
+  const [title, setTitle] = useState(boardData.title);
+  const [content, setContent] = useState(boardData.content);
+  const [lat, setLat] = useState(boardData.locationY);
+  const [lng, setLng] = useState(boardData.locationX);
+  const [hit, setHit] = useState(boardData.hit);
+  const [writer, setWriter] = useState(boardData.writer);
 
   const navigate = useNavigate();
 
