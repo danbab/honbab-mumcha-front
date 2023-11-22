@@ -64,7 +64,6 @@ const MyPage = () => {
       // 참가자 리스트와 찜하기 리스트도 불러옵니다.
       bringParticipants();
       bringLikes();
-  
     } catch (error) {
       console.error("서버 요청 에러: ", error);
     }
@@ -83,6 +82,8 @@ const MyPage = () => {
   //    --------------------------------------------- 구분선 ----------------------------
 
   const fetchBoardDataMyCategory = async (myCategory) => {
+    let temp = [];
+
     try {
       const response = await axios.get(
         `http://localhost:8080/api/my/board/${myCategory}`,
@@ -97,11 +98,15 @@ const MyPage = () => {
       );
       console.log(`${myCategory}에 대한 서버 응답: `, response.data);
       setMyBoard(response.data);
-      response.data.forEach((board) => {
-        if (user.username === board.writer.name) {
-          setBoardId(board.boardId);
+      response.data.map((board) => {
+        console.log(user.name);
+        console.log(board.writer.name);
+        if (user.name === board.writer.name) {
+          temp.push(board.boardId);
         }
       });
+      setBoardId(temp);
+      console.log("내가 찍고싶은 보드아이디" + boardId);
     } catch (error) {
       console.error(`${myCategory}에 대한 서버 요청 에러: `, error);
     }
@@ -185,8 +190,9 @@ const MyPage = () => {
 
   const fetchBoardDataId = async (boardId) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/my/party/${boardId}`,
+      const response = await axios.post(
+        `http://localhost:8080/api/my/party`,
+        boardId,
         requestOption
       );
       console.log(`${boardId}파티 유저 응답 :`, response.data);
@@ -222,9 +228,7 @@ const MyPage = () => {
 
   useEffect(() => {
     if (boardId.length > 0) {
-      boardId.forEach((id) => {
-        fetchBoardDataId(id);
-      });
+      fetchBoardDataId(boardId);
     }
   }, [boardId]);
 
@@ -301,12 +305,15 @@ const MyPage = () => {
               <div className="text-red-600">현재 기능 구현 중입니다 </div>
             </>
           ) : selectMyPageCategory === "내파티" ? (
-            partyUser.map((partyUser) => (
-              <MyBoardCard
-                partyUser={partyUser}
-                user={user}
-                boardId={boardId}
-              />
+            Object.entries(partyUser).map(([title, users]) => (
+              users.map(participantUser => (
+                <MyBoardCard
+                  title={title}
+                  participantUser={participantUser}
+                  user={user}
+                  boardId={boardId}
+                />
+              ))
             ))
           ) : (
             myBoard.map((myBoards) => (

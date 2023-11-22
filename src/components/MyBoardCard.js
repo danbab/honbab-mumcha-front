@@ -2,9 +2,14 @@ import { useState } from "react";
 import Button from "../components/Button";
 import axios from "axios";
 
-const MyBoardCard = ({ partyUser, user, boardId }) => {
+const MyBoardCard = ({ title, participantUser, user, boardId }) => {
+  console.log("참가유저?" + participantUser);
+  console.log("타이틀?" + title);
+  console.log("유저?" + user);
+  console.log("보드아이디?" + boardId);
+
   // let style = "rounded-[0.625rem] shadow-md";
-  let birthDate = new Date(partyUser.birth);
+  let birthDate = new Date(participantUser.birth);
   let today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();
 
@@ -14,7 +19,7 @@ const MyBoardCard = ({ partyUser, user, boardId }) => {
   }
 
   //남자 여자 변경
-  let gender = partyUser.gender === 'm' ? '남자' : '여자';
+  let gender = participantUser.gender === "m" ? "남자" : "여자";
 
   // 지역화된 문자열로 변환
   // date = date
@@ -26,7 +31,7 @@ const MyBoardCard = ({ partyUser, user, boardId }) => {
     axios
       .post("http://localhost:8080/api/app/acceptparticipants", {
         boardNo: boardId[0],
-        email: partyUser.email,
+        email: participantUser.email,
       })
       .then((response) => {
         console.log("acceptparticipants response" + response);
@@ -46,7 +51,7 @@ const MyBoardCard = ({ partyUser, user, boardId }) => {
     axios
       .post("http://localhost:8080/api/app/denyparticipants", {
         boardNo: boardId[0],
-        email: partyUser.email,
+        email: participantUser.email,
       })
       .then((response) => {
         console.log("denyparticipants response" + response);
@@ -69,7 +74,9 @@ const MyBoardCard = ({ partyUser, user, boardId }) => {
         <div className="flex gap-2 ml-2 mt-4">
           <img className="w-[2.125rem] h-[2.125rem]" src="img/iamlogo.svg" />
           {/* 작성자 이름 */}
-          <div className="text-[#000] text-[12px] mt-3">{partyUser.name}</div>
+          <div className="text-[#000] text-[12px] mt-3">
+            {participantUser.name}
+          </div>
         </div>
         {/* 작성일-reg_date */}
         <div className="text-[#0e0a0a] text-[10px] mt-[2.1rem] mr-[0.5rem]">
@@ -86,11 +93,13 @@ const MyBoardCard = ({ partyUser, user, boardId }) => {
         src="img/profile.svg"
       />
       {/* 글 제목-title */}
-      {/* <p className="absolute bottom-[6rem] left-[1rem] text-[0.9375rem] font-bold">
-        {boardDto.title}
-      </p> */}
+      <p className="absolute bottom-[6rem] left-[1rem] text-[0.9375rem] font-bold">
+        {title}
+      </p>
       <ul className="list-disc absolute bottom-[3.8rem] left-[2rem] ">
-        <li className="text-[#8B8686] text-[0.8rem]">{partyUser.birth}</li>
+        <li className="text-[#8B8686] text-[0.8rem]">
+          {participantUser.birth}
+        </li>
         <li className="text-[#8B8686] text-[0.8rem]">{gender}</li>
       </ul>
       <Button type="join-status-pending" onClick={acceptParticipant}>
@@ -99,7 +108,6 @@ const MyBoardCard = ({ partyUser, user, boardId }) => {
       <Button type="join-status-rejected" onClick={denyParticipant}>
         거절
       </Button>
-   
     </div>
   );
 };
