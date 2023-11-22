@@ -54,7 +54,7 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
       </div>
       <Map
         center={{ lat: 37.566826, lng: 126.9786567 }}
-        style={{ width: "100%", height: "500px"}}
+        style={{ width: "100%", height: "500px" }}
         level={3}
         onCreate={setMap}
       >
@@ -63,13 +63,13 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
             key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
             position={marker.position}
             image={{
-              src:"img/locationicon.png",
+              src: "/img/locationicon.png",
               size: {
                 width: 60,
                 height: 65,
               },
               options: {
-                offset:{
+                offset: {
                   x: 27,
                   y: 69,
                 },
