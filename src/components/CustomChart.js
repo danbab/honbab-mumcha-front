@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const CustomChart = ({ board }) => {
   return (
     <div className="bg-[#f1f1f1] w-[14.42rem] h-[7.3rem] rounded-[1rem] pt-2 pl-2">
@@ -18,7 +20,7 @@ const CustomChart = ({ board }) => {
             약속시간 : {board.time}
           </div>
           <button className="text-[0.6rem] mt-2 border w-[3.43rem] h-6 bg-[#54AB75] rounded-[0.625rem] text-[#ffffff]">
-            상세보기
+            <Link to={`/board/boardDetail/${board.boardId}`}>상세보기</Link>
           </button>
         </div>
         <img className="w-[6.5rem] h-[6.5rem]" src="img/boardexampleimg.svg" />

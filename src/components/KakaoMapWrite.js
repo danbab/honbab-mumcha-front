@@ -9,12 +9,23 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
   const [places, setPlaces] = useState([]);
+  const [overlay, setOverlay] = useState(null);
+  const [selectedMarker, setSelectedMarker] = useState(null);
+
 
   const handlePlaceClick = (place) => {
     // 선택된 장소의 이름과 주소를 onSelectPlace로 전달합니다.
-    onSelectPlace(place.place_name, place.road_address_name || place.address_name);
-  };
+    onSelectPlace(
+      place.place_name,
+      place.road_address_name || place.address_name
+    );
 
+    // 지도의 중심 위치와 확대 수준을 변경합니다.
+    map.setCenter(new kakao.maps.LatLng(place.y, place.x));
+    map.setLevel(3);
+
+    setSelectedMarker(place.place_name);
+  };
 
   useEffect(() => {
     if (!map) return;
@@ -32,6 +43,7 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
               lng: data[i].x,
             },
             content: data[i].place_name,
+            url: data[i].place_url,
           });
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
@@ -44,7 +56,7 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
 
   return (
     <div className="map_wrap">
-      <div className='search_input_wrapper'>
+      <div className="search_input_wrapper">
         <input
           type="text"
           value={searchTerm}
@@ -61,9 +73,8 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
         {markers.map((marker) => (
           <MapMarker
             key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-            position={marker.position}
             image={{
-              src: "/img/locationicon.png",
+              src: selectedMarker === marker.content ? "img/locationicon2.png" : "img/locationicon.png",
               size: {
                 width: 60,
                 height: 65,
@@ -75,10 +86,12 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
                 },
               },
             }}
-            onClick={() => setInfo(marker)}
+            position={marker.position}
+            content={marker.content}
+            onClick={() => window.open(marker.url, "_blank")}
           >
             {info && info.content === marker.content && (
-              <div style={{ color: "#000" }}>{marker.content}</div>
+              <div className="border w-16 h-7">{marker.content}</div>
             )}
           </MapMarker>
         ))}
@@ -94,7 +107,11 @@ const KakaoMapSearch = ({ onSelectPlace }) => {
         </div>
         <ul id="placesList">
           {places.map((place, index) => (
-            <li key={index} className="item" onClick={() => handlePlaceClick(place)}>
+            <li
+              key={index}
+              className="item"
+              onClick={() => handlePlaceClick(place)}
+            >
               <span className={`markerbg marker_${index + 1}`}></span>
               <div className="info">
                 <h5>{place.place_name}</h5>

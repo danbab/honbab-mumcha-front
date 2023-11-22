@@ -253,16 +253,6 @@ const KakaoMap = () => {
           (
             board // DB에서 가져온 데이터를 순회하면서 각 게시물의 위치에 마커를 추가합니다.
           ) => (
-            // <MapMarker
-            //   key={board.id}
-            //   position={{ lat: board.locationY, lng: board.locationX }}
-            //   // image={{
-            //   //   src: "img/locationicon.png",
-            //   //   size: { width: 64, height: 69 },
-            //   //   options: { offset: { x: 27, y: 69 } },
-            //   // }}
-            // >
-            // </MapMarker>
             <CustomOverlayMap
               position={{ lat: board.locationY, lng: board.locationX }}
               xAnchor={0.3}
