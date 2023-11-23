@@ -3,10 +3,9 @@ import Button from "../components/Button";
 import axios from "axios";
 
 const MyBoardCard = ({ title, participantUser, user, boardId }) => {
+  console.log("board? " + title);
   console.log("참가유저?" + participantUser);
-  console.log("타이틀?" + title);
-  console.log("유저?" + user);
-  console.log("보드아이디?" + boardId);
+  console.log("보드 아이디?" + boardId);
 
   // let style = "rounded-[0.625rem] shadow-md";
   let birthDate = new Date(participantUser.birth);
@@ -30,7 +29,7 @@ const MyBoardCard = ({ title, participantUser, user, boardId }) => {
   const acceptParticipant = () => {
     axios
       .post("http://localhost:8080/api/app/acceptparticipants", {
-        boardNo: boardId[0],
+        boardNo: boardId,
         email: participantUser.email,
       })
       .then((response) => {
@@ -50,7 +49,7 @@ const MyBoardCard = ({ title, participantUser, user, boardId }) => {
   const denyParticipant = () => {
     axios
       .post("http://localhost:8080/api/app/denyparticipants", {
-        boardNo: boardId[0],
+        boardNo: boardId,
         email: participantUser.email,
       })
       .then((response) => {
@@ -67,6 +66,9 @@ const MyBoardCard = ({ title, participantUser, user, boardId }) => {
         } else alert("Client : 서버 오류");
       });
   };
+  if (participantUser.email === user.email) {
+    return null;
+  }
 
   return (
     <div className="bg-[#FDFDFD] w-[15.625rem] h-[24.875rem] rounded-[1.25rem] relative">
