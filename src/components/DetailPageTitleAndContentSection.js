@@ -39,7 +39,7 @@ const DetailPageTitleAndContentSection = ({ boardData, isLoading }) => {
 
             <div className="md:max-w-full p-3 mt-10 bg-neutral-100 rounded-md">
                 {/* 모집 인원 */}
-                <p>모집 인원: {boardData.people}</p>
+                <p>모집 인원 : {boardData.people}</p>
             </div>
 
             <div className="md:w-full h-full p-3 mt-10 bg-neutral-100 rounded-md">
