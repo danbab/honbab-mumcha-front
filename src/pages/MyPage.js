@@ -192,7 +192,9 @@ const MyPage = () => {
     try {
       const response = await axios.post(
         `http://localhost:8080/api/my/party`,
+
         boardId,
+
         requestOption
       );
       console.log(`${boardId}파티 유저 응답 :`, response.data);
@@ -305,16 +307,32 @@ const MyPage = () => {
               <div className="text-red-600">현재 기능 구현 중입니다 </div>
             </>
           ) : selectMyPageCategory === "내파티" ? (
-            Object.entries(partyUser).map(([title, users]) => (
-              users.map(participantUser => (
-                <MyBoardCard
-                  title={title}
-                  participantUser={participantUser}
-                  user={user}
-                  boardId={boardId}
-                />
-              ))
-            ))
+            // Object.entries(partyUser).map(([title, users]) => {
+            //   users.map((participantUser) => (
+            //     <MyBoardCard
+            //       title={title}
+            //       participantUser={participantUser}
+            //       user={user}
+            //       boardId={boardId}
+            //     />
+            //   ));
+            // })
+            (() => {
+              let index = 0;
+
+              return Object.entries(partyUser).map(([title, users]) => {
+                const result = users.map((participantUser) => (
+                  <MyBoardCard
+                    title={title}
+                    participantUser={participantUser}
+                    user={user}
+                    boardId={boardId[index]}
+                  />
+                ));
+                index += 1;
+                return result;
+              });
+            })()
           ) : (
             myBoard.map((myBoards) => (
               <BoardCard
